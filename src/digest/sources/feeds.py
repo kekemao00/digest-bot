@@ -19,11 +19,12 @@ if TYPE_CHECKING:
 _TAGS = re.compile(r"<[^>]+>")
 # 期刊订阅源描述里的固定前缀，不是摘要：
 #   Nature：“Nature, Published online: 02 October 2026; doi:10.1038/…”
-#   Science：“Science, Volume 394, Issue 6819, Page 15-15, October 2026.”
+#   Science：“Science, Volume 394, Issue 6819, Page 15-15, October 2026.”（在线论文没有 Page 部分）
 _BOILERPLATE = re.compile(
-    r"^(?:[^;]{0,80}Published online:[^;]*;\s*doi:\S+|[^,]{0,60}, Volume \d+, Issue \d+, Page [^,]+, \w+ \d{4}\.)\s*",
+    r"^(?:[^;]{0,80}Published online:[^;]*;\s*doi:\S+|[^,]{0,60}, Volume \d+, Issue \d+(?:, Pages? [^,]+)?, \w+ \d{4}\.)\s*",
     re.I,
 )
+_ARXIV_ABS = re.compile(r"^https?://arxiv\.org/abs/([0-9]{4}\.[0-9]{4,5})(?:v\d+)?$")
 _PAGES = re.compile(r"\bPages? (e?[\w]+)(?:-(\w+))?", re.I)
 
 
@@ -87,6 +88,8 @@ class Feed(Source):
             if min_pages and (pages := page_count(raw_summary)) is not None and pages < min_pages:
                 continue  # 新闻、观点等短文章
             summary = _BOILERPLATE.sub("", raw_summary)[:MAX_SUMMARY] or None
+            if m := _ARXIV_ABS.match(link):
+                link = f"https://arxiv.org/abs/{m.group(1)}"  # 去掉版本号，统一用 https
             items.append(
                 self.item(
                     id=entry.get("id") or link,
@@ -102,9 +105,9 @@ class Feed(Source):
     def extras(self, entry: Any) -> list[str]:
         if label := self.options.get("label"):
             return [str(label)]
-        # arXiv 的 Atom 带主分类，例如 q-fin.TR
+        # arXiv 的 Atom 带主分类，例如 q-fin.TR（来源名已是 arXiv，这里只写分类）
         if category := (entry.get("arxiv_primary_category") or {}).get("term"):
-            return [f"arXiv {category}"]
+            return [category]
         return []
 
     def base_score(self, item: Item) -> float:

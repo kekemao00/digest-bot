@@ -66,7 +66,8 @@ def test_arxiv_atom(config):
     assert len(items) == 1
     paper = items[0]
     assert paper.title == "Order Book Dynamics Under Latency Arbitrage"
-    assert paper.extras == ["arXiv q-fin.TR"]
+    assert paper.extras == ["q-fin.TR"]
+    assert paper.url == "https://arxiv.org/abs/2610.01234"
     assert paper.canonical == "arxiv.org/abs/2610.01234"
 
 
@@ -132,6 +133,13 @@ def test_science_keeps_research_articles_only(config):
     assert [i.title for i in items] == ["A topological p-wave superconductor", "Market crashes and the speed of trading"]
     assert items[0].summary == "We report a superconductor that is topological in nature and robust."
     assert items[1].summary is None
+
+
+def test_science_online_article_boilerplate(config):
+    from digest.sources.feeds import _BOILERPLATE
+
+    text = "Science, Volume 394, Issue 6819, October 2026. Lipid cycling links clock and diet."
+    assert _BOILERPLATE.sub("", text) == "Lipid cycling links clock and diet."
 
 
 def test_empty_feed_is_reported(config):
