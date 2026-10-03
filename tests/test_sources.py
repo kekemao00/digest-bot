@@ -66,7 +66,7 @@ def test_arxiv_atom(config):
     assert len(items) == 1
     paper = items[0]
     assert paper.title == "Order Book Dynamics Under Latency Arbitrage"
-    assert paper.extras == ["q-fin.TR"]
+    assert paper.extras == ["交易与市场微观结构"]  # arXiv 分类显示中文名
     assert paper.url == "https://arxiv.org/abs/2610.01234"
     assert paper.canonical == "arxiv.org/abs/2610.01234"
 

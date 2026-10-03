@@ -68,3 +68,32 @@ def test_all_sections_snapshot(config, hn_source, hn_items):
     selection = select(candidates, sources, config)
     message = dingtalk.render(selection, config, NOW)
     check_snapshot("dingtalk_all_sections.md", f"<!-- {message.title} -->\n\n{message.text}\n")
+
+
+def test_llm_snapshots(config, hn_source, hn_items):
+    """有大模型时的样张：中文标题、原标题放进灰色小字、一句话、今日要点；低分条目进落选表。"""
+    import httpx
+
+    from conftest import fake_llm
+    from digest.llm import ChatClient, Endpoint, Enricher
+
+    client = httpx.Client(transport=httpx.MockTransport(fake_llm))
+    tool = Enricher(ChatClient(client, Endpoint("https://llm.test/v1/chat/completions", "k", "m"), config.llm), config)
+    selection = select(hn_items, [hn_source], config, review=tool.review)
+    selection.highlights = tool.highlights(selection.items)
+    message = dingtalk.render(selection, config, NOW)
+    check_snapshot("dingtalk_llm.md", f"<!-- {message.title} -->\n\n{message.text}\n")
+    check_snapshot("archive_llm.md", archive.render(selection, config, NOW))
+    assert message.title.startswith("每日简报 5 条｜要点：")
+
+
+def test_highlights_follow_trimming(config, hn_source, hn_items, monkeypatch):
+    from digest.models import Highlight
+
+    selection = select(hn_items, [hn_source], config)
+    last = selection.items[-1]
+    selection.highlights = [Highlight(last.key, "指向最后一条的要点")]
+    monkeypatch.setattr(dingtalk, "MAX_BYTES", 1200)
+    message = dingtalk.render(selection, config, NOW)
+    # 最后一条被裁掉后，指向它的要点也不再出现
+    assert "指向最后一条的要点" not in message.text + message.title

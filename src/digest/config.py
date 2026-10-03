@@ -30,6 +30,20 @@ class Focus:
 
 
 @dataclass(frozen=True)
+class LLMSettings:
+    enabled: bool = True
+    temperature: float = 0.2
+    batch_size: int = 12
+    timeout: float = 90.0
+    time_budget: float = 300.0
+    max_tokens: int = 4096
+    json_mode: bool = False
+    min_score: int = 5
+    reject_kinds: tuple[str, ...] = ("营销", "招聘", "活动")
+    highlights: int = 3
+
+
+@dataclass(frozen=True)
 class Config:
     title: str
     timezone: str
@@ -39,6 +53,7 @@ class Config:
     sources: tuple[dict[str, Any], ...]
     focus: tuple[Focus, ...] = ()
     min_outside_focus: float = 0.0
+    llm: LLMSettings = LLMSettings()
     section_by_key: dict[str, Section] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -90,6 +105,25 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
         if not 0.0 <= min_outside <= 1.0:
             raise ConfigError("min_outside_focus 必须在 0 到 1 之间")
 
+    llm = LLMSettings()
+    llm_path = config_dir / "llm.yaml"
+    if llm_path.exists():
+        raw_llm = yaml.safe_load(llm_path.read_text(encoding="utf-8")) or {}
+        llm = LLMSettings(
+            enabled=bool(raw_llm.get("enabled", llm.enabled)),
+            temperature=float(raw_llm.get("temperature", llm.temperature)),
+            batch_size=int(raw_llm.get("batch_size", llm.batch_size)),
+            timeout=float(raw_llm.get("timeout", llm.timeout)),
+            time_budget=float(raw_llm.get("time_budget", llm.time_budget)),
+            max_tokens=int(raw_llm.get("max_tokens", llm.max_tokens)),
+            json_mode=bool(raw_llm.get("json_mode", llm.json_mode)),
+            min_score=int(raw_llm.get("min_score", llm.min_score)),
+            reject_kinds=tuple(str(k) for k in raw_llm.get("reject_kinds", llm.reject_kinds)),
+            highlights=int(raw_llm.get("highlights", llm.highlights)),
+        )
+        if llm.batch_size < 1:
+            raise ConfigError("llm.yaml 的 batch_size 至少为 1")
+
     return Config(
         title=str(digest.get("title", "每日简报")),
         timezone=str(digest.get("timezone", "Asia/Shanghai")),
@@ -99,4 +133,5 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
         sources=sources,
         focus=focus,
         min_outside_focus=min_outside,
+        llm=llm,
     )

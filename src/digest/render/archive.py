@@ -6,7 +6,7 @@ from digest.config import Config
 from digest.interests import InterestMatcher
 from digest.models import Item
 from digest.pipeline import Selection
-from digest.render.dingtalk import meta_parts
+from digest.render.dingtalk import meta_parts, numbering
 from digest.render.text import WEEKDAYS, md_text, safe_url
 
 # 落选条目只列分数最高的这么多条，太长就没人看了
@@ -22,6 +22,8 @@ def _meta(item: Item, matcher: InterestMatcher) -> str:
     parts = meta_parts(item)
     if names := matcher.names(item.focus):
         parts.append("侧重：" + "、".join(names))
+    if item.quality is not None:
+        parts.append(f"大模型评分 {item.quality}" + (f"（{item.kind}）" if item.kind else ""))
     return " · ".join(parts)
 
 
@@ -34,6 +36,11 @@ def render(selection: Selection, config: Config, now: datetime) -> str:
         "",
         f"> 生成于 {now:%H:%M}（{config.timezone}）· 候选 {selection.candidates} 条 · 入选 {len(items)} 条",
     ]
+    numbers = numbering(items)
+    highlights = [h for h in selection.highlights if h.key in numbers]
+    if highlights:
+        lines += ["", "## 今日要点", ""]
+        lines += [f"{n}. {md_text(h.text)}（第 {numbers[h.key]} 条）" for n, h in enumerate(highlights, 1)]
     number = 0
     for section, section_items in selection.sections:
         lines += ["", f"## {section.name}", ""]

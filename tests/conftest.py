@@ -52,3 +52,32 @@ def hn_source(config):
 @pytest.fixture
 def hn_items(hn_source, hn_payload):
     return fetch_with(hn_source, lambda request: httpx.Response(200, json=hn_payload))
+
+
+def llm_reply(content: str | dict) -> httpx.Response:
+    """OpenAI 兼容接口的响应。"""
+    text = content if isinstance(content, str) else json.dumps(content, ensure_ascii=False)
+    return httpx.Response(200, json={"choices": [{"message": {"role": "assistant", "content": text}}]})
+
+
+def llm_entries(request: httpx.Request) -> tuple[str, list[dict]]:
+    """取出一次请求的系统提示词和送审的条目。"""
+    messages = json.loads(request.content)["messages"]
+    user = messages[1]["content"]
+    return messages[0]["content"], json.loads(user[user.index("[") :])
+
+
+def fake_llm(request: httpx.Request) -> httpx.Response:
+    """确定性的假大模型：Ask HN 闲聊判为低分观点，招聘帖判为招聘，其余给中文标题和一句话。"""
+    system, entries = llm_entries(request)
+    if '"highlights"' in system:
+        return llm_reply({"highlights": [{"n": e["n"], "text": f"要点：{e['title'][:16]}"} for e in entries[:3]]})
+    result = []
+    for e in entries:
+        title = e["title"]
+        kind, score = ("观点", 3) if title.startswith("Ask HN") else ("新闻", 7)
+        focus = ["ai"] if "LLM" in title or "Claude" in title else []
+        result.append({"id": e["id"], "title_zh": f"中文：{title[:12]}", "summary": f"一句话说明 {e['id']}",
+                       "kind": kind, "score": score, "focus": focus, "subject": ""})
+    # 推理模型常见的输出形态：先有思考段，再用代码块包住 JSON
+    return llm_reply("<think>先看看这些条目</think>\n```json\n" + json.dumps({"items": result}, ensure_ascii=False) + "\n```")
