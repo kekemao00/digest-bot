@@ -1,8 +1,186 @@
 # digest-bot
 
-每天定时推送一份精选资讯简报到钉钉：少而精，5 分钟内读完。运行在 GitHub Actions 上，不需要服务器。
+每天早上把 15 条精选资讯推送到钉钉群，5 分钟读完。内容覆盖世界与财经、科技热议、AI 实验室、论文、期刊与科学、开源项目六个板块。大模型负责写中文标题和一句话摘要，按信息量筛掉噪声，并限制单一领域的占比，避免信息茧房。每天的完整版永久归档在仓库里，随时可以回查。
 
-每天北京时间 8 点前后推送，消息末尾链接到当天的完整版（含落选条目和原因）。当前进度：第四阶段（定时推送、归档、加固），之后按实际运行情况调门槛。
+整个项目跑在 GitHub Actions 上，不需要服务器。fork 之后配好钉钉机器人就能用，步骤见[快速开始](#快速开始从-fork-到收到第一条消息)。版本记录见 [CHANGELOG.md](CHANGELOG.md)。
+
+## 消息长什么样
+
+下面是示意，实际消息里标题都是可以点开的链接：
+
+```
+每日简报 · 10月4日 周日
+15 条 · 约 5 分钟｜AI 5 · 科学 3 · 金融 2 · 时政 2 · 软件 2 · 安全 1
+
+今日要点
+1. 今天最值得知道的一件事  第 3 条
+2. ……
+3. ……
+
+🌍 世界与财经
+1. 中文标题，点开是原文  🏛️ 时政
+   一句话说清是什么、为什么值得看
+   bbc.com · BBC
+……
+
+🗞️ 科技热议
+4. 中文标题  🤖 AI
+   一句话摘要
+   🔥 812 · 💬 301 · github.com · HN
+……
+
+完整版与落选条目 · 数据截至 07:52
+```
+
+- 钉钉的通知栏里显示第一条要点，不用点开也知道今天最重要的是什么。
+- 每条的灰色小字依次是热度、讨论数、网站和来源，点 💬 可以打开讨论页。
+- 末尾的「完整版与落选条目」链接到当天的完整版，里面有英文原标题、大模型评分，以及没入选的条目和原因。
+
+## 快速开始：从 fork 到收到第一条消息
+
+大约需要 10 分钟。你需要一个 GitHub 账号，和一个可以添加机器人的钉钉群。
+
+### 1. Fork 仓库
+
+点仓库右上角的 **Fork**，保持勾选 **Copy the `main` branch only**（默认就是勾选的）。
+
+`state` 分支里是本仓库自己的去重记录和归档，不需要带过去。你的仓库会在第一次正式推送时自动建立自己的 `state` 分支。
+
+Fork 出来的仓库是公开的，归档也是公开的。如果想用私有仓库，见下面的[用私有仓库](#用私有仓库)。
+
+### 2. 启用 Actions
+
+GitHub 默认不在 fork 出来的仓库里运行工作流。打开你仓库的 **Actions** 页，点 **I understand my workflows, go ahead and enable them**。
+
+如果左侧的「每日简报」旁边标着已停用（disabled），点进去再点 **Enable workflow**。
+
+### 3. 创建钉钉机器人
+
+1. 在要接收简报的钉钉群里，打开 群设置 → 机器人 → 添加机器人，选 **自定义**（通过 Webhook 接入）。
+2. 安全设置只勾选 **加签**，复制以 `SEC` 开头的密钥。
+   - 不要勾选「IP 地址（段）」：GitHub Actions 的出口 IP 不固定，会被钉钉拒绝。
+   - 「自定义关键词」也不需要勾选。
+3. 点完成，复制 Webhook 地址，形如 `https://oapi.dingtalk.com/robot/send?access_token=...`。
+
+### 4. 填写 Secrets
+
+在你的仓库里打开 Settings → Secrets and variables → Actions，点 **New repository secret**，逐个添加下面几项：
+
+| 名称 | 是否必填 | 内容 |
+| --- | --- | --- |
+| `DINGTALK_WEBHOOK` | 必填 | 第 3 步复制的 Webhook 地址 |
+| `DINGTALK_SECRET` | 必填 | 第 3 步复制的 `SEC` 开头的密钥 |
+| `LLM_BASE_URL` | 可选 | 大模型接口地址，见[配置大模型](#配置大模型可选) |
+| `LLM_API_KEY` | 可选 | 大模型的密钥 |
+| `LLM_MODEL` | 可选 | 模型名 |
+
+不配大模型也能推送，只是消息里是英文原标题和来源自带的简介，没有中文摘要、领域标签和今日要点。三项大模型配置要全部填上才会启用。
+
+### 5. 先预览一次
+
+打开 Actions → **每日简报** → **Run workflow**，保持勾选「只生成预览」，然后点绿色的 **Run workflow**。
+
+大约 3 分钟后运行结束。点进这次运行，Summary 页面上依次是：
+- 钉钉消息的样张
+- 各信息源的抓取结果
+- 可以展开的完整版，里面有落选条目和原因
+
+预览不会发消息，也不需要钉钉配置，可以随时运行。
+
+### 6. 正式推送
+
+再运行一次，这次**取消勾选**「只生成预览」。
+
+运行结束后，群里会收到第一条简报。你的仓库里会多出一个 `state` 分支，存着去重记录和当天的完整版。
+
+之后每天北京时间 07:47 自动运行，消息通常在 8 点前后送达，不需要再做任何操作。
+
+第一次运行时要注意两点：
+- Anthropic、Meta AI、DeepSeek、Mistral 的博客没有 RSS。第一次正式运行只会记下现有的文章，从第二天起才会推送新文章。
+- 当天已经正式推送过的话，定时任务当天不会再推。手动运行总会发送，内容是去掉已推送条目后剩下的部分。
+
+### 没收到消息时
+
+先打开 Actions 里最近一次「每日简报」的运行，看日志里的提示：
+
+| 日志里的提示 | 原因和处理 |
+| --- | --- |
+| `缺少 DINGTALK_WEBHOOK`、`缺少 DINGTALK_SECRET` | Secret 没填或名字拼错了，名字要和上表完全一致 |
+| `DINGTALK_WEBHOOK 必须是 https://oapi.dingtalk.com/ 开头的地址` | Webhook 地址没复制完整 |
+| `钉钉拒绝了消息：errcode=310000 …sign not match…` | 加签密钥不对，或者机器人的安全设置不是「加签」 |
+| `钉钉拒绝了消息：errcode=310000 …ip…` 或 `…keywords…` | 安全设置里勾了 IP 地址段或自定义关键词，去掉后重试 |
+| `今天（…）已经推送过，定时任务不再重复推送` | 正常现象，当天已经推送过 |
+| `今天没有达到门槛的内容，不推送` | 当天没有合格的内容，可以在[调整配置](#调整配置)里放宽门槛 |
+| `未配置大模型…`，或者 `大模型配置有误…` | 三项大模型 Secret 没有填全，或者地址不是 https |
+
+运行成功但群里没有消息时，检查是不是勾选了「只生成预览」。
+
+定时任务没有按时运行时，先确认 Actions 已经启用（第 2 步）。GitHub 的定时任务在高峰期可能会晚几十分钟。另外，公开仓库连续 60 天没有活动时，GitHub 会自动停用定时任务，到 Actions 页面重新启用即可。
+
+### 用私有仓库
+
+Fork 只能是公开的。想用私有仓库的话，先在 GitHub 上新建一个空的私有仓库，再把本仓库的 `main` 分支推过去：
+
+```bash
+git clone --single-branch --branch main https://github.com/kekemao00/digest-bot.git
+cd digest-bot
+git push https://github.com/<你的用户名>/<私有仓库名>.git main
+```
+
+之后按第 3 到第 6 步操作。新建的仓库默认已经启用 Actions，不需要第 2 步。
+
+私有仓库会占用 Actions 的免费额度。每天的运行大约计 4 分钟，一个月 120 分钟左右，在免费账号每月 2000 分钟的额度之内。
+
+钉钉消息里的完整版链接，需要登录有权限的 GitHub 账号才能打开。
+
+### 同步上游的更新
+
+在你的 fork 页面上点 **Sync fork** → **Update branch**，就能拿到本仓库的新功能和修复。
+
+如果你改过的配置文件和上游改了同一处，GitHub 会提示冲突，按页面提示处理即可。私有仓库用 `git pull https://github.com/kekemao00/digest-bot.git main` 同步。
+
+## 调整配置
+
+所有配置都是仓库里的文本文件。在 GitHub 网页上打开文件，点右上角的铅笔图标修改，提交到 `main` 分支，下一次运行就会生效。
+
+改完之后，建议先用「只生成预览」运行一次看看效果。
+
+| 想调整什么 | 改哪里 |
+| --- | --- |
+| 推送时间 | [`.github/workflows/daily.yml`](.github/workflows/daily.yml) 里的 `cron`。这里用 UTC 时间，等于北京时间减 8 小时。例如想在中午 12 点前后收到，写 `47 3 * * *`（北京时间 11:47 触发） |
+| 简报标题 | [`config/sources.yaml`](config/sources.yaml) 里的 `digest.title` |
+| 每天的总条数 | `config/sources.yaml` 里的 `digest.max_items`，默认 15 |
+| 板块的顺序、名称、图标和条数上限 | `config/sources.yaml` 里的 `sections` |
+| 停用某个信息源 | 在 `config/sources.yaml` 里该来源下加一行 `enabled: false` |
+| 信息源的门槛 | 各来源下的 `min_points`、`min_comments`、`min_score`、`min_upvotes`、`min_stars_today` |
+| 某个来源每天最多几条、排序权重 | 该来源下的 `max_items` 和 `weight` |
+| 侧重领域和关键词 | [`config/interests.yaml`](config/interests.yaml) 里的 `focus`。侧重领域只加权、不排除。不想要侧重领域时，把 `focus` 删掉 |
+| 给其他领域留多少名额、单一领域最多占多少 | `config/interests.yaml` 里的 `min_outside_focus` 和 `diversity` |
+| 大模型的评分门槛 | [`config/llm.yaml`](config/llm.yaml) 里的 `min_score`，默认 5，调高会更严格 |
+| 今日要点的条数 | `config/llm.yaml` 里的 `highlights`，设为 0 就不显示今日要点 |
+| 评分标准和摘要的写法 | [`prompts/review.md`](prompts/review.md)；今日要点的写法在 [`prompts/highlights.md`](prompts/highlights.md) |
+| 完整版链接的地址 | `config/sources.yaml` 里的 `digest.archive_base_url`，默认指向你仓库 `state` 分支的 `archive/` |
+
+### 添加一个 RSS 信息源
+
+在 `config/sources.yaml` 的 `sources` 列表里加一段：
+
+```yaml
+  - id: my-blog              # 唯一的英文标识
+    type: feed               # RSS 或 Atom 订阅源
+    name: 某博客              # 消息里显示的来源名
+    section: tech            # 放进哪个板块，填 sections 里的 key
+    url: https://example.com/feed.xml
+    window_hours: 48         # 只看最近多少小时内的文章，默认 72
+    max_items: 1             # 每天最多入选几条
+    weight: 0.8              # 同一板块里的排序权重，默认 1，越大越靠前
+    exclude_title: "(?i)sponsored|webinar"   # 标题命中这个正则就丢弃
+```
+
+注意以下几点：
+- 订阅源没有热度数据，同一来源里越新的文章越靠前。
+- `sources` 里的顺序有意义：同一篇文章出现在多个来源时，保留排在前面的那个，其他的显示为「另见」。
+- 其他类型（`hackernews`、`lobsters`、`page`、`crossref`、`hf_daily_papers`、`github_trending`）可以参考文件里现有的写法。没有 RSS 的网站用 `page`，它会比较列表页，只推送新出现的文章。
 
 ## 信息源
 
@@ -30,29 +208,17 @@
    - 同一来源里同领域每多一条，排序分打 85 折，避免一个来源连着推同一类内容。
 7. 没有达标内容的日子不推送。
 
-门槛、配额在 [`config/sources.yaml`](config/sources.yaml)，侧重领域、关键词和领域多样性约束在 [`config/interests.yaml`](config/interests.yaml)，大模型的评分门槛、批量和超时在 [`config/llm.yaml`](config/llm.yaml)，提示词在 [`prompts/`](prompts/)。
-
-## 配置钉钉机器人
-
-1. 在钉钉群里添加“自定义机器人”，安全设置选 **加签**，记下 webhook 地址和以 `SEC` 开头的密钥。
-2. 在仓库 Settings → Secrets and variables → Actions 里新建两个 Repository secret：
-
-   | 名称 | 内容 |
-   | --- | --- |
-   | `DINGTALK_WEBHOOK` | `https://oapi.dingtalk.com/robot/send?access_token=...` |
-   | `DINGTALK_SECRET` | `SEC...` |
-
-3. 打开 Actions → “每日简报” → Run workflow。默认勾选“只生成预览”，结果在运行页面的 Summary 里；取消勾选就会真正发到群里。
+这些门槛、配额和约束都可以修改，见[调整配置](#调整配置)。
 
 ## 定时推送和归档
 
 - 每天北京时间 07:47 触发（`.github/workflows/daily.yml` 里的 cron，UTC 23:47）。GitHub 的定时任务整点最拥挤，常常延迟，所以提前十几分钟，消息通常在 8 点前后送达。改时间只需改 cron。
 - 定时任务同一天只推一次：GitHub 延迟或重复触发时会跳过。手动运行（取消“只生成预览”）总会发送，内容是去掉已推送条目后剩下的。
 - 每天的完整版存在 `state` 分支的 `archive/YYYY/MM-DD.md`，包括全部入选条目、大模型评分和排序靠前的落选条目及原因；钉钉消息末尾的“完整版与落选条目”就链到这里。归档永久保留，不会自动删除。
-- 回查历史：[`archive/`](https://github.com/kekemao00/digest-bot/tree/state/archive) 下的 README 是目录页，按月列出每天的条数、领域分布和三条要点；`archive/items.jsonl` 每行一条推送过的内容（日期、标题、原标题、摘要、链接、来源、领域、评分），可以下载后检索或统计。GitHub 的代码搜索不覆盖 `state` 分支，要全文搜索时用这个文件。
+- 回查历史：`state` 分支的 `archive/` 下的 README 是目录页（本仓库的在[这里](https://github.com/kekemao00/digest-bot/tree/state/archive)），按月列出每天的条数、领域分布和三条要点；`archive/items.jsonl` 每行一条推送过的内容（日期、标题、原标题、摘要、链接、来源、领域、评分），可以下载后检索或统计。GitHub 的代码搜索不覆盖 `state` 分支，要全文搜索时用这个文件。
 - `state` 分支还存着去重记录（`state.json`，只保留最近 30 天），和代码历史分开。
 - 钉钉配置有误、推送失败或所有信息源都抓取失败时，这次运行会在 Actions 页面标红，GitHub 也会按你的通知设置发邮件提醒。
-- 公开仓库连续 60 天没有活动时，GitHub 会自动停用定时任务。每天提交到 `state` 分支的数据算作活动，正常运行时不会被停用；如果被停用了，在 Actions 页面重新启用即可。
+- 公开仓库连续 60 天没有活动时，GitHub 会自动停用定时任务，停用后在 Actions 页面重新启用即可。
 
 ## 配置大模型（可选）
 
@@ -66,7 +232,7 @@
 | `LLM_API_KEY` | 密钥 |
 | `LLM_MODEL` | 模型名，例如 `deepseek-chat` |
 
-每天大约 3–5 次请求：送审 30 条左右（每批 12 条），外加一次今日要点。只发标题和来源自带的简介，不抓全文。配好后在 Actions 里勾选“只生成预览”运行一次，Summary 里会显示“大模型：审阅 N 条……”和中文样张。
+每天大约 4–6 次请求：送审 30 条左右（每批 12 条），外加一次同事件合并和一次今日要点。只发标题和来源自带的简介，不抓全文。配好后在 Actions 里勾选“只生成预览”运行一次，Summary 里会显示“大模型：审阅 N 条……”和中文样张。
 
 接口出错、超时或者输出格式不对时，会重试一次；连续失败就停用，剩下的条目用原文，推送照常。不接受 `temperature`、`max_tokens` 参数的接口（如部分推理模型）会自动改用最少参数重试。
 
