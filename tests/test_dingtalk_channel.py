@@ -9,11 +9,17 @@ from urllib.parse import parse_qs, unquote_plus, urlsplit
 import httpx
 import pytest
 
+import digest.channels.dingtalk as dingtalk_channel
 from digest.channels.base import ChannelError
 from digest.channels.dingtalk import DingTalk, sign
 from digest.render.dingtalk import Message
 
 WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=tok123"
+
+
+@pytest.fixture(autouse=True)
+def no_retry_delay(monkeypatch):
+    monkeypatch.setattr(dingtalk_channel, "RETRY_DELAY", 0)
 
 
 def test_sign_matches_dingtalk_algorithm():
@@ -63,3 +69,29 @@ def test_api_error_is_reported():
     with httpx.Client(transport=transport) as client:
         with pytest.raises(ChannelError, match="310000"):
             DingTalk(WEBHOOK, "SEC", client).send(Message(title="t", text="x"))
+
+
+def test_retries_once_when_message_was_not_delivered():
+    responses = iter([httpx.Response(503), httpx.Response(200, json={"errcode": 0, "errmsg": "ok"})])
+    signs = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        signs.append(parse_qs(urlsplit(str(request.url)).query)["timestamp"])
+        return next(responses)
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        DingTalk(WEBHOOK, "SEC", client).send(Message(title="t", text="x"))
+    assert len(signs) == 2
+
+
+def test_no_retry_when_message_may_have_arrived():
+    calls = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls.append(request)
+        raise httpx.ReadTimeout("slow")
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        with pytest.raises(ChannelError, match="ReadTimeout"):
+            DingTalk(WEBHOOK, "SEC", client).send(Message(title="t", text="x"))
+    assert len(calls) == 1  # 读超时时消息可能已经送达，重试会重复推送

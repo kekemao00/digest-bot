@@ -58,7 +58,7 @@ def test_dry_run_does_not_send(network, tmp_path, monkeypatch):
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))
     assert cli.main(["--out", str(tmp_path / "out")]) == 0
     assert network == []
-    assert "钉钉消息预览" in summary.read_text(encoding="utf-8")
+    assert "钉钉消息预览（未发送）" in summary.read_text(encoding="utf-8")
     assert (tmp_path / "out" / "archive.md").exists()
 
 
@@ -101,3 +101,36 @@ def test_llm_failure_still_sends(network, llm_env, monkeypatch):
     text = network[0]["markdown"]["text"]
     assert "今日要点" not in text and "Show HN" in text
     assert len(calls) == 4  # 两批各重试一次后停用，不再请求
+
+
+def test_archive_written_and_linked(network, tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_REPOSITORY", "owner/digest-bot")
+    assert cli.main(["--archive-dir", str(tmp_path / "archive")]) == 0
+    files = list((tmp_path / "archive").glob("*/*.md"))
+    assert len(files) == 1 and files[0].read_text(encoding="utf-8").startswith("# 每日简报")
+    year, day = files[0].parent.name, files[0].stem
+    link = f"https://github.com/owner/digest-bot/blob/state/archive/{year}/{day}.md"
+    assert f"[完整版与落选条目]({link})" in network[0]["markdown"]["text"]
+
+
+def test_dry_run_writes_no_archive(network, tmp_path):
+    assert cli.main(["--dry-run", "--archive-dir", str(tmp_path / "archive")]) == 0
+    assert not (tmp_path / "archive").exists()
+
+
+def test_scheduled_run_sends_once_per_day(network, monkeypatch):
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "schedule")
+    assert cli.main([]) == 0
+    assert cli.main([]) == 0  # 同一天第二次定时触发：跳过
+    assert len(network) == 1
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "workflow_dispatch")
+    assert cli.main([]) == 0  # 手动运行照常发送（去重后剩下的内容）
+    assert len(network) == 2
+
+
+def test_missing_webhook_fails_before_fetching(network, monkeypatch):
+    fetched = []
+    network.routes["hn.algolia.com"] = lambda request: fetched.append(request) or httpx.Response(500)
+    monkeypatch.delenv("DINGTALK_WEBHOOK")
+    assert cli.main([]) == 1
+    assert fetched == [] and network == []

@@ -1,9 +1,10 @@
 name: 每日简报
 
 on:
-  # 定时推送在第四阶段启用（北京时间 08:00 = UTC 00:00）
-  # schedule:
-  #   - cron: "0 0 * * *"
+  schedule:
+    # 北京时间 07:47（UTC 23:47）触发。GitHub 的定时任务整点最拥挤、常常延迟，
+    # 提前十几分钟触发，消息通常在 8 点前后送达
+    - cron: "47 23 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -19,12 +20,12 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # 生成并推送：能读到钉钉和大模型的密钥，但没有写仓库的权限
   digest:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    # 只有保存去重状态需要写权限，而且只写 state 分支
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -45,7 +46,7 @@ jobs:
       - run: python -m pip install --require-hashes -r requirements.txt
 
       - name: 生成并推送简报
-        run: python -m digest --state .state/state.json
+        run: python -m digest --state .state/state.json --archive-dir .state/archive
         env:
           PYTHONPATH: src
           # 手动运行时按勾选决定；定时运行时 inputs 为空，即正式发送
@@ -57,8 +58,43 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
 
-      - name: 保存去重状态
+      # 交给下一个任务提交；不含 .state/.git 等隐藏文件
+      - name: 上传去重状态和归档
         if: ${{ inputs.dry_run != true }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: state
+          path: .state/
+          retention-days: 1
+          if-no-files-found: error
+
+  # 保存：只有这个任务能写仓库，而且只写 state 分支；这里不接触任何密钥，也不运行 Python 依赖
+  save:
+    needs: digest
+    if: ${{ inputs.dry_run != true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: 取出 state 分支
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        continue-on-error: true
+        with:
+          ref: state
+          path: .state
+          persist-credentials: false
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: state
+          path: .state
+
+      - name: 提交去重状态和归档
         run: scripts/save_state.sh
         env:
           GH_TOKEN: ${{ github.token }}

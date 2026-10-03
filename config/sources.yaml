@@ -5,7 +5,8 @@ digest:
   timezone: Asia/Shanghai
   # 全天总条数上限；各板块上限之和可以超过它，名次靠后的自动让位
   max_items: 15
-  # 完整版归档的地址前缀（第四阶段启用），留空则钉钉消息里不放归档链接
+  # 完整版归档的地址前缀。留空时用本仓库 state 分支上的 archive/ 目录，
+  # 即 https://github.com/<仓库>/blob/state/archive/YYYY/MM-DD.md
   archive_base_url: ""
 
 # 板块按这里的顺序出现在消息里

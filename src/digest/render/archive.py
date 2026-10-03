@@ -27,7 +27,7 @@ def _meta(item: Item, matcher: InterestMatcher) -> str:
     return " · ".join(parts)
 
 
-def render(selection: Selection, config: Config, now: datetime) -> str:
+def render(selection: Selection, config: Config, now: datetime, status: str | None = None) -> str:
     """当天的完整版：GitHub 上阅读的 Markdown，包含全部入选条目和主要落选条目。"""
     matcher = InterestMatcher(config.focus)
     items = selection.items
@@ -36,6 +36,9 @@ def render(selection: Selection, config: Config, now: datetime) -> str:
         "",
         f"> 生成于 {now:%H:%M}（{config.timezone}）· 候选 {selection.candidates} 条 · 入选 {len(items)} 条",
     ]
+    if status:
+        lines[-1] += "  "  # 引用块里的硬换行，否则两行会连成一段
+        lines.append(f"> {md_text(status)}")
     numbers = numbering(items)
     highlights = [h for h in selection.highlights if h.key in numbers]
     if highlights:
