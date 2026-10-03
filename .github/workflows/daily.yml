@@ -58,13 +58,17 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
 
-      # 交给下一个任务提交；不含 .state/.git 等隐藏文件
+      # 交给下一个任务提交。.state 本身是隐藏目录，默认会被整个跳过，
+      # 所以要打开 include-hidden-files，再单独排除 checkout 留下的 .git
       - name: 上传去重状态和归档
         if: ${{ inputs.dry_run != true }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: state
-          path: .state/
+          path: |
+            .state/
+            !.state/.git/
+          include-hidden-files: true
           retention-days: 1
           if-no-files-found: error
 
