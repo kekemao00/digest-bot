@@ -8,10 +8,11 @@
 
 | 板块 | 来源 | 入选条件（默认） |
 | --- | --- | --- |
+| 世界与财经 | BBC 国际要闻、Al Jazeera、美联储公告、CNBC 经济、经济学人财经版、FT中文网 | 每家每天最多 1 条；BBC 按编辑排序取最重要的；美联储只要政策类公告 |
 | 科技热议 | Hacker News、Lobsters | HN 分数 ≥ 200 或评论 ≥ 100；Lobsters 分数 ≥ 20；两边都有的合并为一条 |
 | 实验室动态 | OpenAI、Anthropic、Google DeepMind、Google Research、Meta AI、Microsoft Research、Apple ML、DeepSeek、Mistral AI、Hugging Face 博客 | 新发布的文章，每家每天最多 1 条，排除客户案例 |
 | 论文 | Hugging Face 每日论文、arXiv 量化金融（q-fin.TR / ST / PM） | HF 点赞 ≥ 20；arXiv 每天最多 1 条 |
-| 期刊 | Nature、Nature Machine Intelligence、Science、Cell、PNAS | 只取研究论文 |
+| 期刊与科学 | Nature、Nature Machine Intelligence、Science、Cell、PNAS、Quanta Magazine | 期刊只取研究论文；Quanta 每天最多 1 篇 |
 | 开源项目 | GitHub Trending（日榜） | 当日新增 star ≥ 300 |
 
 没有 RSS 的博客（Anthropic、Meta AI、DeepSeek、Mistral）通过比较列表页发现新文章：第一次正式运行只记录现有文章，从第二次起才会推送新文章。推送过的内容记在仓库的 `state` 分支里，30 天内不会重复出现。
@@ -20,12 +21,16 @@
 
 1. 每个信息源先过自己的门槛（见上表），30 天内推送过的内容直接跳过。
 2. 命中侧重领域（默认 AI/LLM、金融、交易）的条目排序时加权，但不会排除其他内容。
-3. 同一板块的多个来源交替排列，每个来源、每个板块都有条数上限，全天总数不超过 15 条。
-4. 配置了大模型时，有机会入选的条目（含同样多的替补）会先送审：模型给每条写中文标题和一句话，判断类型和信息价值（0–10 分，只看内容，与侧重领域无关）。低于 5 分的、营销、招聘、活动类不入选，空出的名额由替补补上。侧重领域也改由模型判断，比关键词准确。
-5. 每天至少三分之一的名额留给侧重领域之外的高分内容，避免只看到一个方向。
-6. 没有达标内容的日子不推送。
+3. 同一板块的多个来源交替排列，每个来源、每个板块都有条数上限，全天总数不超过 15 条。来源之间的热度不能直接比较，大模型评分高得多的条目可以排到权重更高的来源前面。
+4. 配置了大模型时，有机会入选的条目（含同样多的替补）会先送审：模型给每条写中文标题和一句话，判断类型、领域和信息价值（0–10 分，只看内容，与侧重领域无关）。低于 5 分的、营销、招聘、活动类不入选，空出的名额由替补补上。侧重领域也改由模型判断，比关键词准确。
+5. 链接不同但报道同一件事的条目（比如官方博客和 HN 讨论）由模型找出来合并成一条，其他来源放进“另见”。
+6. 保持视野，防止信息茧房：
+   - 每天至少三分之一的名额留给侧重领域之外的高分内容；
+   - 单一领域最多占 40%（15 条里最多 6 条），每天至少覆盖 4 个领域；
+   - 同一来源里同领域每多一条，排序分打 85 折，避免一个来源连着推同一类内容。
+7. 没有达标内容的日子不推送。
 
-门槛、配额在 [`config/sources.yaml`](config/sources.yaml)，侧重领域和关键词在 [`config/interests.yaml`](config/interests.yaml)，大模型的评分门槛、批量和超时在 [`config/llm.yaml`](config/llm.yaml)，提示词在 [`prompts/`](prompts/)。
+门槛、配额在 [`config/sources.yaml`](config/sources.yaml)，侧重领域、关键词和领域多样性约束在 [`config/interests.yaml`](config/interests.yaml)，大模型的评分门槛、批量和超时在 [`config/llm.yaml`](config/llm.yaml)，提示词在 [`prompts/`](prompts/)。
 
 ## 配置钉钉机器人
 

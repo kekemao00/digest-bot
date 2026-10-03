@@ -1,6 +1,6 @@
 # 每日简报 · 2026-10-03 周六
 
-> 生成于 08:02（Asia/Shanghai）· 候选 11 条 · 入选 5 条｜AI 2 · 金融 1 · 软件 1 · 科学 1
+> 生成于 08:02（Asia/Shanghai）· 候选 11 条 · 入选 5 条｜软件 2 · AI 1 · 金融 1 · 科学 1
 
 ## 今日要点
 
@@ -22,17 +22,17 @@
 4. **[中文：Rust 2.0 roa](https://blog.rust-lang.org/2026/10/01/roadmap%28draft%29.html)** 💻 软件  
    一句话说明 4  
    Rust 2.0 roadmap (draft) · 🔥 520 · [💬 260](https://news.ycombinator.com/item?id=45000008) · blog.rust-lang.org · HN · 大模型评分 7（新闻）
-5. **[中文：Claude and G](https://www.example.org/agent-bench)** 🤖 AI  
+5. **[中文：How a market](https://www.example-quant.com/blog/flash-crash)** 💻 软件  
    一句话说明 5  
-   Claude and GPT compared on agent benchmarks · 🔥 290 · [💬 95](https://news.ycombinator.com/item?id=45000009) · example.org · HN · 侧重：AI/LLM · 大模型评分 7（新闻）
+   How a market maker survived the flash crash · 🔥 388 · [💬 160](https://news.ycombinator.com/item?id=45000003) · example-quant.com · HN · 大模型评分 7（新闻）
 
 ## 落选条目
 
 | 条目 | 来源 | 原因 |
 | --- | --- | --- |
-| [How a market maker survived the flash crash](https://www.example-quant.com/blog/flash-crash) | HN | 超出“科技热议”板块上限 5 条 |
-| [A deep dive into the ＊new＊ Linux scheduler](https://lwn.net/Articles/990001/) | HN | 超出“科技热议”板块上限 5 条 |
+| [Claude and GPT compared on agent benchmarks](https://www.example.org/agent-bench) | HN | 超出“科技热议”板块上限 5 条 |
+| [A deep dive into the ＊new＊ Linux scheduler](https://lwn.net/Articles/990001/) | HN | “软件”领域当天已有 2 条 |
 | [Fed up with slow builds, I rewrote our CI](https://example.dev/ci) | HN | 超出“科技热议”板块上限 5 条 |
 | [Ask HN: What's your favorite underrated book?](https://news.ycombinator.com/item?id=45000006) | HN | 大模型评分 3/10（观点） |
-| [Quantitative trading with options: a primer](https://example.net/options-primer) | HN | 超出“科技热议”板块上限 5 条 |
+| [Quantitative trading with options: a primer](https://example.net/options-primer) | HN | “软件”领域当天已有 2 条 |
 | [Small startup postmortem](https://example.com/postmortem) | HN | 热度不足（80 分 / 30 评论，门槛 200 分或 100 评论） |

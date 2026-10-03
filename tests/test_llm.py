@@ -231,3 +231,19 @@ def test_spacing_and_trailing_period(config):
     tool.review([item])
     assert item.title_zh == "Redis 作者推出 ds4：本地运行 LLM"
     assert item.one_liner == "新闻使 Qwen 下单占比变化 48 个百分点"
+
+
+def test_duplicates_are_validated(config):
+    items = [make_item(n, f"Story {n}") for n in range(1, 5)]
+    reply = {"groups": [[1, 3, 3], [3, 4], [2], [9, 4, 2], "x", [True, 1]]}
+    tool, requests = enricher(config, lambda r: llm_reply(reply))
+    # 编号越界、重复使用、只有一条的组都丢掉
+    assert tool.duplicates(items) == [["hn:1", "hn:3"], ["hn:4", "hn:2"]]
+    _, entries = llm_entries(requests[0])
+    assert entries[0] == {"n": 1, "source": "Hacker News", "title": "Story 1", "summary": ""}
+
+
+def test_duplicates_failure_is_harmless(config):
+    tool, _ = enricher(config, lambda r: httpx.Response(500))
+    assert tool.duplicates([make_item(1, "a"), make_item(2, "b")]) == []
+    assert tool.duplicates([make_item(1, "a")]) == []

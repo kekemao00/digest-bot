@@ -48,7 +48,8 @@ def meta_parts(item: Item, original: bool = False) -> list[str]:
     if item.domain:
         parts.append(md_text(item.domain))
     parts.append(md_text(item.source_name))
-    parts += [md_text(extra) for extra in item.extras]
+    # 有领域标签时，来源自带的话题标签（如 Lobsters 的 #security）是重复信息
+    parts += [md_text(extra) for extra in item.extras if not (item.topic and extra.startswith("#"))]
     if item.subject and not item.extras:
         parts.append(md_text(item.subject))
     parts += [f"[{md_text(label)}]({url})" for label, link in item.links if (url := safe_url(link))]

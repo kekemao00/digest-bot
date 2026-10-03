@@ -176,3 +176,16 @@ def test_journal_notices_excluded(config):
     source = Feed(source_options(config, "nature"))
     notice = source.item(id="n", title="Retraction Note: Something", url="https://x.test", published_at=NOW)
     assert source.reject_reason(notice) == "标题命中排除规则"
+
+
+def test_feed_can_rank_by_editorial_order(config):
+    from datetime import timedelta
+
+    stamp = (NOW - timedelta(hours=1)).strftime("%a, %d %b %Y %H:%M:%S %z")
+    rss = "<rss><channel>" + "".join(
+        f"<item><title>Story {n}</title><link>https://news.test/{n}</link><pubDate>{stamp}</pubDate></item>"
+        for n in range(3)
+    ) + "</channel></rss>"
+    source = Feed({"id": "w", "type": "feed", "section": "world", "url": "https://news.test/rss", "rank": "order"})
+    items = fetch_with(source, rss)
+    assert [source.base_score(i) for i in items] == [100.0, 98.0, 96.0]

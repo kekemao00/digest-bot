@@ -2,7 +2,7 @@
 
 ### 每日简报 · 10月3日 周六
 
-<font color=#999999>5 条 · 约 1 分钟｜AI 2 · 金融 1 · 软件 1 · 科学 1</font>
+<font color=#999999>5 条 · 约 1 分钟｜软件 2 · AI 1 · 金融 1 · 科学 1</font>
 
 **今日要点**
 
@@ -28,9 +28,9 @@
 一句话说明 4  
 <font color=#999999>🔥 520 · [💬 260](https://news.ycombinator.com/item?id=45000008) · blog.rust-lang.org · HN</font>
 
-**5. [中文：Claude and G](https://www.example.org/agent-bench)** <font color=#999999>🤖 AI</font>  
+**5. [中文：How a market](https://www.example-quant.com/blog/flash-crash)** <font color=#999999>💻 软件</font>  
 一句话说明 5  
-<font color=#999999>🔥 290 · [💬 95](https://news.ycombinator.com/item?id=45000009) · example.org · HN</font>
+<font color=#999999>🔥 388 · [💬 160](https://news.ycombinator.com/item?id=45000003) · example-quant.com · HN</font>
 
 ---
 
