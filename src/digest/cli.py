@@ -11,7 +11,7 @@ import httpx
 
 from digest.channels.base import ChannelError
 from digest.channels.dingtalk import DingTalk
-from digest.config import load_config
+from digest.config import Config, load_config
 from digest.http import make_client
 from digest.llm import build_enricher
 from digest.models import Item
@@ -37,6 +37,11 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     )
     parser.add_argument("--out", type=Path, help="把钉钉消息和完整版写到这个目录")
     parser.add_argument(
+        "--archive-dir",
+        type=Path,
+        help="正式推送时把完整版写到这个目录的 YYYY/MM-DD.md（工作流随后提交到 state 分支）",
+    )
+    parser.add_argument(
         "--state",
         type=Path,
         default=Path(".state/state.json"),
@@ -53,14 +58,24 @@ def source_report(stats: dict[str, str], selection: Selection) -> str:
     return "\n".join(["| 信息源 | 抓取结果 | 入选 |", "| --- | --- | --- |", *rows])
 
 
-def write_step_summary(message: dingtalk.Message, report: str, full: str) -> None:
-    """在 GitHub Actions 运行页面上展示预览。"""
+def write_step_summary(message: dingtalk.Message, report: str, full: str, preview: bool = True) -> None:
+    """在 GitHub Actions 运行页面上展示这次的消息、各信息源情况和完整版。"""
     path = os.environ.get("GITHUB_STEP_SUMMARY")
     if not path:
         return
+    heading = "钉钉消息预览（未发送）" if preview else "钉钉消息"
     with open(path, "a", encoding="utf-8") as f:
-        f.write(f"## 钉钉消息预览\n\n通知标题：{message.title}\n\n---\n\n{message.text}\n\n---\n\n")
+        f.write(f"## {heading}\n\n通知标题：{message.title}\n\n---\n\n{message.text}\n\n---\n\n")
         f.write(f"## 各信息源\n\n{report}\n\n<details><summary>完整版（含落选条目）</summary>\n\n{full}\n</details>\n")
+
+
+def archive_link(config: Config, now: datetime) -> str | None:
+    """当天完整版的网页地址。没有在配置里指定时，用本仓库 state 分支上的 archive/ 目录。"""
+    base = config.archive_base_url
+    if not base and (repo := os.environ.get("GITHUB_REPOSITORY")):
+        server = os.environ.get("GITHUB_SERVER_URL", "https://github.com")
+        base = f"{server}/{repo}/blob/state/archive"
+    return f"{base.rstrip('/')}/{now:%Y}/{now:%m-%d}.md" if base else None
 
 
 def setup_logging() -> None:
@@ -82,6 +97,19 @@ def main(argv: list[str] | None = None) -> int:
     stats: dict[str, str] = {}
     failed = 0
     with make_client() as client:
+        channel: DingTalk | None = None
+        if not args.dry_run:
+            # 定时任务可能因为 GitHub 延迟或手动重跑在同一天触发两次，只推一次
+            if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and state.last_sent == now.date().isoformat():
+                log.info("今天（%s）已经推送过，定时任务不再重复推送", state.last_sent)
+                return 0
+            # 钉钉配置有误时尽早失败，不白白抓取和调用大模型
+            try:
+                channel = DingTalk.from_env(client)
+            except ChannelError as exc:
+                log.error("%s", exc)
+                return 1
+
         for source in sources:
             try:
                 items = source.fetch(client, now, state)
@@ -108,8 +136,14 @@ def main(argv: list[str] | None = None) -> int:
                 # 便于按日志调整评分门槛；标题本身是公开内容
                 log.info("大模型淘汰：%s（%s）", rejected.item.title[:80], rejected.reason)
         log.info("入选 %d 条，落选 %d 条；%s", len(selection.items), len(selection.rejected), llm_status)
-        message = dingtalk.render(selection, config, now)
-        full = archive.render(selection, config, now)
+        full = archive.render(selection, config, now, status=llm_status)
+        archive_url = None
+        if not args.dry_run and args.archive_dir:
+            path = args.archive_dir / f"{now:%Y}" / f"{now:%m-%d}.md"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(full, encoding="utf-8")
+            archive_url = archive_link(config, now)
+        message = dingtalk.render(selection, config, now, archive_url)
 
         if args.out:
             args.out.mkdir(parents=True, exist_ok=True)
@@ -117,16 +151,16 @@ def main(argv: list[str] | None = None) -> int:
             (args.out / "archive.md").write_text(full, encoding="utf-8")
 
         report = f"{llm_status}\n\n{source_report(stats, selection)}"
-        if args.dry_run:
+        write_step_summary(message, report, full, preview=channel is None)
+        if args.dry_run or channel is None:
             print(f"通知标题：{message.title}\n\n{message.text}\n\n{report}")
-            write_step_summary(message, report, full)
             return 0
         if not selection.items:
             log.info("今天没有达到门槛的内容，不推送")
             state.save(now.date())
             return 0
         try:
-            DingTalk.from_env(client).send(message)
+            channel.send(message)
         except ChannelError as exc:
             log.error("%s", exc)
             return 1
