@@ -38,3 +38,33 @@ def test_quiet_day_message(config):
 
     message = dingtalk.render(Selection(sections=[]), config, NOW)
     assert "0 条" in message.text
+
+
+def test_all_sections_snapshot(config, hn_source, hn_items):
+    import json
+
+    import httpx
+
+    from conftest import fetch_with, fixture_text, source_options
+    from digest.sources.feeds import Feed
+    from digest.sources.github_trending import GitHubTrending
+    from digest.sources.hf_papers import HFDailyPapers
+    from digest.sources.lobsters import Lobsters
+
+    lobsters = Lobsters(source_options(config, "lobsters"))
+    trending = GitHubTrending(source_options(config, "github-trending"))
+    papers = HFDailyPapers(source_options(config, "hf-papers"))
+    nature = Feed(source_options(config, "nature"))
+    arxiv = Feed(source_options(config, "arxiv-qfin"))
+    candidates = [
+        *hn_items,
+        *fetch_with(lobsters, fixture_text("lobsters.json")),
+        *fetch_with(trending, fixture_text("github_trending.html")),
+        *fetch_with(papers, lambda r: httpx.Response(200, json=json.loads(fixture_text("hf_papers.json")))),
+        *fetch_with(nature, fixture_text("nature.rss")),
+        *fetch_with(arxiv, fixture_text("arxiv.atom")),
+    ]
+    sources = [hn_source, lobsters, papers, arxiv, nature, trending]
+    selection = select(candidates, sources, config)
+    message = dingtalk.render(selection, config, NOW)
+    check_snapshot("dingtalk_all_sections.md", f"<!-- {message.title} -->\n\n{message.text}\n")

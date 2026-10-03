@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:prism="http://prismstandard.org/namespaces/basic/2.0/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel rdf:about="https://www.nature.com/nature.rss"><title>Nature</title><link>https://www.nature.com/nature</link></channel>
+  <item rdf:about="https://www.nature.com/articles/d41586-026-03037-8">
+    <title>Location, location, location: how to edit genes only in the cells you want</title>
+    <link>https://www.nature.com/articles/d41586-026-03037-8</link>
+    <dc:date>2026-10-02</dc:date>
+  </item>
+  <item rdf:about="https://www.nature.com/articles/s41586-026-09912-1">
+    <title>A language model that discovers trading strategies</title>
+    <link>https://www.nature.com/articles/s41586-026-09912-1</link>
+    <content:encoded><![CDATA[<p>Nature, Published online: 02 October 2026; <a href="https://www.nature.com/articles/s41586-026-09912-1">doi:10.1038/s41586-026-09912-1</a></p>We show that...]]></content:encoded>
+    <dc:date>2026-10-02</dc:date>
+  </item>
+  <item rdf:about="https://www.nature.com/articles/s41586-026-09900-5">
+    <title>Ancient DNA reveals early farming in the Sahara</title>
+    <link>https://www.nature.com/articles/s41586-026-09900-5</link>
+    <dc:date>2026-10-01</dc:date>
+  </item>
+  <item rdf:about="https://www.nature.com/articles/s41586-026-09000-0">
+    <title>An older paper outside the time window</title>
+    <link>https://www.nature.com/articles/s41586-026-09000-0</link>
+    <dc:date>2026-09-20</dc:date>
+  </item>
+</rdf:RDF>

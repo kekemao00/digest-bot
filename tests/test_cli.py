@@ -13,7 +13,7 @@ TOKEN = "tok-should-never-be-logged"
 
 
 @pytest.fixture
-def network(monkeypatch, hn_payload):
+def network(monkeypatch, hn_payload, tmp_path):
     sent = []
     for hit in hn_payload["hits"]:
         hit["created_at_i"] = int(time.time()) - 3600
@@ -21,13 +21,16 @@ def network(monkeypatch, hn_payload):
     def handler(request: httpx.Request) -> httpx.Response:
         if request.url.host == "hn.algolia.com":
             return httpx.Response(200, json=hn_payload)
-        sent.append(json.loads(request.content))
-        return httpx.Response(200, json={"errcode": 0, "errmsg": "ok"})
+        if request.url.host == "oapi.dingtalk.com":
+            sent.append(json.loads(request.content))
+            return httpx.Response(200, json={"errcode": 0, "errmsg": "ok"})
+        return httpx.Response(404)  # 其他信息源在这些测试里不可用
 
     monkeypatch.setattr(cli, "make_client", lambda: httpx.Client(transport=httpx.MockTransport(handler)))
     monkeypatch.setenv("DINGTALK_WEBHOOK", f"https://oapi.dingtalk.com/robot/send?access_token={TOKEN}")
     monkeypatch.setenv("DINGTALK_SECRET", "SEC")
     monkeypatch.delenv("DIGEST_DRY_RUN", raising=False)
+    monkeypatch.chdir(tmp_path)  # 默认 state 路径是相对路径，放到临时目录里
     return sent
 
 

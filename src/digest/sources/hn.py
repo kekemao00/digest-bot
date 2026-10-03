@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import re
 from datetime import datetime, timedelta, timezone
+from typing import TYPE_CHECKING
 
 import httpx
 
 from digest.models import Item
 from digest.sources.base import Source
+
+if TYPE_CHECKING:
+    from digest.state import State
 
 API = "https://hn.algolia.com/api/v1/search"
 ITEM_URL = "https://news.ycombinator.com/item?id={}"
@@ -16,10 +20,10 @@ SKIP_TITLES = re.compile(r"^(Ask HN: Who is hiring|Ask HN: Who wants to be hired
 
 
 class HackerNews(Source):
-    name = "hn"
-    display_name = "Hacker News"
+    type = "hackernews"
+    default_name = "Hacker News"
 
-    def fetch(self, client: httpx.Client, now: datetime) -> list[Item]:
+    def fetch(self, client: httpx.Client, now: datetime, state: State) -> list[Item]:
         since = now - timedelta(hours=float(self.options.get("window_hours", 24)))
         # 先用一个较低的分数下限缩小结果集，真正的门槛在 reject_reason 里判断，
         # 这样评论很多但分数一般的帖子也能被看到
@@ -38,20 +42,20 @@ class HackerNews(Source):
         if not title or not story_id or SKIP_TITLES.match(title):
             return None
         discussion = ITEM_URL.format(story_id)
-        return Item(
-            source=self.name,
-            source_name=self.display_name,
-            section=self.section,
+        return self.item(
             id=story_id,
             title=title,
             url=hit.get("url") or discussion,
             discussion_url=discussion,
+            show_domain=True,
             published_at=datetime.fromtimestamp(int(hit["created_at_i"]), tz=timezone.utc),
             score=int(hit.get("points") or 0),
             comments=int(hit.get("num_comments") or 0),
         )
 
     def reject_reason(self, item: Item) -> str | None:
+        if reason := super().reject_reason(item):
+            return reason
         min_points = int(self.options.get("min_points", 200))
         min_comments = int(self.options.get("min_comments", 100))
         if item.score >= min_points or item.comments >= min_comments:

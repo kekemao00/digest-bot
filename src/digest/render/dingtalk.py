@@ -27,33 +27,41 @@ def grey(text: str) -> str:
 
 
 def reading_minutes(items: list[Item]) -> int:
-    chars = sum(len(i.title_zh or i.title) + len(i.one_liner or "") for i in items)
+    chars = sum(len(i.title_zh or i.title) + len(i.blurb or "") for i in items)
     # 中文约每分钟 300 字，另给每条留出扫一眼来源信息的时间
     return max(1, round(chars / 300 + len(items) * 0.15))
 
 
-def meta_line(item: Item) -> str:
+def meta_parts(item: Item) -> list[str]:
+    """标题下灰色小字的各个部分，钉钉版和完整版共用。"""
     parts: list[str] = []
     if item.title_zh:
         parts.append(md_text(truncate(item.title, 80)))
     if item.domain:
         parts.append(md_text(item.domain))
-    if item.score:
+    if item.score_text:
+        parts.append(f"{item.source_name} {md_text(item.score_text)}")
+    elif item.score:
         parts.append(f"{item.source_name} {count_label(item.score)} {item.score_unit}")
     else:
         parts.append(item.source_name)
+    parts += [md_text(extra) for extra in item.extras]
     if item.comments and item.discussion_url and (url := safe_url(item.discussion_url)):
         parts.append(f"[{count_label(item.comments)} 条讨论]({url})")
-    return grey(" · ".join(parts))
+    parts += [f"[{md_text(label)}]({url})" for label, link in item.links if (url := safe_url(link))]
+    also = [f"[{md_text(a.source_name)}]({url})" for a in item.also if (url := safe_url(a.url))]
+    if also:
+        parts.append("另见 " + "、".join(also))
+    return parts
 
 
 def render_item(number: int, item: Item) -> str:
     title = md_text(item.title_zh or item.title)
     url = safe_url(item.url)
     lines = [f"**{number}. [{title}]({url})**" if url else f"**{number}. {title}**"]
-    if item.one_liner:
-        lines.append(md_text(item.one_liner))
-    lines.append(meta_line(item))
+    if item.blurb:
+        lines.append(md_text(truncate(item.blurb, 120)))
+    lines.append(grey(" · ".join(meta_parts(item))))
     return LINE.join(lines)
 
 

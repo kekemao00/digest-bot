@@ -1,0 +1,14 @@
+[
+ {"short_id": "abc123", "short_id_url": "https://lobste.rs/s/abc123", "created_at": "2026-10-02T20:15:00.000-05:00",
+  "title": "The Fed signals two more interest rate cuts this year", "url": "https://www.reuters.com/markets/fed-signals-cuts?utm_source=lobsters",
+  "score": 42, "comment_count": 17, "comments_url": "https://lobste.rs/s/abc123/the_fed_signals", "tags": ["finance", "news"]},
+ {"short_id": "def456", "short_id_url": "https://lobste.rs/s/def456", "created_at": "2026-10-02T22:00:00.000-05:00",
+  "title": "Writing a tiny Forth in Zig", "url": "https://example.dev/forth-zig", "score": 31, "comment_count": 8,
+  "comments_url": "https://lobste.rs/s/def456/writing_tiny_forth_zig", "tags": ["zig", "forth"]},
+ {"short_id": "ghi789", "short_id_url": "https://lobste.rs/s/ghi789", "created_at": "2026-10-02T23:00:00.000-05:00",
+  "title": "Ask: what are you reading?", "url": "", "score": 5, "comment_count": 12,
+  "comments_url": "https://lobste.rs/s/ghi789/ask_what_are_you_reading", "tags": ["ask"]},
+ {"short_id": "old111", "short_id_url": "https://lobste.rs/s/old111", "created_at": "2026-09-28T10:00:00.000-05:00",
+  "title": "An old story", "url": "https://example.com/old", "score": 90, "comment_count": 40,
+  "comments_url": "https://lobste.rs/s/old111/old", "tags": []}
+]

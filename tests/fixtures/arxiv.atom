@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:arxiv="http://arxiv.org/schemas/atom">
+  <title>ArXiv Query</title>
+  <entry>
+    <id>http://arxiv.org/abs/2610.01234v1</id>
+    <published>2026-10-02T17:59:59Z</published>
+    <updated>2026-10-02T17:59:59Z</updated>
+    <title>Order Book Dynamics Under
+      Latency Arbitrage</title>
+    <summary>We study high-frequency trading in limit order books.</summary>
+    <link href="http://arxiv.org/abs/2610.01234v1" rel="alternate" type="text/html"/>
+    <arxiv:primary_category term="q-fin.TR" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+</feed>

@@ -6,7 +6,8 @@ from digest.config import Config
 from digest.interests import InterestMatcher
 from digest.models import Item
 from digest.pipeline import Selection
-from digest.render.text import WEEKDAYS, count_label, md_text, safe_url
+from digest.render.dingtalk import meta_parts
+from digest.render.text import WEEKDAYS, md_text, safe_url
 
 # 落选条目只列分数最高的这么多条，太长就没人看了
 MAX_REJECTED = 30
@@ -18,14 +19,7 @@ def _link(text: str, url: str | None) -> str:
 
 
 def _meta(item: Item, matcher: InterestMatcher) -> str:
-    parts: list[str] = []
-    if item.title_zh:
-        parts.append(md_text(item.title))
-    if item.domain:
-        parts.append(md_text(item.domain))
-    parts.append(f"{item.source_name} {count_label(item.score)} {item.score_unit}" if item.score else item.source_name)
-    if item.comments and item.discussion_url:
-        parts.append(_link(f"{count_label(item.comments)} 条讨论", item.discussion_url))
+    parts = meta_parts(item)
     if names := matcher.names(item.focus):
         parts.append("侧重：" + "、".join(names))
     return " · ".join(parts)
@@ -46,8 +40,8 @@ def render(selection: Selection, config: Config, now: datetime) -> str:
         for item in section_items:
             number += 1
             lines.append(f"{number}. **{_link(item.title_zh or item.title, item.url)}**  ")
-            if item.one_liner:
-                lines.append(f"   {md_text(item.one_liner)}  ")
+            if item.blurb:
+                lines.append(f"   {md_text(item.blurb)}  ")
             lines.append(f"   {_meta(item, matcher)}")
     if not items:
         lines += ["", "今天没有达到门槛的内容。"]
