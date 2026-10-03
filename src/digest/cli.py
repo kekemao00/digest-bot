@@ -13,6 +13,7 @@ from digest.channels.base import ChannelError
 from digest.channels.dingtalk import DingTalk
 from digest.config import load_config
 from digest.http import make_client
+from digest.llm import build_enricher
 from digest.models import Item
 from digest.pipeline import Selection, select
 from digest.render import archive, dingtalk
@@ -97,8 +98,12 @@ def main(argv: list[str] | None = None) -> int:
             log.error("所有信息源都抓取失败，今天不推送")
             return 1
 
-        selection = select(candidates, sources, config, state)
-        log.info("入选 %d 条，落选 %d 条", len(selection.items), len(selection.rejected))
+        enricher = build_enricher(client, config)
+        selection = select(candidates, sources, config, state, review=enricher.review if enricher else None)
+        if enricher and selection.items:
+            selection.highlights = enricher.highlights(selection.items)
+        llm_status = enricher.status() if enricher else "大模型：未启用，使用原文标题和简介"
+        log.info("入选 %d 条，落选 %d 条；%s", len(selection.items), len(selection.rejected), llm_status)
         message = dingtalk.render(selection, config, now)
         full = archive.render(selection, config, now)
 
@@ -107,7 +112,7 @@ def main(argv: list[str] | None = None) -> int:
             (args.out / "dingtalk.md").write_text(f"<!-- {message.title} -->\n\n{message.text}\n", encoding="utf-8")
             (args.out / "archive.md").write_text(full, encoding="utf-8")
 
-        report = source_report(stats, selection)
+        report = f"{llm_status}\n\n{source_report(stats, selection)}"
         if args.dry_run:
             print(f"通知标题：{message.title}\n\n{message.text}\n\n{report}")
             write_step_summary(message, report, full)

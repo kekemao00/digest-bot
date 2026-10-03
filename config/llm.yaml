@@ -1,0 +1,22 @@
+# 大模型增强：中文标题、一句话摘要、价值评分、今日要点。
+# 接口地址、密钥、模型名放在 GitHub Secrets（LLM_BASE_URL、LLM_API_KEY、LLM_MODEL），不写在这里。
+# 没配这三个 Secret，或者接口出错时，简报照常推送，只是用原文标题和来源自带的简介。
+
+enabled: true
+temperature: 0.2
+# 每次请求审阅的条目数；条目越多单次输出越长，部分接口会截断
+batch_size: 12
+# 单次请求的超时（秒）
+timeout: 90
+# 全部大模型请求的总时长上限（秒），超出后剩下的条目用原文
+time_budget: 300
+max_tokens: 4096
+# 接口支持 response_format: json_object 时可以打开，输出更稳定；不支持的接口会报错，所以默认关闭
+json_mode: false
+
+# 价值评分（0–10）低于这个分数的条目不入选。评分只看信息量，与侧重领域无关
+min_score: 5
+# 这些类型直接淘汰
+reject_kinds: [营销, 招聘, 活动]
+# 今日要点的条数，0 表示不要
+highlights: 3

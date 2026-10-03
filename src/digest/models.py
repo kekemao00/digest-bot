@@ -16,6 +16,14 @@ class Also:
 
 
 @dataclass
+class Highlight:
+    """今日要点里的一行，指向简报中的某一条。"""
+
+    key: str  # 对应条目的 Item.key
+    text: str
+
+
+@dataclass
 class Item:
     """一条候选资讯。每个信息源都把自己的数据转换成这个结构。"""
 
@@ -36,8 +44,14 @@ class Item:
     extras: list[str] = field(default_factory=list)  # 额外的元信息，如编程语言、arXiv 分类
     links: list[tuple[str, str]] = field(default_factory=list)  # 额外链接，如论文代码仓库
     also: list[Also] = field(default_factory=list)
-    title_zh: str | None = None  # 中文标题（第三阶段由大模型生成）
-    one_liner: str | None = None  # 一句话（第三阶段由大模型生成）
+    # 以下几项由大模型审阅后填写，没有大模型时保持为空
+    reviewed: bool = False  # 是否已送审（失败的也算，避免反复重试）
+    title_zh: str | None = None  # 中文标题
+    one_liner: str | None = None  # 一句话：是什么、为什么值得看
+    quality: int | None = None  # 信息价值评分 0–10，与侧重领域无关
+    kind: str | None = None  # 内容类型，如研究、发布、观点
+    subject: str | None = None  # 论文和期刊的学科，如“神经科学”
+    llm_focus: list[str] | None = None  # 大模型判断的侧重领域，有它时代替关键词匹配
     focus: list[str] = field(default_factory=list)  # 命中的侧重领域 key
     rank: float = 0.0  # 排序分，由筛选流程计算
 

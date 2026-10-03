@@ -103,3 +103,49 @@ def test_per_source_cap_and_interleaving(config):
     selection = select(items, [a, b], big)
     assert [i.id for i in selection.items] == ["a1", "b1", "b2"]
     assert any("每天 1 条" in r.reason for r in selection.rejected)
+
+
+def test_review_replaces_rejected_items(config, hn_source, hn_items):
+    batches = []
+
+    def review(items):
+        batches.append([i.key for i in items])
+        return {i.key: "大模型评分 2/10（观点）" for i in items if "Voyager" in i.title}
+
+    selection = select(hn_items, [hn_source], config, review=review)
+    assert len(selection.items) == 5  # 被淘汰的由替补补上
+    assert not any("Voyager" in i.title for i in selection.items)
+    assert all(i.reviewed for i in selection.items)
+    assert any(r.reason == "大模型评分 2/10（观点）" for r in selection.rejected)
+    # 第一轮就带上替补一起审，之后不会重复审同一条
+    assert len(batches[0]) > 5
+    reviewed = [key for batch in batches for key in batch]
+    assert len(reviewed) == len(set(reviewed))
+
+
+def test_review_rounds_cover_late_replacements(config, hn_source):
+    one = replace(config, sections=(Section("tech", "科技热议", 2),), max_items=2, focus=())
+    items = [make(i, f"Story {i}", 1000 - i) for i in range(10)]
+
+    def review(batch):
+        # 每轮把送审的都淘汰掉，替补要在下一轮补审
+        return {i.key: "大模型判断为营销" for i in batch if int(i.id) < 6}
+
+    selection = select(items, [hn_source], one, review=review)
+    assert [i.id for i in selection.items] == ["6", "7"]
+    assert all(i.reviewed for i in selection.items)
+
+
+def test_model_judgement_drives_focus_and_order(config, hn_source):
+    plain = replace(config, sections=(Section("tech", "科技热议", 2),), max_items=2)
+    items = [make(1, "LLM benchmark roundup", 500), make(2, "Gardening tips", 500), make(3, "Bird migration", 500)]
+
+    def review(batch):
+        for item in batch:
+            item.llm_focus = []  # 模型认为都不属于侧重领域，关键词 LLM 不再加权
+            item.quality = 9 if item.id == "3" else 5
+        return {}
+
+    selection = select(items, [hn_source], plain, review=review)
+    assert selection.items[0].id == "3"
+    assert all(not i.focus for i in selection.items)

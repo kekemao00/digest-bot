@@ -52,6 +52,10 @@ jobs:
           DIGEST_DRY_RUN: ${{ inputs.dry_run }}
           DINGTALK_WEBHOOK: ${{ secrets.DINGTALK_WEBHOOK }}
           DINGTALK_SECRET: ${{ secrets.DINGTALK_SECRET }}
+          # 三项都配置了才启用大模型，否则用原文标题和简介
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
 
       - name: 保存去重状态
         if: ${{ inputs.dry_run != true }}
