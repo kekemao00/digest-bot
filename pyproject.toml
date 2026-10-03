@@ -1,6 +1,6 @@
 [project]
 name = "digest-bot"
-version = "0.1.0"
+version = "1.0.0"
 description = "每日精选资讯简报，通过 GitHub Actions 定时推送到钉钉"
 requires-python = ">=3.11"
 dependencies = [

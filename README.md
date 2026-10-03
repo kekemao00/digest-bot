@@ -87,3 +87,10 @@ PYTHONPATH=src python -m digest --dry-run --out preview   # 抓取真实数据�
 ```
 
 改了排版后，用 `UPDATE_SNAPSHOTS=1 python -m pytest` 更新 `tests/snapshots/` 里的样张快照，并在 PR 里检查它的变化。依赖变更后用 `uv pip compile --generate-hashes --universal --python-version 3.12 requirements.in -o requirements.txt`（`requirements-dev.in` 同理）重新锁定。
+
+## 发布新版本
+
+1. 改 `pyproject.toml` 里的 `version`，在 `CHANGELOG.md` 最上面写好这一版的说明（标题格式是 `## vX.Y.Z · 日期`），合并到 main。
+2. 在 Actions 里运行「发布版本」。它会先跑一遍测试，再在 main 的最新提交上打 `vX.Y.Z` 标签，发布到 Releases 页面，并附上源码包和 SHA-256 校验值。
+
+同一个版本号只能发布一次，重复运行会失败，不会覆盖已有的发布。版本历史见 [CHANGELOG.md](CHANGELOG.md)。
