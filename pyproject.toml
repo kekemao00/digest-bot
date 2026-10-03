@@ -1,0 +1,16 @@
+[project]
+name = "digest-bot"
+version = "0.1.0"
+description = "每日精选资讯简报，通过 GitHub Actions 定时推送到钉钉"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.27",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

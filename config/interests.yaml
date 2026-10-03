@@ -1,0 +1,26 @@
+# 兴趣画像：侧重领域只加分，不排除其他内容。
+# 关键词不区分大小写，按整词匹配英文、按子串匹配中文。
+
+focus:
+  - key: ai
+    name: AI/LLM
+    weight: 1.5
+    keywords: [AI, LLM, LLMs, GPT, Claude, Gemini, Llama, Qwen, DeepSeek, Mistral,
+               transformer, transformers, "language model", "neural network", agent, agents,
+               "machine learning", "deep learning", inference, fine-tuning, RLHF, diffusion,
+               OpenAI, Anthropic, DeepMind, embedding, embeddings, 大模型, 人工智能]
+  - key: finance
+    name: 金融
+    weight: 1.5
+    keywords: [finance, financial, bank, banks, banking, "central bank", "the Fed", "Federal Reserve", FOMC, "interest rate",
+               "interest rates", inflation, bond, bonds, stock, stocks, equity, IPO, fintech,
+               payments, crypto, bitcoin, stablecoin, SEC, 金融, 银行, 利率, 股市]
+  - key: trading
+    name: 交易
+    weight: 1.5
+    keywords: [trading, trader, traders, quant, quantitative, "market making", "order book",
+               HFT, "high-frequency", hedge, "hedge fund", options, futures, derivatives,
+               portfolio, backtest, backtesting, arbitrage, 交易, 量化]
+
+# 防止信息茧房：每天至少这么多比例的名额留给侧重领域之外的高分内容
+min_outside_focus: 0.34

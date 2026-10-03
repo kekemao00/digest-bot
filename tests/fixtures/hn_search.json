@@ -1,0 +1,173 @@
+{
+ "hits": [
+  {
+   "objectID": "45000001",
+   "title": "Show HN: An open-source LLM inference server that runs on a laptop",
+   "url": "https://github.com/example/tiny-infer",
+   "author": "user1",
+   "points": 812,
+   "num_comments": 301,
+   "created_at_i": 1790991000,
+   "_tags": [
+    "story",
+    "author_user1",
+    "story_45000001"
+   ]
+  },
+  {
+   "objectID": "45000002",
+   "title": "The Fed signals two more interest rate cuts this year",
+   "url": "https://www.reuters.com/markets/fed-signals-cuts",
+   "author": "user2",
+   "points": 455,
+   "num_comments": 512,
+   "created_at_i": 1790976600,
+   "_tags": [
+    "story",
+    "author_user2",
+    "story_45000002"
+   ]
+  },
+  {
+   "objectID": "45000003",
+   "title": "How a market maker survived the flash crash",
+   "url": "https://www.example-quant.com/blog/flash-crash",
+   "author": "user3",
+   "points": 388,
+   "num_comments": 160,
+   "created_at_i": 1790998200,
+   "_tags": [
+    "story",
+    "author_user3",
+    "story_45000003"
+   ]
+  },
+  {
+   "objectID": "45000004",
+   "title": "Voyager 1 resumes sending science data after [fix]",
+   "url": "https://www.nasa.gov/voyager-1-update",
+   "author": "user4",
+   "points": 640,
+   "num_comments": 140,
+   "created_at_i": 1790962200,
+   "_tags": [
+    "story",
+    "author_user4",
+    "story_45000004"
+   ]
+  },
+  {
+   "objectID": "45000005",
+   "title": "A deep dive into the *new* Linux scheduler",
+   "url": "https://lwn.net/Articles/990001/",
+   "author": "user5",
+   "points": 302,
+   "num_comments": 88,
+   "created_at_i": 1791005400,
+   "_tags": [
+    "story",
+    "author_user5",
+    "story_45000005"
+   ]
+  },
+  {
+   "objectID": "45000006",
+   "title": "Ask HN: What's your favorite underrated book?",
+   "url": null,
+   "author": "user6",
+   "points": 150,
+   "num_comments": 420,
+   "created_at_i": 1790983800,
+   "_tags": [
+    "story",
+    "author_user6",
+    "story_45000006"
+   ]
+  },
+  {
+   "objectID": "45000007",
+   "title": "Ask HN: Who is hiring? (October 2026)",
+   "url": null,
+   "author": "user7",
+   "points": 600,
+   "num_comments": 900,
+   "created_at_i": 1790955000,
+   "_tags": [
+    "story",
+    "author_user7",
+    "story_45000007"
+   ]
+  },
+  {
+   "objectID": "45000008",
+   "title": "Rust 2.0 roadmap (draft)",
+   "url": "https://blog.rust-lang.org/2026/10/01/roadmap(draft).html",
+   "author": "user8",
+   "points": 520,
+   "num_comments": 260,
+   "created_at_i": 1790947800,
+   "_tags": [
+    "story",
+    "author_user8",
+    "story_45000008"
+   ]
+  },
+  {
+   "objectID": "45000009",
+   "title": "Claude and GPT compared on agent benchmarks",
+   "url": "https://www.example.org/agent-bench",
+   "author": "user9",
+   "points": 290,
+   "num_comments": 95,
+   "created_at_i": 1791009000,
+   "_tags": [
+    "story",
+    "author_user9",
+    "story_45000009"
+   ]
+  },
+  {
+   "objectID": "45000010",
+   "title": "Small startup postmortem",
+   "url": "https://example.com/postmortem",
+   "author": "user10",
+   "points": 80,
+   "num_comments": 30,
+   "created_at_i": 1791012600,
+   "_tags": [
+    "story",
+    "author_user10",
+    "story_45000010"
+   ]
+  },
+  {
+   "objectID": "45000011",
+   "title": "Quantitative trading with options: a primer",
+   "url": "https://example.net/options-primer",
+   "author": "user11",
+   "points": 240,
+   "num_comments": 70,
+   "created_at_i": 1790994600,
+   "_tags": [
+    "story",
+    "author_user11",
+    "story_45000011"
+   ]
+  },
+  {
+   "objectID": "45000012",
+   "title": "Fed up with slow builds, I rewrote our CI",
+   "url": "https://example.dev/ci",
+   "author": "user12",
+   "points": 260,
+   "num_comments": 110,
+   "created_at_i": 1791001800,
+   "_tags": [
+    "story",
+    "author_user12",
+    "story_45000012"
+   ]
+  }
+ ],
+ "nbHits": 12
+}
