@@ -11,6 +11,7 @@ import httpx
 
 from digest.channels.base import ChannelError
 from digest.channels.dingtalk import DingTalk
+from digest import history
 from digest.config import Config, load_config
 from digest.http import make_client
 from digest.llm import build_enricher
@@ -174,6 +175,11 @@ def main(argv: list[str] | None = None) -> int:
         log.info("已推送到钉钉")
         state.mark_sent(selection.items, now.date())
         state.save(now.date())
+        if args.archive_dir:
+            try:
+                history.update(args.archive_dir, selection, config, now.date())
+            except Exception as exc:  # 目录页只是方便回查，不能因此丢掉去重状态
+                log.warning("归档目录更新失败：%s", type(exc).__name__)
     return 0
 
 
