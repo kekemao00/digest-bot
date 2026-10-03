@@ -1,0 +1,9 @@
+[
+ {"paper": {"id": "2610.01234", "title": "Order Book Dynamics Under Latency Arbitrage", "summary": "We study high-frequency trading.",
+   "upvotes": 45, "publishedAt": "2026-10-02T17:59:59.000Z", "githubRepo": "https://github.com/quant/obd"},
+  "title": "Order Book Dynamics Under Latency Arbitrage", "numComments": 3},
+ {"paper": {"id": "2610.05555", "title": "Scaling Test-Time Compute for Agents", "summary": "Agents agents.",
+   "upvotes": 120, "publishedAt": "2026-10-02T10:00:00.000Z"}, "numComments": 9},
+ {"paper": {"id": "2610.09999", "title": "A Minor Result", "summary": "Small.", "upvotes": 3,
+   "publishedAt": "2026-10-02T10:00:00.000Z"}, "numComments": 0}
+]

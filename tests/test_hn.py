@@ -3,6 +3,7 @@ from __future__ import annotations
 import httpx
 
 from conftest import NOW
+from digest.state import State
 
 
 def test_query_uses_time_window(hn_source, hn_payload):
@@ -13,8 +14,8 @@ def test_query_uses_time_window(hn_source, hn_payload):
         return httpx.Response(200, json=hn_payload)
 
     with httpx.Client(transport=httpx.MockTransport(handler)) as client:
-        hn_source.fetch(client, NOW)
-    since = int(NOW.timestamp()) - 24 * 3600
+        hn_source.fetch(client, NOW, State(None))
+    since = int(NOW.timestamp()) - 30 * 3600
     assert seen["params"]["tags"] == "story"
     assert f"created_at_i>{since}" in seen["params"]["numericFilters"]
 

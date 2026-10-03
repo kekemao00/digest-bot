@@ -22,18 +22,40 @@ jobs:
   digest:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # 只有保存去重状态需要写权限，而且只写 state 分支
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+
+      # 第一次运行时 state 分支还不存在，这一步会失败，程序按第一次运行处理
+      - name: 读取去重状态
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        continue-on-error: true
+        with:
+          ref: state
+          path: .state
+          persist-credentials: false
+
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
       - run: python -m pip install --require-hashes -r requirements.txt
-      - run: python -m digest
+
+      - name: 生成并推送简报
+        run: python -m digest --state .state/state.json
         env:
           PYTHONPATH: src
           # 手动运行时按勾选决定；定时运行时 inputs 为空，即正式发送
           DIGEST_DRY_RUN: ${{ inputs.dry_run }}
           DINGTALK_WEBHOOK: ${{ secrets.DINGTALK_WEBHOOK }}
           DINGTALK_SECRET: ${{ secrets.DINGTALK_SECRET }}
+
+      - name: 保存去重状态
+        if: ${{ inputs.dry_run != true }}
+        run: scripts/save_state.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}

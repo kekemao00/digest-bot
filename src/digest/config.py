@@ -36,7 +36,7 @@ class Config:
     max_items: int
     archive_base_url: str
     sections: tuple[Section, ...]
-    sources: dict[str, dict[str, Any]]
+    sources: tuple[dict[str, Any], ...]
     focus: tuple[Focus, ...] = ()
     min_outside_focus: float = 0.0
     section_by_key: dict[str, Section] = field(init=False, repr=False)
@@ -61,10 +61,16 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
     if any(s.limit < 1 for s in sections):
         raise ConfigError("板块的 limit 至少为 1")
     section_keys = {s.key for s in sections}
-    sources = _require(raw, "sources", "sources.yaml") or {}
-    for name, opts in sources.items():
-        if opts.get("enabled", True) and opts.get("section") not in section_keys:
-            raise ConfigError(f"信息源 {name!r} 的 section 不在 sections 里")
+    sources = tuple(_require(raw, "sources", "sources.yaml") or ())
+    ids: set[str] = set()
+    for opts in sources:
+        source_id = str(_require(opts, "id", "sources 里的条目"))
+        if source_id in ids:
+            raise ConfigError(f"信息源 id {source_id!r} 重复")
+        ids.add(source_id)
+        _require(opts, "type", f"信息源 {source_id!r}")
+        if opts.get("section") not in section_keys:
+            raise ConfigError(f"信息源 {source_id!r} 的 section 不在 sections 里")
 
     focus: tuple[Focus, ...] = ()
     min_outside = 0.0

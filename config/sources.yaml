@@ -3,23 +3,200 @@
 digest:
   title: 每日简报
   timezone: Asia/Shanghai
-  # 全天总条数上限；各板块上限之和可以超过它，分数低的板块自动让位
+  # 全天总条数上限；各板块上限之和可以超过它，名次靠后的自动让位
   max_items: 15
   # 完整版归档的地址前缀（第四阶段启用），留空则钉钉消息里不放归档链接
   archive_base_url: ""
 
 # 板块按这里的顺序出现在消息里
 sections:
-  - key: tech
-    name: 科技热议
-    limit: 5
+  - {key: tech, name: 科技热议, limit: 5}
+  - {key: labs, name: 实验室动态, limit: 3}
+  - {key: papers, name: 论文, limit: 3}
+  - {key: journals, name: 期刊, limit: 3}
+  - {key: oss, name: 开源项目, limit: 3}
 
+# 信息源。顺序有意义：同一内容出现在多个来源时，保留靠前的那个，其他的显示为“另见”。
+# 通用字段：
+#   section       所属板块
+#   weight        同板块多个来源交替排列时的权重，默认 1，越大越靠前
+#   max_items     本来源每天最多入选几条
+#   exclude_title 标题命中这个正则就丢弃
+#   enabled       false 时停用
 sources:
-  hn:
-    enabled: true
+  # ---- 科技热议 ----
+  - id: hn
+    type: hackernews
     section: tech
-    # 只看这么多小时内发布的帖子
-    window_hours: 24
+    window_hours: 30
     # 满足任一条件即可入选
     min_points: 200
     min_comments: 100
+
+  - id: lobsters
+    type: lobsters
+    section: tech
+    window_hours: 30
+    min_score: 20
+    # HN 的量大得多，Lobsters 的第一条大约排在 HN 第二、三条之后
+    weight: 0.4
+
+  # ---- 实验室动态 ----
+  # 有 RSS 的用 feed；没有 RSS 的用 page：比较列表页，新出现的文章才算
+  - id: openai
+    type: feed
+    name: OpenAI
+    section: labs
+    url: https://openai.com/news/rss.xml
+    max_items: 1
+    # 客户案例不算实验室动态
+    exclude_title: "(?i)\\bwith OpenAI$|\\bscales\\b.*\\bOpenAI\\b"
+
+  - id: anthropic
+    type: page
+    name: Anthropic
+    section: labs
+    url: https://www.anthropic.com/news
+    link_pattern: "^https://www\\.anthropic\\.com/news/[a-z0-9-]+$"
+    max_items: 1
+    exclude_title: "(?i)\\bscales Claude\\b"
+
+  - id: deepmind
+    type: feed
+    name: Google DeepMind
+    section: labs
+    url: https://deepmind.google/blog/rss.xml
+    max_items: 1
+
+  - id: google-research
+    type: feed
+    name: Google Research
+    section: labs
+    url: https://research.google/blog/rss/
+    max_items: 1
+    weight: 0.8
+
+  - id: meta-ai
+    type: page
+    name: Meta AI
+    section: labs
+    url: https://ai.meta.com/blog/
+    link_pattern: "^https://ai\\.meta\\.com/blog/[a-z0-9-]+/?$"
+    max_items: 1
+
+  - id: microsoft-research
+    type: feed
+    name: Microsoft Research
+    section: labs
+    url: https://www.microsoft.com/en-us/research/feed/
+    max_items: 1
+    weight: 0.8
+
+  - id: apple-ml
+    type: feed
+    name: Apple ML
+    section: labs
+    url: https://machinelearning.apple.com/rss.xml
+    max_items: 1
+    weight: 0.6
+
+  - id: deepseek
+    type: page
+    name: DeepSeek
+    section: labs
+    url: https://api-docs.deepseek.com/news/news250120
+    link_pattern: "^https://api-docs\\.deepseek\\.com/news/news\\d+$"
+    max_items: 1
+
+  - id: mistral
+    type: page
+    name: Mistral AI
+    section: labs
+    url: https://mistral.ai/news
+    link_pattern: "^https://mistral\\.ai/news/[a-z0-9-]+/?$"
+    max_items: 1
+    weight: 0.8
+
+  - id: hf-blog
+    type: feed
+    name: Hugging Face 博客
+    section: labs
+    url: https://huggingface.co/blog/feed.xml
+    # 社区投稿很多，只取一条且排在后面
+    max_items: 1
+    weight: 0.4
+
+  # ---- 论文 ----
+  - id: hf-papers
+    type: hf_daily_papers
+    section: papers
+    min_upvotes: 20
+
+  - id: arxiv-qfin
+    type: feed
+    name: arXiv
+    section: papers
+    # 量化金融：交易与市场微观结构、统计金融、投资组合管理
+    url: https://export.arxiv.org/api/query?search_query=cat:q-fin.TR+OR+cat:q-fin.ST+OR+cat:q-fin.PM&sortBy=submittedDate&sortOrder=descending&max_results=50
+    window_hours: 72
+    # 没有热度数据，每天只取一篇（命中“交易”等侧重领域的优先），第三阶段改由大模型挑选
+    max_items: 1
+
+  # ---- 期刊 ----
+  # 只要研究论文：撤稿、更正等声明一律排除
+  # Nature 系列的文章编号以 s 开头的是研究论文，以 d 开头的是新闻和评论
+  - id: nature
+    type: feed
+    name: Nature
+    section: journals
+    url: https://www.nature.com/nature.rss
+    link_pattern: "/articles/s4"
+    exclude_title: &notices "(?i)^(retraction|correction|author correction|publisher correction|addendum|erratum|editorial expression of concern)\\b"
+    max_items: 2
+
+  - id: nature-mi
+    type: feed
+    name: Nature Machine Intelligence
+    section: journals
+    url: https://www.nature.com/natmachintell.rss
+    link_pattern: "/articles/s4"
+    exclude_title: *notices
+    max_items: 1
+    weight: 0.6
+
+  # Science 的订阅源是整期目录，含新闻和观点；按页数只留研究论文（在线论文页码以 e 开头）
+  - id: science
+    type: feed
+    name: Science
+    section: journals
+    url: https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=science
+    exclude_title: *notices
+    min_pages: 3
+    max_items: 2
+
+  # Cell 和 PNAS 的官方订阅源拦截自动请求，改用 Crossref 按 ISSN 查询
+  - id: cell
+    type: crossref
+    name: Cell
+    section: journals
+    issn: 0092-8674
+    exclude_title: *notices
+    max_items: 1
+    weight: 0.6
+
+  - id: pnas
+    type: crossref
+    name: PNAS
+    section: journals
+    issn: 0027-8424
+    # PNAS 每周发表上百篇，只要有摘要的研究论文，且排在最后
+    require_abstract: true
+    exclude_title: *notices
+    max_items: 1
+    weight: 0.4
+
+  # ---- 开源项目 ----
+  - id: github-trending
+    type: github_trending
+    section: oss
+    min_stars_today: 300

@@ -2,13 +2,25 @@
 
 每天定时推送一份精选资讯简报到钉钉：少而精，5 分钟内读完。运行在 GitHub Actions 上，不需要服务器。
 
-当前进度：第一阶段（Hacker News + 钉钉消息排版 + 加签发送）。Lobsters、GitHub Trending、实验室博客、论文和期刊在第二阶段接入，大模型一句话摘要在第三阶段，定时推送和归档在第四阶段。
+当前进度：第二阶段（全部信息源、跨来源合并、跨天去重）。大模型中文标题和一句话摘要在第三阶段，定时推送和归档在第四阶段。
+
+## 信息源
+
+| 板块 | 来源 | 入选条件（默认） |
+| --- | --- | --- |
+| 科技热议 | Hacker News、Lobsters | HN 分数 ≥ 200 或评论 ≥ 100；Lobsters 分数 ≥ 20；两边都有的合并为一条 |
+| 实验室动态 | OpenAI、Anthropic、Google DeepMind、Google Research、Meta AI、Microsoft Research、Apple ML、DeepSeek、Mistral AI、Hugging Face 博客 | 新发布的文章，每家每天最多 1 条，排除客户案例 |
+| 论文 | Hugging Face 每日论文、arXiv 量化金融（q-fin.TR / ST / PM） | HF 点赞 ≥ 20；arXiv 每天最多 1 条 |
+| 期刊 | Nature、Nature Machine Intelligence、Science、Cell、PNAS | 只取研究论文 |
+| 开源项目 | GitHub Trending（日榜） | 当日新增 star ≥ 300 |
+
+没有 RSS 的博客（Anthropic、Meta AI、DeepSeek、Mistral）通过比较列表页发现新文章：第一次运行只记录现有文章，从第二次起才会推送新文章。推送过的内容记在仓库的 `state` 分支里，30 天内不会重复出现。
 
 ## 它怎么选内容
 
-1. 每个信息源先过自己的门槛，例如 Hacker News 要求 24 小时内、分数 ≥ 200 或评论 ≥ 100。
+1. 每个信息源先过自己的门槛（见上表），30 天内推送过的内容直接跳过。
 2. 命中侧重领域（默认 AI/LLM、金融、交易）的条目排序时加权，但不会排除其他内容。
-3. 每个板块有条数上限，全天总数不超过 15 条。
+3. 同一板块的多个来源交替排列，每个来源、每个板块都有条数上限，全天总数不超过 15 条。
 4. 每天至少三分之一的名额留给侧重领域之外的高分内容，避免只看到一个方向。
 5. 没有达标内容的日子不推送。
 
@@ -29,7 +41,7 @@
 ## 安全
 
 - 密钥只存在 GitHub Secrets，代码会拒绝把消息发往 `oapi.dingtalk.com` 以外的地址，日志里不会出现 webhook 地址、token 或签名。
-- 工作流只有只读权限，只由手动或定时触发；外部提交的 PR 拿不到任何密钥。
+- 工作流默认只读；每日任务只在最后一步用 `GITHUB_TOKEN` 写 `state` 分支。只由手动或定时触发，外部提交的 PR 拿不到任何密钥。
 - 第三方 Action 按 commit SHA 固定版本，Python 依赖带哈希安装，Dependabot 每月检查更新。
 - 外部内容进入消息前会转义 Markdown，链接只允许 http(s)。
 
