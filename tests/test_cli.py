@@ -111,6 +111,9 @@ def test_archive_written_and_linked(network, tmp_path, monkeypatch):
     year, day = files[0].parent.name, files[0].stem
     link = f"https://github.com/owner/digest-bot/blob/state/archive/{year}/{day}.md"
     assert f"[完整版与落选条目]({link})" in network[0]["markdown"]["text"]
+    # 推送成功后更新归档目录页和逐条清单
+    assert f"]({year}/{day}.md)" in (tmp_path / "archive" / "README.md").read_text(encoding="utf-8")
+    assert (tmp_path / "archive" / "items.jsonl").read_text(encoding="utf-8").count("\n") >= 1
 
 
 def test_dry_run_writes_no_archive(network, tmp_path):
