@@ -17,14 +17,34 @@ if TYPE_CHECKING:
     from digest.state import State
 
 _TAGS = re.compile(r"<[^>]+>")
-# Nature 系列订阅源的描述只有“期刊名, Published online: 日期; doi:…”，不是摘要
-_BOILERPLATE = re.compile(r"^[^;]{0,80}Published online:[^;]*;\s*doi:\S+\s*", re.I)
+# 期刊订阅源描述里的固定前缀，不是摘要：
+#   Nature：“Nature, Published online: 02 October 2026; doi:10.1038/…”
+#   Science：“Science, Volume 394, Issue 6819, Page 15-15, October 2026.”
+_BOILERPLATE = re.compile(
+    r"^(?:[^;]{0,80}Published online:[^;]*;\s*doi:\S+|[^,]{0,60}, Volume \d+, Issue \d+, Page [^,]+, \w+ \d{4}\.)\s*",
+    re.I,
+)
+_PAGES = re.compile(r"\bPages? (e?[\w]+)(?:-(\w+))?", re.I)
+
+
+def page_count(text: str) -> int | None:
+    """从 “Page 15-15” 或 “Page eadk1234” 里估算篇幅；e 开头的是在线发表的研究论文，按足够长处理。"""
+    m = _PAGES.search(text)
+    if not m:
+        return None
+    first, last = m.group(1), m.group(2)
+    if first.lower().startswith("e"):
+        return 99
+    if first.isdigit() and last and last.isdigit():
+        return int(last) - int(first) + 1
+    return 1
 # 只取摘要的前一部分，摘要只用于关键词匹配和（第三阶段）大模型输入
 MAX_SUMMARY = 1500
 
 
-def strip_html(text: str) -> str:
-    return clean(html.unescape(_TAGS.sub(" ", text)))
+def strip_html(text: str, sep: str = " ") -> str:
+    """去掉 HTML 标签。标题里的 <i>、<sub> 等行内标签用 sep="" 去掉，避免把一个词拆开。"""
+    return clean(html.unescape(_TAGS.sub(sep, text)))
 
 
 def entry_time(entry: Any) -> datetime | None:
@@ -45,21 +65,28 @@ class Feed(Source):
         resp.raise_for_status()
         # 先由 httpx 下载（统一超时和重试），再交给 feedparser 解析内容
         parsed = feedparser.parse(resp.content)
-        if parsed.bozo and not parsed.entries:
-            raise ValueError(f"订阅源解析失败：{type(parsed.bozo_exception).__name__}")
+        if not parsed.entries:
+            # 被拦截时常常返回 200 的 HTML 页面，解析出来是空的，要报出来而不是当作“今天没有新内容”
+            detail = type(parsed.bozo_exception).__name__ if parsed.bozo else "没有任何条目"
+            raise ValueError(f"订阅源为空或被拦截（{detail}）")
+        min_pages = int(self.options.get("min_pages", 0))
         # 期刊等只给日期不给时间，时间窗放宽到 3 天；推送过的内容由跨天去重挡掉
         since = now - timedelta(hours=float(self.options.get("window_hours", 72)))
         link_pattern = re.compile(self.options["link_pattern"]) if self.options.get("link_pattern") else None
         items = []
         for entry in parsed.entries:
             link = entry.get("link") or ""
-            title = clean(html.unescape(entry.get("title") or ""))
+            # 期刊标题里常带 <i> 等斜体标签
+            title = strip_html(entry.get("title") or "", sep="")
             published = entry_time(entry)
             if not link or not title or not published or published < since:
                 continue
             if link_pattern and not link_pattern.search(link):
                 continue
-            summary = _BOILERPLATE.sub("", strip_html(entry.get("summary") or ""))[:MAX_SUMMARY] or None
+            raw_summary = strip_html(entry.get("summary") or "")
+            if min_pages and (pages := page_count(raw_summary)) is not None and pages < min_pages:
+                continue  # 新闻、观点等短文章
+            summary = _BOILERPLATE.sub("", raw_summary)[:MAX_SUMMARY] or None
             items.append(
                 self.item(
                     id=entry.get("id") or link,

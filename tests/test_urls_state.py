@@ -37,3 +37,18 @@ def test_missing_or_foreign_state_is_first_run(tmp_path):
     path = tmp_path / "old.json"
     path.write_text('{"version": 999, "sent": {"x": "2026-10-01"}}', encoding="utf-8")
     assert State(path).sent == {}
+
+
+def test_blurb_rules():
+    base = item("https://a.test")
+    base.title = "Toward provably private learning"
+    base.summary = "Mobile Systems"
+    assert base.blurb is None  # 太短，多半是分类标签
+    base.summary = "Toward provably private learning"
+    assert base.blurb is None
+    base.summary = "A toolkit for building LLM agents and tools, with batteries included."
+    assert base.blurb == base.summary
+    base.summary = "x" * 200
+    assert base.blurb is None  # 长摘要不进消息
+    base.one_liner = "一句话"
+    assert base.blurb == "一句话"

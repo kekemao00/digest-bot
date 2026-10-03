@@ -24,17 +24,14 @@
 #### 论文
 
 **6. [Scaling Test-Time Compute for Agents](https://arxiv.org/abs/2610.05555)**  
-Agents agents.  
 <font color=#999999>HF 论文 120 赞 · [9 条讨论](https://huggingface.co/papers/2610.05555)</font>
 
 **7. [Order Book Dynamics Under Latency Arbitrage](https://arxiv.org/abs/2610.01234)**  
-We study high-frequency trading.  
 <font color=#999999>HF 论文 45 赞 · [3 条讨论](https://huggingface.co/papers/2610.01234) · [代码](https://github.com/quant/obd)</font>
 
 #### 期刊
 
 **8. [A language model that discovers trading strategies](https://www.nature.com/articles/s41586-026-09912-1)**  
-We show that...  
 <font color=#999999>Nature</font>
 
 **9. [Ancient DNA reveals early farming in the Sahara](https://www.nature.com/articles/s41586-026-09900-5)**  

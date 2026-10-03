@@ -1,0 +1,9 @@
+{"status": "ok", "message-type": "work-list", "message": {"items": [
+ {"DOI": "10.1073/pnas.2601234123", "type": "journal-article", "title": ["Liquidity spirals in <i>algorithmic</i> markets"],
+  "published-online": {"date-parts": [[2026, 10, 2]]}, "published": {"date-parts": [[2026, 10, 2]]},
+  "abstract": "<jats:title>Abstract</jats:title><jats:p>We show how algorithmic traders amplify liquidity shocks.</jats:p>"},
+ {"DOI": "10.1073/pnas.2609999123", "type": "journal-article", "title": ["Reply to Smith: on liquidity"],
+  "published": {"date-parts": [[2026, 10, 2]]}},
+ {"DOI": "10.1073/pnas.2600000123", "type": "journal-article", "title": [],
+  "published": {"date-parts": [[2026, 10, 1]]}, "abstract": "<jats:p>No title.</jats:p>"}
+]}}

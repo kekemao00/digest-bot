@@ -124,3 +124,47 @@ def test_page_source_reports_new_articles(config):
     # 客户案例被排除规则挡掉
     customer = source.item(id="x", title="Barclays scales Claude", url="https://x.test", published_at=NOW)
     assert source.reject_reason(customer) == "标题命中排除规则"
+
+
+def test_science_keeps_research_articles_only(config):
+    source = Feed(source_options(config, "science"))
+    items = fetch_with(source, fixture_text("science.rss"))
+    assert [i.title for i in items] == ["A topological p-wave superconductor", "Market crashes and the speed of trading"]
+    assert items[0].summary == "We report a superconductor that is topological in nature and robust."
+    assert items[1].summary is None
+
+
+def test_empty_feed_is_reported(config):
+    source = Feed(source_options(config, "nature"))
+    try:
+        fetch_with(source, "<html><body>Access denied</body></html>")
+    except ValueError as exc:
+        assert "被拦截" in str(exc)
+    else:
+        raise AssertionError("应当报错")
+
+
+def test_crossref_requires_abstract(config):
+    from digest.sources.crossref import Crossref
+
+    source = Crossref(source_options(config, "pnas"))
+    seen = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["path"] = request.url.path
+        seen["filter"] = request.url.params["filter"]
+        return httpx.Response(200, text=fixture_text("crossref_pnas.json"))
+
+    items = fetch_with(source, handler)
+    assert seen["path"] == "/journals/0027-8424/works"
+    assert seen["filter"] == "from-pub-date:2026-09-30,type:journal-article"
+    assert len(items) == 1
+    assert items[0].title == "Liquidity spirals in algorithmic markets"
+    assert items[0].url == "https://doi.org/10.1073/pnas.2601234123"
+    assert items[0].summary == "We show how algorithmic traders amplify liquidity shocks."
+
+
+def test_journal_notices_excluded(config):
+    source = Feed(source_options(config, "nature"))
+    notice = source.item(id="n", title="Retraction Note: Something", url="https://x.test", published_at=NOW)
+    assert source.reject_reason(notice) == "标题命中排除规则"

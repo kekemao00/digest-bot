@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from digest.sources.base import Source
+from digest.sources.crossref import Crossref
 from digest.sources.feeds import Feed
 from digest.sources.github_trending import GitHubTrending
 from digest.sources.hf_papers import HFDailyPapers
@@ -11,7 +12,7 @@ from digest.sources.lobsters import Lobsters
 from digest.sources.pages import NewsPage
 
 REGISTRY: dict[str, type[Source]] = {
-    cls.type: cls for cls in (HackerNews, Lobsters, GitHubTrending, HFDailyPapers, Feed, NewsPage)
+    cls.type: cls for cls in (HackerNews, Lobsters, GitHubTrending, HFDailyPapers, Feed, NewsPage, Crossref)
 }
 
 

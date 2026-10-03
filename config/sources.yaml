@@ -139,11 +139,11 @@ sources:
     # 量化金融：交易与市场微观结构、统计金融、投资组合管理
     url: https://export.arxiv.org/api/query?search_query=cat:q-fin.TR+OR+cat:q-fin.ST+OR+cat:q-fin.PM&sortBy=submittedDate&sortOrder=descending&max_results=50
     window_hours: 72
-    # 没有热度数据，第三阶段由大模型打分后再放开
+    # 没有热度数据，每天只取一篇（命中“交易”等侧重领域的优先），第三阶段改由大模型挑选
     max_items: 1
-    weight: 0.5
 
   # ---- 期刊 ----
+  # 只要研究论文：撤稿、更正等声明一律排除
   # Nature 系列的文章编号以 s 开头的是研究论文，以 d 开头的是新闻和评论
   - id: nature
     type: feed
@@ -151,6 +151,7 @@ sources:
     section: journals
     url: https://www.nature.com/nature.rss
     link_pattern: "/articles/s4"
+    exclude_title: &notices "(?i)^(retraction|correction|author correction|publisher correction|addendum|erratum|editorial expression of concern)\\b"
     max_items: 2
 
   - id: nature-mi
@@ -159,29 +160,38 @@ sources:
     section: journals
     url: https://www.nature.com/natmachintell.rss
     link_pattern: "/articles/s4"
+    exclude_title: *notices
     max_items: 1
     weight: 0.6
 
+  # Science 的订阅源是整期目录，含新闻和观点；按页数只留研究论文（在线论文页码以 e 开头）
   - id: science
     type: feed
     name: Science
     section: journals
     url: https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=science
+    exclude_title: *notices
+    min_pages: 3
     max_items: 2
 
+  # Cell 和 PNAS 的官方订阅源拦截自动请求，改用 Crossref 按 ISSN 查询
   - id: cell
-    type: feed
+    type: crossref
     name: Cell
     section: journals
-    url: https://www.cell.com/cell/inpress.rss
+    issn: 0092-8674
+    exclude_title: *notices
     max_items: 1
     weight: 0.6
 
   - id: pnas
-    type: feed
+    type: crossref
     name: PNAS
     section: journals
-    url: https://www.pnas.org/action/showFeed?type=etoc&feed=rss&jc=pnas
+    issn: 0027-8424
+    # PNAS 每周发表上百篇，只要有摘要的研究论文，且排在最后
+    require_abstract: true
+    exclude_title: *notices
     max_items: 1
     weight: 0.4
 

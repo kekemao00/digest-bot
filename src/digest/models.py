@@ -62,6 +62,8 @@ class Item:
         """标题下的一行说明：优先用一句话摘要；没有时用来源自带的短简介（长摘要不放进消息）。"""
         if self.one_liner:
             return self.one_liner
-        if self.summary and len(self.summary) <= 160:
-            return self.summary
+        summary = (self.summary or "").strip()
+        # 太短的多半是分类标签（如 “Mobile Systems”），和标题相同的没有信息量
+        if 40 <= len(summary) <= 160 and summary.casefold() != self.title.strip().casefold():
+            return summary
         return None

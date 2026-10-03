@@ -18,7 +18,8 @@ PAGE = "https://github.com/trending"
 
 _ARTICLE = re.compile(r'<article class="Box-row">(.*?)</article>', re.S)
 _REPO = re.compile(r'<h2[^>]*>\s*<a[^>]*href="/([\w.-]+/[\w.-]+)"', re.S)
-_DESC = re.compile(r"<p[^>]*>(.*?)</p>", re.S)
+# 仓库简介所在的段落；同一块里还有赞助按钮等其他段落，不能只按 <p> 匹配
+_DESC = re.compile(r'<p class="col-9[^"]*">(.*?)</p>', re.S)
 _LANG = re.compile(r'itemprop="programmingLanguage">([^<]+)<')
 _STARS = re.compile(r'href="/[\w.-]+/[\w.-]+/stargazers"[^>]*>.*?([\d,]+)\s*</a>', re.S)
 _TODAY = re.compile(r"([\d,]+)\s+stars\s+(?:today|this week|this month)")
