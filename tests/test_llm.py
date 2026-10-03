@@ -222,3 +222,12 @@ def test_unexpected_output_never_raises(config):
     tool, _ = enricher(config, lambda r: llm_reply('{"items": [{"id": "1", "score": NaN}, {"id": {"x": 1}}]}'))
     assert tool.review([item]) == {}
     assert item.quality is None
+
+
+def test_spacing_and_trailing_period(config):
+    item = make_item(1, "Some title")
+    reply = {"items": [{"id": "1", "title_zh": "Redis作者推出ds4：本地运行LLM", "summary": "新闻使Qwen下单占比变化48个百分点。"}]}
+    tool, _ = enricher(config, lambda r: llm_reply(reply))
+    tool.review([item])
+    assert item.title_zh == "Redis 作者推出 ds4：本地运行 LLM"
+    assert item.one_liner == "新闻使 Qwen 下单占比变化 48 个百分点"

@@ -103,6 +103,10 @@ def main(argv: list[str] | None = None) -> int:
         if enricher and selection.items:
             selection.highlights = enricher.highlights(selection.items)
         llm_status = enricher.status() if enricher else "大模型：未启用，使用原文标题和简介"
+        for rejected in selection.rejected:
+            if rejected.reason.startswith("大模型"):
+                # 便于按日志调整评分门槛；标题本身是公开内容
+                log.info("大模型淘汰：%s（%s）", rejected.item.title[:80], rejected.reason)
         log.info("入选 %d 条，落选 %d 条；%s", len(selection.items), len(selection.rejected), llm_status)
         message = dingtalk.render(selection, config, now)
         full = archive.render(selection, config, now)

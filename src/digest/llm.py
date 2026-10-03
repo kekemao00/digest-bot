@@ -40,6 +40,9 @@ LOOPBACK = {"localhost", "127.0.0.1", "::1"}
 
 _THINK = re.compile(r"<think>.*?</think>", re.S | re.I)
 _URL = re.compile(r"(?:https?://|www\.)\S+", re.I)
+_CJK = "\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff"
+_CJK_LATIN = re.compile(rf"([{_CJK}])([A-Za-z0-9])")
+_LATIN_CJK = re.compile(rf"([A-Za-z0-9%])([{_CJK}])")
 
 
 class LLMError(Exception):
@@ -161,11 +164,19 @@ def parse_json(text: str) -> Any:
     return json.loads(text[start : end + 1])
 
 
-def clean_output(value: Any, limit: int) -> str | None:
-    """模型写的文本只当普通文字用：去掉链接、换行和包裹的引号，截断到上限。"""
+def space_cjk(text: str) -> str:
+    """中文与英文、数字之间加空格。模型有时加有时不加，统一后整份简报看起来一致。"""
+    return _LATIN_CJK.sub(r"\1 \2", _CJK_LATIN.sub(r"\1 \2", text))
+
+
+def clean_output(value: Any, limit: int, sentence: bool = False) -> str | None:
+    """模型写的文本只当普通文字用：去掉链接、换行和包裹的引号，统一中英文间距，截断到上限。
+    sentence 为 True 时去掉句末的句号，和标题一样不带标点收尾。"""
     if not isinstance(value, str):
         return None
-    text = clean(_URL.sub("", value)).strip(" \"'“”「」")
+    text = space_cjk(clean(_URL.sub("", value)).strip(" \"'“”「」"))
+    if sentence:
+        text = text.removesuffix("。").rstrip()
     return truncate(text, limit) if text else None
 
 
@@ -223,6 +234,8 @@ class Enricher:
                 "section": self.section_names.get(item.section, ""),
                 "title": item.title_zh or item.title,
                 "summary": item.one_liner or "",
+                "kind": item.kind or "",
+                "score": item.quality,
             }
             for n, item in enumerate(items, 1)
         ]
@@ -241,7 +254,7 @@ class Enricher:
             if not isinstance(entry, dict):
                 continue
             n = entry.get("n")
-            text = clean_output(entry.get("text"), 40)
+            text = clean_output(entry.get("text"), 40, sentence=True)
             if isinstance(n, int) and not isinstance(n, bool) and 1 <= n <= len(items) and n not in used and text:
                 used.add(n)
                 result.append(Highlight(items[n - 1].key, text))
@@ -297,7 +310,7 @@ class Enricher:
         # 原标题本身是中文或仓库名时，模型会留空或原样返回，这时不另设中文标题
         if title_zh and title_zh.casefold() != item.title.strip().casefold():
             item.title_zh = title_zh
-        item.one_liner = clean_output(entry.get("summary"), 80)
+        item.one_liner = clean_output(entry.get("summary"), 80, sentence=True)
         kind = entry.get("kind")
         item.kind = kind if kind in KINDS else None
         score = entry.get("score")
