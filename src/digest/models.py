@@ -7,6 +7,20 @@ from urllib.parse import urlsplit
 from digest.urls import canonical_url
 
 
+# 领域标签：名称 → emoji。由大模型给每条选一个，消息里显示在标题后，顶部统计今天的分布。
+# “其他”不显示标签，只计入分布
+TOPICS: dict[str, str] = {
+    "AI": "🤖",
+    "金融": "💹",
+    "软件": "💻",
+    "硬件": "🔧",
+    "安全": "🔒",
+    "科学": "🔬",
+    "社会": "🏛️",
+    "其他": "",
+}
+
+
 @dataclass
 class Also:
     """同一内容在其他来源的出现，例如 HN 和 Lobsters 都在讨论同一篇文章。"""
@@ -37,8 +51,7 @@ class Item:
     discussion_url: str | None = None
     show_domain: bool = False  # 聚合站（HN、Lobsters）的条目需要显示原文域名
     score: int = 0  # 来源自己的热度，如 HN 分数
-    score_unit: str = "分"
-    score_text: str | None = None  # 自定义热度文案，如 GitHub 的“今日 +878 star”
+    score_text: str | None = None  # 自定义热度文案，如 GitHub 的“今日 +878”
     comments: int = 0
     summary: str | None = None  # 来源提供的摘要（RSS 描述、论文 abstract、仓库简介）
     extras: list[str] = field(default_factory=list)  # 额外的元信息，如编程语言、arXiv 分类
@@ -51,6 +64,7 @@ class Item:
     quality: int | None = None  # 信息价值评分 0–10，与侧重领域无关
     kind: str | None = None  # 内容类型，如研究、发布、观点
     subject: str | None = None  # 论文和期刊的学科，如“神经科学”
+    topic: str | None = None  # 领域标签，TOPICS 里的一个
     llm_focus: list[str] | None = None  # 大模型判断的侧重领域，有它时代替关键词匹配
     focus: list[str] = field(default_factory=list)  # 命中的侧重领域 key
     rank: float = 0.0  # 排序分，由筛选流程计算

@@ -33,7 +33,7 @@ def test_github_trending(config):
     kit = items[0]
     assert kit.url == "https://github.com/acme/agent-kit"
     assert kit.summary == "A toolkit for building LLM agents & tools, with batteries included."
-    assert kit.extras == ["Python", "12,345 star"]
+    assert kit.extras == ["Python", "⭐ 12,345"]
     assert kit.score == 1024 and kit.score_text == "今日 +1,024"
     assert source.reject_reason(kit) is None
     assert "热度不足" in source.reject_reason(items[1])
@@ -85,7 +85,7 @@ def test_hf_papers(config):
     assert first.url == "https://arxiv.org/abs/2610.01234"
     assert first.discussion_url == "https://huggingface.co/papers/2610.01234"
     assert first.links == [("代码", "https://github.com/quant/obd")]
-    assert first.score == 45 and first.score_unit == "赞"
+    assert first.score == 45
     assert "热度不足" in source.reject_reason(items[2])
 
 

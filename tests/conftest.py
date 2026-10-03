@@ -77,7 +77,8 @@ def fake_llm(request: httpx.Request) -> httpx.Response:
         title = e["title"]
         kind, score = ("观点", 3) if title.startswith("Ask HN") else ("新闻", 7)
         focus = ["ai"] if "LLM" in title or "Claude" in title else []
+        topic = "AI" if focus else "金融" if "Fed" in title else "科学" if "Voyager" in title else "软件"
         result.append({"id": e["id"], "title_zh": f"中文：{title[:12]}", "summary": f"一句话说明 {e['id']}",
-                       "kind": kind, "score": score, "focus": focus, "subject": ""})
+                       "kind": kind, "score": score, "focus": focus, "topic": topic, "subject": ""})
     # 推理模型常见的输出形态：先有思考段，再用代码块包住 JSON
     return llm_reply("<think>先看看这些条目</think>\n```json\n" + json.dumps({"items": result}, ensure_ascii=False) + "\n```")

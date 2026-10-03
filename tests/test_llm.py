@@ -77,8 +77,8 @@ def test_review_enriches_and_rejects(config):
     first = items[0]
     assert first.title_zh == "中文：Show HN: An"
     assert first.one_liner == "一句话说明 1"
-    assert (first.kind, first.quality, first.llm_focus) == ("新闻", 7, ["ai"])
-    assert items[2].llm_focus == []
+    assert (first.kind, first.quality, first.llm_focus, first.topic) == ("新闻", 7, ["ai"], "AI")
+    assert items[2].llm_focus == [] and items[2].topic == "软件"
 
     request = requests[0]
     assert request.headers["Authorization"] == f"Bearer {KEY}"
@@ -100,7 +100,7 @@ def test_model_output_is_sanitized(config):
     long_summary = "很长的一句话" * 30
     reply = {"items": [
         {"id": "1", "title_zh": "点击\nhttps://evil.example/x 领取 www.evil.example 奖励", "summary": long_summary,
-         "kind": "胡编的类型", "score": 12, "focus": ["ai", "crypto"], "subject": "  "},
+         "kind": "胡编的类型", "score": 12, "focus": ["ai", "crypto"], "topic": "<b>AI</b>", "subject": "  "},
         {"id": "99", "title_zh": "不存在的条目"},
         "不是对象",
     ]}
@@ -109,7 +109,7 @@ def test_model_output_is_sanitized(config):
     assert item.title_zh == "点击 领取 奖励"
     assert "\n" not in item.title_zh and "http" not in item.title_zh
     assert len(item.one_liner) == 80 and item.one_liner.endswith("…")
-    assert item.kind is None
+    assert item.kind is None and item.topic is None
     assert item.quality == 10
     assert item.llm_focus == ["ai"]
     assert item.subject is None

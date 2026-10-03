@@ -6,7 +6,7 @@ from digest.config import Config
 from digest.interests import InterestMatcher
 from digest.models import Item
 from digest.pipeline import Selection
-from digest.render.dingtalk import meta_parts, numbering
+from digest.render.dingtalk import meta_parts, numbering, section_heading, topic_summary, topic_tag
 from digest.render.text import WEEKDAYS, md_text, safe_url
 
 # 落选条目只列分数最高的这么多条，太长就没人看了
@@ -19,7 +19,7 @@ def _link(text: str, url: str | None) -> str:
 
 
 def _meta(item: Item, matcher: InterestMatcher) -> str:
-    parts = meta_parts(item)
+    parts = meta_parts(item, original=True)
     if names := matcher.names(item.focus):
         parts.append("侧重：" + "、".join(names))
     if item.quality is not None:
@@ -36,6 +36,8 @@ def render(selection: Selection, config: Config, now: datetime, status: str | No
         "",
         f"> 生成于 {now:%H:%M}（{config.timezone}）· 候选 {selection.candidates} 条 · 入选 {len(items)} 条",
     ]
+    if topics := topic_summary(items):
+        lines[-1] += f"｜{topics}"
     if status:
         lines[-1] += "  "  # 引用块里的硬换行，否则两行会连成一段
         lines.append(f"> {md_text(status)}")
@@ -46,10 +48,11 @@ def render(selection: Selection, config: Config, now: datetime, status: str | No
         lines += [f"{n}. {md_text(h.text)}（第 {numbers[h.key]} 条）" for n, h in enumerate(highlights, 1)]
     number = 0
     for section, section_items in selection.sections:
-        lines += ["", f"## {section.name}", ""]
+        lines += ["", f"## {section_heading(section)}", ""]
         for item in section_items:
             number += 1
-            lines.append(f"{number}. **{_link(item.title_zh or item.title, item.url)}**  ")
+            tag = f" {tag}" if (tag := topic_tag(item)) else ""
+            lines.append(f"{number}. **{_link(item.title_zh or item.title, item.url)}**{tag}  ")
             if item.blurb:
                 lines.append(f"   {md_text(item.blurb)}  ")
             lines.append(f"   {_meta(item, matcher)}")

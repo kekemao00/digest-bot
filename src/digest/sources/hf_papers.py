@@ -46,7 +46,6 @@ class HFDailyPapers(Source):
             discussion_url=f"https://huggingface.co/papers/{arxiv_id}",
             published_at=datetime.fromisoformat(published.replace("Z", "+00:00")) if published else datetime.now(timezone.utc),
             score=int(paper.get("upvotes") or entry.get("upvotes") or 0),
-            score_unit="赞",
             comments=int(entry.get("numComments") or 0),
             summary=clean(paper.get("summary") or entry.get("summary") or "")[:1500] or None,
             links=links,

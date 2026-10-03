@@ -9,13 +9,13 @@ digest:
   # 即 https://github.com/<仓库>/blob/state/archive/YYYY/MM-DD.md
   archive_base_url: ""
 
-# 板块按这里的顺序出现在消息里
+# 板块按这里的顺序出现在消息里；icon 显示在板块标题前
 sections:
-  - {key: tech, name: 科技热议, limit: 5}
-  - {key: labs, name: 实验室动态, limit: 3}
-  - {key: papers, name: 论文, limit: 3}
-  - {key: journals, name: 期刊, limit: 3}
-  - {key: oss, name: 开源项目, limit: 3}
+  - {key: tech, name: 科技热议, icon: 🗞️, limit: 5}
+  - {key: labs, name: 实验室动态, icon: 🧪, limit: 3}
+  - {key: papers, name: 论文, icon: 📄, limit: 3}
+  - {key: journals, name: 期刊, icon: 📚, limit: 3}
+  - {key: oss, name: 开源项目, icon: 🛠️, limit: 3}
 
 # 信息源。顺序有意义：同一内容出现在多个来源时，保留靠前的那个，其他的显示为“另见”。
 # 通用字段：
@@ -28,6 +28,7 @@ sources:
   # ---- 科技热议 ----
   - id: hn
     type: hackernews
+    name: HN
     section: tech
     window_hours: 30
     # 满足任一条件即可入选
