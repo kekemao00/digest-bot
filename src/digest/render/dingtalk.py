@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime
 
 from digest.config import Config, Section
-from digest.models import Highlight, Item
+from digest.models import TOPICS, Highlight, Item
 from digest.pipeline import Selection
 from digest.render.text import count_label, date_label, md_text, safe_url, truncate
 
@@ -32,24 +33,24 @@ def reading_minutes(items: list[Item]) -> int:
     return max(1, round(chars / 300 + len(items) * 0.15))
 
 
-def meta_parts(item: Item) -> list[str]:
-    """标题下灰色小字的各个部分，钉钉版和完整版共用。"""
+def meta_parts(item: Item, original: bool = False) -> list[str]:
+    """标题下灰色小字的各个部分，钉钉版和完整版共用：热度和讨论在前，用图标代替文字，手机上一行放得下。
+
+    original 为真时先列出原标题（完整版用来核对译文；钉钉消息里不放，省一行）。
+    """
     parts: list[str] = []
-    if item.title_zh:
-        parts.append(md_text(truncate(item.title, 60)))  # 原标题方便核对译文，太长会在手机上占好几行
+    if original and item.title_zh:
+        parts.append(md_text(item.title))
+    if heat := item.score_text or (count_label(item.score) if item.score else None):
+        parts.append(f"🔥 {md_text(heat)}")
+    if item.comments and item.discussion_url and (url := safe_url(item.discussion_url)):
+        parts.append(f"[💬 {count_label(item.comments)}]({url})")
     if item.domain:
         parts.append(md_text(item.domain))
-    if item.score_text:
-        parts.append(f"{item.source_name} {md_text(item.score_text)}")
-    elif item.score:
-        parts.append(f"{item.source_name} {count_label(item.score)} {item.score_unit}")
-    else:
-        parts.append(item.source_name)
+    parts.append(md_text(item.source_name))
     parts += [md_text(extra) for extra in item.extras]
     if item.subject and not item.extras:
         parts.append(md_text(item.subject))
-    if item.comments and item.discussion_url and (url := safe_url(item.discussion_url)):
-        parts.append(f"[{count_label(item.comments)} 条讨论]({url})")
     parts += [f"[{md_text(label)}]({url})" for label, link in item.links if (url := safe_url(link))]
     also = [f"[{md_text(a.source_name)}]({url})" for a in item.also if (url := safe_url(a.url))]
     if also:
@@ -57,10 +58,33 @@ def meta_parts(item: Item) -> list[str]:
     return parts
 
 
+def topic_tag(item: Item) -> str | None:
+    """标题后的领域小标签，如“🤖 AI”。“其他”和没有判断出领域的不显示。"""
+    emoji = TOPICS.get(item.topic or "")
+    return f"{emoji} {item.topic}" if emoji else None
+
+
+def topic_summary(items: list[Item]) -> str | None:
+    """今天各领域的条数，如“AI 5 · 科学 4 · 金融 3”，多的在前，“其他”放最后。没有大模型时不显示。"""
+    if not any(item.topic for item in items):
+        return None
+    counts = Counter(item.topic or "其他" for item in items)
+    order = list(TOPICS)
+    ranked = sorted(counts, key=lambda t: (t == "其他", -counts[t], order.index(t)))
+    return " · ".join(f"{t} {counts[t]}" for t in ranked)
+
+
+def section_heading(section: Section) -> str:
+    return f"{section.icon} {section.name}" if section.icon else section.name
+
+
 def render_item(number: int, item: Item) -> str:
     title = md_text(item.title_zh or item.title)
     url = safe_url(item.url)
-    lines = [f"**{number}. [{title}]({url})**" if url else f"**{number}. {title}**"]
+    first = f"**{number}. [{title}]({url})**" if url else f"**{number}. {title}**"
+    if tag := topic_tag(item):
+        first += " " + grey(tag)
+    lines = [first]
     if item.blurb:
         lines.append(md_text(truncate(item.blurb, 120)))
     lines.append(grey(" · ".join(meta_parts(item))))
@@ -89,15 +113,15 @@ def _compose(
     archive_url: str | None,
 ) -> str:
     items = [item for _, section_items in sections for item in section_items]
-    lines = [
-        f"### {config.title} · {date_label(now)}",
-        grey(f"{len(items)} 条 · 约 {reading_minutes(items)} 分钟"),
-    ]
+    overview = f"{len(items)} 条 · 约 {reading_minutes(items)} 分钟"
+    if topics := topic_summary(items):
+        overview += f"｜{topics}"
+    lines = [f"### {config.title} · {date_label(now)}", grey(overview)]
     if block := render_highlights(highlights, items):
         lines.append(block)
     number = 0
     for section, section_items in sections:
-        lines.append(f"#### {section.name}")
+        lines.append(f"#### {section_heading(section)}")
         for item in section_items:
             number += 1
             lines.append(render_item(number, item))

@@ -58,7 +58,7 @@ class GitHubTrending(Source):
         stars = _STARS.search(block)
         extras = [lang.group(1).strip()] if lang else []
         if stars:
-            extras.append(f"{_int(stars.group(1)):,} star")
+            extras.append(f"⭐ {_int(stars.group(1)):,}")
         gained = _int(today.group(1))
         return self.item(
             id=name.lower(),

@@ -19,6 +19,7 @@ class Section:
     key: str
     name: str
     limit: int
+    icon: str = ""  # 板块标题前的 emoji
 
 
 @dataclass(frozen=True)
@@ -70,7 +71,7 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
     raw = yaml.safe_load((config_dir / "sources.yaml").read_text(encoding="utf-8")) or {}
     digest = _require(raw, "digest", "sources.yaml")
     sections = tuple(
-        Section(key=str(s["key"]), name=str(s["name"]), limit=int(s["limit"]))
+        Section(key=str(s["key"]), name=str(s["name"]), limit=int(s["limit"]), icon=str(s.get("icon") or ""))
         for s in _require(raw, "sections", "sources.yaml")
     )
     if any(s.limit < 1 for s in sections):

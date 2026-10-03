@@ -97,3 +97,16 @@ def test_highlights_follow_trimming(config, hn_source, hn_items, monkeypatch):
     message = dingtalk.render(selection, config, NOW)
     # 最后一条被裁掉后，指向它的要点也不再出现
     assert "指向最后一条的要点" not in message.text + message.title
+
+
+def test_topic_tags_and_summary(hn_items):
+    a, b, c, d = hn_items[:4]
+    a.topic, b.topic, c.topic, d.topic = "金融", "AI", "其他", "AI"
+    assert dingtalk.topic_tag(b) == "🤖 AI"
+    assert dingtalk.topic_tag(c) is None  # “其他”不显示标签
+    # 多的在前，同样多时按 TOPICS 的顺序，“其他”和没判断出领域的放最后
+    hn_items[4].topic = None
+    assert dingtalk.topic_summary(hn_items[:5]) == "AI 2 · 金融 1 · 其他 2"
+    for item in hn_items:
+        item.topic = None
+    assert dingtalk.topic_summary(hn_items) is None

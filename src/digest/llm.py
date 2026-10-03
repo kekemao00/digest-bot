@@ -23,7 +23,7 @@ from urllib.parse import urlsplit, urlunsplit
 import httpx
 
 from digest.config import ROOT, Config, LLMSettings
-from digest.models import Highlight, Item
+from digest.models import TOPICS, Highlight, Item
 from digest.render.text import clean, truncate
 
 log = logging.getLogger("digest.llm")
@@ -235,6 +235,7 @@ class Enricher:
                 "title": item.title_zh or item.title,
                 "summary": item.one_liner or "",
                 "kind": item.kind or "",
+                "topic": item.topic or "",
                 "score": item.quality,
             }
             for n, item in enumerate(items, 1)
@@ -320,6 +321,8 @@ class Enricher:
         if isinstance(focus, list):
             item.llm_focus = [key for key in self.focus_keys if key in focus]
         item.subject = clean_output(entry.get("subject"), 12)
+        topic = entry.get("topic")
+        item.topic = topic if topic in TOPICS else None
 
     def _verdict(self, item: Item) -> str | None:
         if item.kind and item.kind in self.settings.reject_kinds:
