@@ -1,0 +1,25 @@
+# 简报整体设置、板块与信息源。改门槛和配额只需改这个文件。
+
+digest:
+  title: 每日简报
+  timezone: Asia/Shanghai
+  # 全天总条数上限；各板块上限之和可以超过它，分数低的板块自动让位
+  max_items: 15
+  # 完整版归档的地址前缀（第四阶段启用），留空则钉钉消息里不放归档链接
+  archive_base_url: ""
+
+# 板块按这里的顺序出现在消息里
+sections:
+  - key: tech
+    name: 科技热议
+    limit: 5
+
+sources:
+  hn:
+    enabled: true
+    section: tech
+    # 只看这么多小时内发布的帖子
+    window_hours: 24
+    # 满足任一条件即可入选
+    min_points: 200
+    min_comments: 100
