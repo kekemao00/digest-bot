@@ -77,7 +77,7 @@ def entry_time(entry: Any) -> datetime | None:
 
 
 class Feed(Source):
-    """RSS / Atom 订阅源：实验室博客、期刊、arXiv。"""
+    """RSS / Atom 订阅源：实验室博客、期刊、arXiv、新闻和财经媒体。"""
 
     type = "feed"
 
@@ -96,7 +96,9 @@ class Feed(Source):
         since = now - timedelta(hours=float(self.options.get("window_hours", 72)))
         link_pattern = re.compile(self.options["link_pattern"]) if self.options.get("link_pattern") else None
         items = []
-        for entry in parsed.entries:
+        # 条目在订阅源里的位置：编辑排过序的源（如 BBC 要闻）越靠前越重要
+        self.positions: dict[str, int] = {}
+        for position, entry in enumerate(parsed.entries):
             link = entry.get("link") or ""
             # 期刊标题里常带 <i> 等斜体标签
             title = strip_html(entry.get("title") or "", sep="")
@@ -111,6 +113,7 @@ class Feed(Source):
             summary = _BOILERPLATE.sub("", raw_summary)[:MAX_SUMMARY] or None
             if m := _ARXIV_ABS.match(link):
                 link = f"https://arxiv.org/abs/{m.group(1)}"  # 去掉版本号，统一用 https
+            self.positions[entry.get("id") or link] = position
             items.append(
                 self.item(
                     id=entry.get("id") or link,
@@ -132,6 +135,9 @@ class Feed(Source):
         return []
 
     def base_score(self, item: Item) -> float:
+        if self.options.get("rank") == "order":
+            # 按订阅源本身的顺序（编辑判断的重要性），每往后一位减 2 分
+            return max(1.0, 100.0 - 2 * getattr(self, "positions", {}).get(item.id, 49))
         # 订阅源没有热度数据，同一来源内越新越靠前（每小时减 1 分）
         now = getattr(self, "now", None) or datetime.now(timezone.utc)
         hours = (now - item.published_at).total_seconds() / 3600

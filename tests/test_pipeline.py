@@ -149,3 +149,95 @@ def test_model_judgement_drives_focus_and_order(config, hn_source):
     selection = select(items, [hn_source], plain, review=review)
     assert selection.items[0].id == "3"
     assert all(not i.focus for i in selection.items)
+
+
+def tagged(review_topics: dict[str, str], quality: int = 6):
+    """假的审阅：按 id 给条目打领域标签和评分，不淘汰任何条目。"""
+
+    def review(batch):
+        for item in batch:
+            item.topic = review_topics.get(item.id)
+            item.quality = quality
+            item.llm_focus = []
+        return {}
+
+    return review
+
+
+def test_topic_cap_limits_one_topic(config, hn_source):
+    one = replace(config, sections=(Section("tech", "科技热议", 10),), max_items=10)
+    items = [make(i, f"Story {i}", 1000 - i) for i in range(20)]
+    topics = {str(i): "AI" if i < 12 else "科学" if i < 16 else "软件" for i in range(20)}
+    selection = select(items, [hn_source], one, review=tagged(topics))
+    ai = [i for i in selection.items if i.topic == "AI"]
+    assert len(selection.items) == 10
+    assert len(ai) == 4  # 10 条的 40%
+    assert any(r.reason == "“AI”领域当天已有 4 条" for r in selection.rejected)
+
+
+def test_topic_cap_never_leaves_empty_slots(config, hn_source):
+    one = replace(config, sections=(Section("tech", "科技热议", 5),), max_items=5)
+    items = [make(i, f"Story {i}", 1000 - i) for i in range(6)]
+    selection = select(items, [hn_source], one, review=tagged({str(i): "AI" for i in range(6)}))
+    assert len(selection.items) == 5  # 只有 AI 候选时放宽上限
+
+
+def test_min_topics_brings_in_breadth(config, hn_source):
+    one = replace(config, sections=(Section("tech", "科技热议", 5),), max_items=5)
+    items = [make(i, f"Story {i}", 1000 - i) for i in range(12)]
+    topics = {str(i): "软件" for i in range(12)}
+    topics.update({"9": "科学", "10": "时政", "11": "金融"})
+    selection = select(items, [hn_source], one, review=tagged(topics))
+    assert {i.topic for i in selection.items} >= {"软件", "科学", "时政", "金融"}
+
+
+def test_topic_decay_spreads_one_source():
+    from digest.pipeline import spread_topics
+
+    items = [make(i, f"Story {i}", 0) for i in range(4)]
+    for item, (rank, topic) in zip(items, [(100, "AI"), (95, "AI"), (90, "AI"), (88, "科学")], strict=True):
+        item.rank, item.topic = rank, topic
+    # 第二条 AI 打 85 折（80.75）后不如科学（88）
+    assert [i.id for i in spread_topics(items, 0.85)] == ["0", "3", "1", "2"]
+    assert [i.id for i in spread_topics(items, 1.0)] == ["0", "1", "2", "3"]
+
+
+def test_quality_lets_lower_weight_source_win(config):
+    from conftest import NOW
+    from digest.sources.feeds import Feed
+
+    journals = replace(config, sections=(Section("journals", "期刊", 1),), max_items=1, focus=())
+    science = Feed({"id": "science", "type": "feed", "section": "journals", "url": "x"})
+    cell = Feed({"id": "cell", "type": "feed", "section": "journals", "url": "x", "weight": 0.6})
+    science.now = cell.now = NOW
+
+    def papers():
+        return [
+            science.item(id="s", title="Science paper", url="https://science.test/s", published_at=NOW),
+            cell.item(id="c", title="Cell paper", url="https://cell.test/c", published_at=NOW),
+        ]
+
+    def review(batch):
+        for item in batch:
+            item.quality = 9 if item.source == "cell" else 5
+        return {}
+
+    assert [i.id for i in select(papers(), [science, cell], journals, review=review).items] == ["c"]
+    # 评分相同时仍按来源权重
+    assert [i.id for i in select(papers(), [science, cell], journals, review=tagged({}, quality=7)).items] == ["s"]
+
+
+def test_same_event_is_merged_and_backfilled(config, hn_source):
+    one = replace(config, sections=(Section("tech", "科技热议", 3),), max_items=3, focus=())
+    items = [make(i, f"Story {i}", 1000 - i) for i in range(6)]
+    asked = []
+
+    def dedupe(batch):
+        asked.append([i.id for i in batch])
+        return [["hn:1", "hn:0"]]
+
+    selection = select(items, [hn_source], one, review=tagged({}), dedupe=dedupe)
+    assert asked == [["0", "1", "2"]]
+    assert [i.id for i in selection.items] == ["0", "2", "3"]  # 1 并入 0，3 补位
+    assert [a.url for a in selection.items[0].also] == ["https://example.com/1"]
+    assert any("同一事件" in r.reason for r in selection.rejected)

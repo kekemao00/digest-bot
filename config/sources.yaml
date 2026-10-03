@@ -10,12 +10,14 @@ digest:
   archive_base_url: ""
 
 # 板块按这里的顺序出现在消息里；icon 显示在板块标题前
+# 各板块上限之和（18）大于全天总数（15），名次靠后的自动让位
 sections:
+  - {key: world, name: 世界与财经, icon: 🌍, limit: 3}
   - {key: tech, name: 科技热议, icon: 🗞️, limit: 5}
-  - {key: labs, name: 实验室动态, icon: 🧪, limit: 3}
+  - {key: labs, name: 实验室动态, icon: 🧪, limit: 2}
   - {key: papers, name: 论文, icon: 📄, limit: 3}
-  - {key: journals, name: 期刊, icon: 📚, limit: 3}
-  - {key: oss, name: 开源项目, icon: 🛠️, limit: 3}
+  - {key: journals, name: 期刊与科学, icon: 📚, limit: 3}
+  - {key: oss, name: 开源项目, icon: 🛠️, limit: 2}
 
 # 信息源。顺序有意义：同一内容出现在多个来源时，保留靠前的那个，其他的显示为“另见”。
 # 通用字段：
@@ -25,6 +27,67 @@ sections:
 #   exclude_title 标题命中这个正则就丢弃
 #   enabled       false 时停用
 sources:
+  # ---- 世界与财经 ----
+  # 平衡技术类来源的视角：国际时事、央行与经济数据、深度评论、中文媒体
+  - id: bbc-world
+    type: feed
+    name: BBC
+    section: world
+    url: https://feeds.bbci.co.uk/news/world/rss.xml
+    window_hours: 36
+    # 按编辑排序：越靠前越重要
+    rank: order
+    max_items: 1
+
+  - id: aljazeera
+    type: feed
+    name: Al Jazeera
+    section: world
+    url: https://www.aljazeera.com/xml/rss/all.xml
+    window_hours: 36
+    # 只要新闻、专题和经济报道，不要体育和直播
+    link_pattern: "aljazeera\\.com/(news|features|economy)/"
+    exclude_title: "(?i)^live\\b"
+    max_items: 1
+    weight: 0.6
+
+  - id: fed
+    type: feed
+    name: 美联储
+    section: world
+    url: https://www.federalreserve.gov/feeds/press_all.xml
+    window_hours: 36
+    # 只要货币政策和监管政策，不要单家银行的审批和处罚
+    exclude_title: "(?i)approval of application|enforcement action|comment period|announces (the )?(appointment|retirement)"
+    max_items: 1
+
+  - id: cnbc-economy
+    type: feed
+    name: CNBC
+    section: world
+    url: https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258
+    window_hours: 36
+    max_items: 1
+
+  - id: economist
+    type: feed
+    name: 经济学人
+    section: world
+    url: https://www.economist.com/finance-and-economics/rss.xml
+    # 周刊，每周四更新
+    window_hours: 168
+    max_items: 1
+    weight: 0.8
+
+  - id: ftchinese
+    type: feed
+    name: FT中文网
+    section: world
+    url: https://www.ftchinese.com/rss/news
+    window_hours: 48
+    max_items: 1
+    weight: 0.6
+
   # ---- 科技热议 ----
   - id: hn
     type: hackernews
@@ -196,6 +259,15 @@ sources:
     exclude_title: *notices
     max_items: 1
     weight: 0.4
+
+  # 通俗但严谨的数学、物理、生物深度报道
+  - id: quanta
+    type: feed
+    name: Quanta
+    section: journals
+    url: https://www.quantamagazine.org/feed/
+    max_items: 1
+    weight: 0.8
 
   # ---- 开源项目 ----
   - id: github-trending

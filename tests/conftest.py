@@ -70,6 +70,8 @@ def llm_entries(request: httpx.Request) -> tuple[str, list[dict]]:
 def fake_llm(request: httpx.Request) -> httpx.Response:
     """确定性的假大模型：Ask HN 闲聊判为低分观点，招聘帖判为招聘，其余给中文标题和一句话。"""
     system, entries = llm_entries(request)
+    if '"groups"' in system:
+        return llm_reply({"groups": []})
     if '"highlights"' in system:
         return llm_reply({"highlights": [{"n": e["n"], "text": f"要点：{e['title'][:16]}"} for e in entries[:3]]})
     result = []

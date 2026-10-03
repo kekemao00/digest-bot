@@ -12,16 +12,16 @@
    🔥 640 · [💬 140](https://news.ycombinator.com/item?id=45000004) · nasa.gov · HN
 4. **[Rust 2.0 roadmap (draft)](https://blog.rust-lang.org/2026/10/01/roadmap%28draft%29.html)**  
    🔥 520 · [💬 260](https://news.ycombinator.com/item?id=45000008) · blog.rust-lang.org · HN
-5. **[Claude and GPT compared on agent benchmarks](https://www.example.org/agent-bench)**  
-   🔥 290 · [💬 95](https://news.ycombinator.com/item?id=45000009) · example.org · HN · 侧重：AI/LLM
+5. **[How a market maker survived the flash crash](https://www.example-quant.com/blog/flash-crash)**  
+   🔥 388 · [💬 160](https://news.ycombinator.com/item?id=45000003) · example-quant.com · HN
 
 ## 落选条目
 
 | 条目 | 来源 | 原因 |
 | --- | --- | --- |
-| [How a market maker survived the flash crash](https://www.example-quant.com/blog/flash-crash) | HN | 超出“科技热议”板块上限 5 条 |
-| [Quantitative trading with options: a primer](https://example.net/options-primer) | HN | 超出“科技热议”板块上限 5 条 |
+| [Claude and GPT compared on agent benchmarks](https://www.example.org/agent-bench) | HN | 超出“科技热议”板块上限 5 条 |
 | [Ask HN: What's your favorite underrated book?](https://news.ycombinator.com/item?id=45000006) | HN | 超出“科技热议”板块上限 5 条 |
+| [Quantitative trading with options: a primer](https://example.net/options-primer) | HN | 超出“科技热议”板块上限 5 条 |
 | [A deep dive into the ＊new＊ Linux scheduler](https://lwn.net/Articles/990001/) | HN | 超出“科技热议”板块上限 5 条 |
 | [Fed up with slow builds, I rewrote our CI](https://example.dev/ci) | HN | 超出“科技热议”板块上限 5 条 |
 | [Small startup postmortem](https://example.com/postmortem) | HN | 热度不足（80 分 / 30 评论，门槛 200 分或 100 评论） |

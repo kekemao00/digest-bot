@@ -29,7 +29,7 @@
 **7. [Order Book Dynamics Under Latency Arbitrage](https://arxiv.org/abs/2610.01234)**  
 <font color=#999999>🔥 45 · [💬 3](https://huggingface.co/papers/2610.01234) · HF 论文 · [代码](https://github.com/quant/obd)</font>
 
-#### 📚 期刊
+#### 📚 期刊与科学
 
 **8. [A language model that discovers trading strategies](https://www.nature.com/articles/s41586-026-09912-1)**  
 <font color=#999999>Nature</font>

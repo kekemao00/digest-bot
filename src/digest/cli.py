@@ -127,7 +127,14 @@ def main(argv: list[str] | None = None) -> int:
             return 1
 
         enricher = build_enricher(client, config)
-        selection = select(candidates, sources, config, state, review=enricher.review if enricher else None)
+        selection = select(
+            candidates,
+            sources,
+            config,
+            state,
+            review=enricher.review if enricher else None,
+            dedupe=enricher.duplicates if enricher else None,
+        )
         if enricher and selection.items:
             selection.highlights = enricher.highlights(selection.items)
         llm_status = enricher.status() if enricher else "大模型：未启用，使用原文标题和简介"

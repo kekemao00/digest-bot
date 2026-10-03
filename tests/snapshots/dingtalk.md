@@ -18,8 +18,8 @@
 **4. [Rust 2.0 roadmap (draft)](https://blog.rust-lang.org/2026/10/01/roadmap%28draft%29.html)**  
 <font color=#999999>🔥 520 · [💬 260](https://news.ycombinator.com/item?id=45000008) · blog.rust-lang.org · HN</font>
 
-**5. [Claude and GPT compared on agent benchmarks](https://www.example.org/agent-bench)**  
-<font color=#999999>🔥 290 · [💬 95](https://news.ycombinator.com/item?id=45000009) · example.org · HN</font>
+**5. [How a market maker survived the flash crash](https://www.example-quant.com/blog/flash-crash)**  
+<font color=#999999>🔥 388 · [💬 160](https://news.ycombinator.com/item?id=45000003) · example-quant.com · HN</font>
 
 ---
 

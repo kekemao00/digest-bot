@@ -31,6 +31,15 @@ class Focus:
 
 
 @dataclass(frozen=True)
+class Diversity:
+    """防止某一领域刷屏。依据大模型给的领域标签，没有大模型时不生效。"""
+
+    max_topic_share: float = 0.4  # 单一领域每天最多占总条数的比例
+    min_topics: int = 4  # 每天至少覆盖几个领域（候选里有的话）
+    topic_decay: float = 0.85  # 同一来源里同领域每多一条，排序分乘以这个系数
+
+
+@dataclass(frozen=True)
 class LLMSettings:
     enabled: bool = True
     temperature: float = 0.2
@@ -54,6 +63,7 @@ class Config:
     sources: tuple[dict[str, Any], ...]
     focus: tuple[Focus, ...] = ()
     min_outside_focus: float = 0.0
+    diversity: Diversity = Diversity()
     llm: LLMSettings = LLMSettings()
     section_by_key: dict[str, Section] = field(init=False, repr=False)
 
@@ -90,6 +100,7 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
 
     focus: tuple[Focus, ...] = ()
     min_outside = 0.0
+    diversity = Diversity()
     interests_path = config_dir / "interests.yaml"
     if interests_path.exists():
         interests = yaml.safe_load(interests_path.read_text(encoding="utf-8")) or {}
@@ -105,6 +116,14 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
         min_outside = float(interests.get("min_outside_focus", 0.0))
         if not 0.0 <= min_outside <= 1.0:
             raise ConfigError("min_outside_focus 必须在 0 到 1 之间")
+        raw_div = interests.get("diversity") or {}
+        diversity = Diversity(
+            max_topic_share=float(raw_div.get("max_topic_share", diversity.max_topic_share)),
+            min_topics=int(raw_div.get("min_topics", diversity.min_topics)),
+            topic_decay=float(raw_div.get("topic_decay", diversity.topic_decay)),
+        )
+        if not 0.0 < diversity.max_topic_share <= 1.0 or not 0.0 < diversity.topic_decay <= 1.0:
+            raise ConfigError("diversity 的 max_topic_share 和 topic_decay 必须在 0 到 1 之间")
 
     llm = LLMSettings()
     llm_path = config_dir / "llm.yaml"
@@ -134,5 +153,6 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
         sources=sources,
         focus=focus,
         min_outside_focus=min_outside,
+        diversity=diversity,
         llm=llm,
     )
