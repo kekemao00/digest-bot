@@ -1,0 +1,77 @@
+name: 发布版本
+
+# 在 Actions 页面手动运行。先在 pyproject.toml 改好版本号、在 CHANGELOG.md 写好这一版的说明并合并到 main，
+# 版本号和说明都从仓库里读，不需要填写任何参数
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  # 测试、核对版本号、打包：只读权限
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      version: ${{ steps.notes.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --require-hashes -r requirements-dev.txt
+      - run: python -m pytest -q
+
+      - name: 读取版本号和更新说明
+        id: notes
+        run: |
+          version=$(python scripts/release_notes.py dist/notes.md)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: 打包源码
+        run: |
+          name="digest-bot-$VERSION"
+          git archive --format=tar.gz --prefix="$name/" -o "dist/$name.tar.gz" HEAD
+          git archive --format=zip --prefix="$name/" -o "dist/$name.zip" HEAD
+          cd dist && sha256sum "$name.tar.gz" "$name.zip" > SHA256SUMS.txt
+        env:
+          VERSION: ${{ steps.notes.outputs.version }}
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release
+          path: dist/
+          retention-days: 1
+          if-no-files-found: error
+
+  # 打标签并发布：只有这个任务能写仓库，这里不运行 Python 依赖。同一个版本号已经发布过时会失败，不会覆盖
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release
+          path: dist
+
+      - name: 发布到 Releases 页面
+        run: |
+          gh release create "v$VERSION" --repo "$REPO" --target "$SHA" \
+            --title "v$VERSION" --notes-file dist/notes.md \
+            "dist/digest-bot-$VERSION.tar.gz" "dist/digest-bot-$VERSION.zip" dist/SHA256SUMS.txt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          VERSION: ${{ needs.build.outputs.version }}
