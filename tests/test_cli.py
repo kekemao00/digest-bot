@@ -148,6 +148,22 @@ def test_external_scheduler_sends_once_per_day(network, monkeypatch):
     assert len(network) == 2
 
 
+def test_skip_tells_workflow_not_to_save(network, tmp_path, monkeypatch):
+    # 跳过时在 Summary 里写明，并告诉工作流不用上传和保存；正式推送时不输出 skipped，照常保存
+    summary, output = tmp_path / "summary.md", tmp_path / "output.txt"
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+    monkeypatch.setenv("DIGEST_SCHEDULED", "true")
+    assert cli.main([]) == 0
+    assert len(network) == 1
+    assert not output.exists()
+    summary.unlink()
+    assert cli.main([]) == 0
+    assert len(network) == 1
+    assert output.read_text(encoding="utf-8") == "skipped=true\n"
+    assert summary.read_text(encoding="utf-8").startswith("## 已推送过，跳过")
+
+
 def test_missing_webhook_fails_before_fetching(network, monkeypatch):
     fetched = []
     network.routes["hn.algolia.com"] = lambda request: fetched.append(request) or httpx.Response(500)

@@ -65,15 +65,21 @@ def source_report(stats: dict[str, str], selection: Selection) -> str:
     return "\n".join(["| 信息源 | 抓取结果 | 入选 |", "| --- | --- | --- |", *rows])
 
 
+def _append_env_file(name: str, text: str) -> None:
+    """写入 GitHub Actions 提供的文件（运行页面的 Summary、步骤输出）；本地运行时没有这些文件，什么也不做。"""
+    if path := os.environ.get(name):
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(text)
+
+
 def write_step_summary(message: dingtalk.Message, report: str, full: str, preview: bool = True) -> None:
     """在 GitHub Actions 运行页面上展示这次的消息、各信息源情况和完整版。"""
-    path = os.environ.get("GITHUB_STEP_SUMMARY")
-    if not path:
-        return
     heading = "钉钉消息预览（未发送）" if preview else "钉钉消息"
-    with open(path, "a", encoding="utf-8") as f:
-        f.write(f"## {heading}\n\n通知标题：{message.title}\n\n---\n\n{message.text}\n\n---\n\n")
-        f.write(f"## 各信息源\n\n{report}\n\n<details><summary>完整版（含落选条目）</summary>\n\n{full}\n</details>\n")
+    _append_env_file(
+        "GITHUB_STEP_SUMMARY",
+        f"## {heading}\n\n通知标题：{message.title}\n\n---\n\n{message.text}\n\n---\n\n"
+        f"## 各信息源\n\n{report}\n\n<details><summary>完整版（含落选条目）</summary>\n\n{full}\n</details>\n",
+    )
 
 
 def archive_link(config: Config, now: datetime) -> str | None:
@@ -110,6 +116,13 @@ def main(argv: list[str] | None = None) -> int:
             scheduled = args.scheduled or os.environ.get("GITHUB_EVENT_NAME") == "schedule"
             if scheduled and state.last_sent == now.date().isoformat():
                 log.info("今天（%s）已经推送过，定时任务不再重复推送", state.last_sent)
+                _append_env_file(
+                    "GITHUB_STEP_SUMMARY",
+                    f"## 已推送过，跳过\n\n今天（{state.last_sent}）已经推送过，这次触发没有发送消息，"
+                    "去重记录和归档也没有改动。\n",
+                )
+                # 工作流据此跳过上传和保存这两步
+                _append_env_file("GITHUB_OUTPUT", "skipped=true\n")
                 return 0
             # 钉钉配置有误时尽早失败，不白白抓取和调用大模型
             try:

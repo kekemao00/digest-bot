@@ -1,4 +1,11 @@
 name: 每日简报
+# Actions 页面上每次运行的名称标明触发方式。一天会有几路触发，推送的只有先到的那一次，
+# 其余的点进去 Summary 写着「已推送过，跳过」
+run-name: >-
+  ${{ github.event_name == 'schedule' && '每日简报 · GitHub 兜底'
+  || inputs.dry_run && '每日简报 · 预览'
+  || inputs.scheduled && '每日简报 · 准点触发'
+  || '每日简报 · 手动推送' }}
 
 # 准点推送靠外部定时服务（如 cron-job.org）每天 07:47 调用 workflow_dispatch，带 scheduled=true，
 # 设置方法见 README「准点推送」。下面 GitHub 自带的定时任务只作兜底：它不保证准点，
@@ -34,6 +41,8 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
+    outputs:
+      skipped: ${{ steps.digest.outputs.skipped }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -54,6 +63,7 @@ jobs:
       - run: python -m pip install --require-hashes -r requirements.txt
 
       - name: 生成并推送简报
+        id: digest
         run: python -m digest --state .state/state.json --archive-dir .state/archive
         env:
           PYTHONPATH: src
@@ -68,9 +78,10 @@ jobs:
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
 
       # 交给下一个任务提交。.state 本身是隐藏目录，默认会被整个跳过，
-      # 所以要打开 include-hidden-files，再单独排除 checkout 留下的 .git
+      # 所以要打开 include-hidden-files，再单独排除 checkout 留下的 .git。
+      # 预览和「当天已推送过」的跳过不会改动 state，不用上传
       - name: 上传去重状态和归档
-        if: ${{ inputs.dry_run != true }}
+        if: ${{ inputs.dry_run != true && steps.digest.outputs.skipped != 'true' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: state
@@ -84,7 +95,7 @@ jobs:
   # 保存：只有这个任务能写仓库，而且只写 state 分支；这里不接触任何密钥，也不运行 Python 依赖
   save:
     needs: digest
-    if: ${{ inputs.dry_run != true }}
+    if: ${{ inputs.dry_run != true && needs.digest.outputs.skipped != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
