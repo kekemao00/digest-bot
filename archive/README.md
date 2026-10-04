@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 1 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 2 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月5日 周一](2026/10-05.md) · 14 条｜AI 6 · 科学 3 · 软件 2 · 时政 2 · 金融 1  
+  [全球液化天然气供应面临严重紧张](https://www.economist.com/finance-and-economics/2026/10/04/the-world-is-facing-an-almighty-lng-crunch)；[基辅北桥连续两天遭俄军袭击](https://www.bbc.co.uk/news/videos/cmglwkyl9djyo?at_medium=RSS&at_campaign=rss)；[花粉化石研究重建东非草原两万五千年生态变化](https://doi.org/10.1073/pnas.2607372123)
 - [10月4日 周日 晚间](2026/10-04-evening.md) · 8 条｜AI 2 · 软件 2 · 时政 2 · 社会 1 · 其他 1  
   [俄无人机再袭基辅，击中仍有车辆通行的北桥](https://www.bbc.co.uk/news/articles/ckreyjzzzywqo?at_medium=RSS&at_campaign=rss)；[OpenAI 安全负责人辞职，批评公司文化](https://www.theguardian.com/technology/2026/oct/03/openai-safety-leader-quits-warning-ai-companys-culture-is-broken)
 - [10月4日 周日](2026/10-04.md) · 15 条｜AI 5 · 科学 3 · 金融 2 · 安全 2 · 社会 2 · 软件 1  
