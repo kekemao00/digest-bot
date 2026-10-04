@@ -206,7 +206,7 @@ def _allocate(
         elif per_section[item.section] >= limits[item.section]:
             rejected.append(Rejected(item, f"超出“{section.name}”板块上限 {section.limit} 条"))
         else:
-            rejected.append(Rejected(item, f"超出全天总数上限 {config.max_items} 条"))
+            rejected.append(Rejected(item, f"超出{'晚间版' if config.is_evening else '全天'}总数上限 {config.max_items} 条"))
 
     sections = []
     for section in config.sections:

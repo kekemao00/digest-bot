@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
+from datetime import datetime
+from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import httpx
 import pytest
@@ -162,6 +166,102 @@ def test_skip_tells_workflow_not_to_save(network, tmp_path, monkeypatch):
     assert len(network) == 1
     assert output.read_text(encoding="utf-8") == "skipped=true\n"
     assert summary.read_text(encoding="utf-8").startswith("## 已推送过，跳过")
+
+
+SHANGHAI = ZoneInfo("Asia/Shanghai")
+MORNING = datetime(2026, 10, 4, 7, 47, tzinfo=SHANGHAI)
+EVENING = datetime(2026, 10, 4, 19, 47, tzinfo=SHANGHAI)
+LINK = re.compile(r"\]\((https?://[^)]+)\)")
+
+
+def at(monkeypatch, when):
+    monkeypatch.setattr(cli, "now_in", lambda timezone: when)
+
+
+def test_evening_edition_sends_once_apart_from_morning(network, monkeypatch, tmp_path):
+    monkeypatch.setenv("DIGEST_SCHEDULED", "true")
+    at(monkeypatch, MORNING)
+    assert cli.main([]) == 0
+    # GitHub 自带的晚间定时任务：按 cron 的钟点判断是晚间版
+    at(monkeypatch, EVENING)
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "schedule")
+    monkeypatch.setenv("DIGEST_CRON", "47 11 * * *")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "owner/digest-bot")
+    assert cli.main(["--archive-dir", str(tmp_path / "archive")]) == 0
+    assert len(network) == 2
+    morning, evening = (m["markdown"] for m in network)
+    assert evening["title"].startswith("晚间简报") and evening["text"].startswith("### 晚间简报 · 10月4日")
+    # 早上推过的不再出现
+    assert set(LINK.findall(evening["text"])).isdisjoint(LINK.findall(morning["text"]))
+    assert (tmp_path / "archive" / "2026" / "10-04-evening.md").exists()
+    assert "(https://github.com/owner/digest-bot/blob/state/archive/2026/10-04-evening.md)" in evening["text"]
+    # 外部定时服务的晚间触发晚到：今晚已处理过，跳过；早间版的触发也不受晚间版影响，照样跳过
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "workflow_dispatch")
+    monkeypatch.setenv("DIGEST_EDITION", "evening")
+    assert cli.main([]) == 0
+    monkeypatch.setenv("DIGEST_EDITION", "morning")
+    assert cli.main([]) == 0
+    assert len(network) == 2
+    saved = json.loads(Path(".state/state.json").read_text(encoding="utf-8"))
+    assert saved["last_sent"] == saved["last_evening"] == "2026-10-04"
+
+
+def test_quiet_evening_is_not_sent(network, monkeypatch, hn_payload, tmp_path):
+    from test_sources import anthropic_handler
+
+    hn_payload["hits"] = hn_payload["hits"][:1]
+    network.routes["www.anthropic.com"] = anthropic_handler({"/news/claude-frontier-academy": "Frontier Academy"})
+    known = ["https://www.anthropic.com/news/barclays-scales-claude"]
+    state_path = Path(".state/state.json")
+    state_path.parent.mkdir()
+    state_path.write_text(json.dumps({"version": 1, "pages": {"anthropic": known}}), encoding="utf-8")
+    output = tmp_path / "output.txt"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+    monkeypatch.setenv("DIGEST_EDITION", "evening")
+    monkeypatch.setenv("DIGEST_SCHEDULED", "true")
+    at(monkeypatch, EVENING)
+
+    assert cli.main(["--archive-dir", str(tmp_path / "archive")]) == 0
+    assert network == []
+    assert not (tmp_path / "archive").exists()
+    assert not output.exists()  # 要把“今晚已处理”存下来，不能跳过保存
+    saved = json.loads(state_path.read_text(encoding="utf-8"))
+    assert saved["last_evening"] == "2026-10-04" and saved["last_sent"] is None
+    # 今晚没推送，博客上新看到的文章不记成已见过，留给第二天早上
+    assert saved["pages"]["anthropic"] == known
+    # 当晚的兜底触发不再重跑
+    assert cli.main([]) == 0
+    assert output.read_text(encoding="utf-8") == "skipped=true\n"
+
+
+def test_late_evening_trigger_is_skipped(network, monkeypatch):
+    monkeypatch.setenv("DIGEST_EDITION", "evening")
+    monkeypatch.setenv("DIGEST_SCHEDULED", "true")
+    for late in (datetime(2026, 10, 4, 23, 5, tzinfo=SHANGHAI), datetime(2026, 10, 5, 0, 37, tzinfo=SHANGHAI)):
+        at(monkeypatch, late)
+        assert cli.main([]) == 0
+    assert network == []
+    monkeypatch.setenv("DIGEST_SCHEDULED", "false")  # 手动运行不受时间限制
+    assert cli.main([]) == 0
+    assert len(network) == 1
+
+
+def test_disabled_evening_is_skipped(network, monkeypatch):
+    from dataclasses import replace
+
+    config = cli.load_config()
+    monkeypatch.setattr(cli, "load_config", lambda: replace(config, evening=replace(config.evening, enabled=False)))
+    monkeypatch.setenv("DIGEST_EDITION", "evening")
+    monkeypatch.setenv("DIGEST_SCHEDULED", "true")
+    at(monkeypatch, EVENING)
+    assert cli.main([]) == 0
+    assert network == []
+
+
+def test_unknown_edition_is_an_error(monkeypatch):
+    monkeypatch.setenv("DIGEST_EDITION", "noon")
+    with pytest.raises(SystemExit):
+        cli.main(["--dry-run"])
 
 
 def test_missing_webhook_fails_before_fetching(network, monkeypatch):

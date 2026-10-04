@@ -1,21 +1,28 @@
 name: 每日简报
-# Actions 页面上每次运行的名称标明触发方式。一天会有几路触发，推送的只有先到的那一次，
-# 其余的点进去 Summary 写着「已推送过，跳过」
+# Actions 页面上每次运行的名称标明触发方式（晚间版另外标出）。一天会有几路触发，
+# 每一版推送的只有先到的那一次，其余的点进去 Summary 写着「已推送过，跳过」
 run-name: >-
-  ${{ github.event_name == 'schedule' && '每日简报 · GitHub 兜底'
-  || inputs.dry_run && '每日简报 · 预览'
-  || inputs.scheduled && '每日简报 · 准点触发'
-  || '每日简报 · 手动推送' }}
+  ${{ format('每日简报{0} · {1}',
+  inputs.edition == 'evening' && ' · 晚间' || '',
+  github.event_name == 'schedule' && 'GitHub 兜底'
+  || inputs.dry_run && '预览'
+  || inputs.scheduled && '准点触发'
+  || '手动推送') }}
 
-# 准点推送靠外部定时服务（如 cron-job.org）每天 07:47 调用 workflow_dispatch，带 scheduled=true，
-# 设置方法见 README「准点推送」。下面 GitHub 自带的定时任务只作兜底：它不保证准点，
-# 负载高时会延迟几个小时（2026-10-04 的 07:47 晚了 3 小时才运行），严重时直接丢弃、不补跑。
-# 几路触发同一天都会到达，谁先到谁推送，后到的读到当天已推送就跳过
+# 准点推送靠外部定时服务（如 cron-job.org）每天 07:47 和 19:47 调用 workflow_dispatch，带 scheduled=true，
+# 晚上那次再带 edition=evening，设置方法见 README「准点推送」。下面 GitHub 自带的定时任务只作兜底：
+# 它不保证准点，负载高时会延迟几个小时（2026-10-04 的 07:47 晚了 3 小时才运行），严重时直接丢弃、不补跑。
+# 几路触发同一天都会到达，每一版谁先到谁推送，后到的读到这一版今天已处理过就跳过
 on:
   schedule:
+    # 早间版。兜底触发属于哪一版按 cron 的钟点判断：北京时间 15 点及以后的是晚间版
     - cron: "47 23 * * *"  # 北京时间 07:47
     - cron: "37 0 * * *"   # 北京时间 08:37
     - cron: "37 1 * * *"   # 北京时间 09:37
+    # 晚间版
+    - cron: "47 11 * * *"  # 北京时间 19:47
+    - cron: "37 12 * * *"  # 北京时间 20:37
+    - cron: "37 13 * * *"  # 北京时间 21:37
   workflow_dispatch:
     inputs:
       dry_run:
@@ -23,9 +30,14 @@ on:
         type: boolean
         default: true
       scheduled:
-        description: 外部定时服务调用时用，手动运行不用勾：当天已经推送过就跳过
+        description: 外部定时服务调用时用，手动运行不用勾：这一版今天已经推送过就跳过
         type: boolean
         default: false
+      edition:
+        description: 哪一版：morning 早间版，evening 晚间版
+        type: choice
+        options: [morning, evening]
+        default: morning
 
 permissions:
   contents: read
@@ -70,6 +82,9 @@ jobs:
           # 手动运行时按勾选决定；定时运行时 inputs 为空，即正式发送
           DIGEST_DRY_RUN: ${{ inputs.dry_run }}
           DIGEST_SCHEDULED: ${{ inputs.scheduled }}
+          # 手动和外部定时服务触发时按 edition 决定哪一版；GitHub 自带的定时任务按 cron 的钟点判断
+          DIGEST_EDITION: ${{ inputs.edition }}
+          DIGEST_CRON: ${{ github.event.schedule }}
           DINGTALK_WEBHOOK: ${{ secrets.DINGTALK_WEBHOOK }}
           DINGTALK_SECRET: ${{ secrets.DINGTALK_SECRET }}
           # 三项都配置了才启用大模型，否则用原文标题和简介
@@ -79,7 +94,7 @@ jobs:
 
       # 交给下一个任务提交。.state 本身是隐藏目录，默认会被整个跳过，
       # 所以要打开 include-hidden-files，再单独排除 checkout 留下的 .git。
-      # 预览和「当天已推送过」的跳过不会改动 state，不用上传
+      # 预览和「这一版今天已推送过」的跳过不会改动 state，不用上传
       - name: 上传去重状态和归档
         if: ${{ inputs.dry_run != true && steps.digest.outputs.skipped != 'true' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

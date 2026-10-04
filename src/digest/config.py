@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
@@ -54,6 +54,20 @@ class LLMSettings:
 
 
 @dataclass(frozen=True)
+class Evening:
+    """晚间版：只看白天会更新的板块，早上推过的不再出现，条数少；达标的太少就不发。"""
+
+    enabled: bool = True
+    title: str = "晚间简报"
+    max_items: int = 8
+    min_items: int = 3  # 达标的少于这么多条，当晚不推送
+    sections: tuple[str, ...] = ("world", "tech", "labs")
+    window_hours: float = 14  # 只看最近多少小时内发布的内容，大致从早间版推送前后算起
+    highlights: int = 2
+    latest_hour: int = 23  # 定时触发到这个钟点还没推送，当晚就不再推，避免深夜打扰
+
+
+@dataclass(frozen=True)
 class Config:
     title: str
     timezone: str
@@ -65,10 +79,44 @@ class Config:
     min_outside_focus: float = 0.0
     diversity: Diversity = Diversity()
     llm: LLMSettings = LLMSettings()
+    evening: Evening = Evening()
+    edition: str = "morning"  # morning 早间版，evening 晚间版
     section_by_key: dict[str, Section] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "section_by_key", {s.key: s for s in self.sections})
+
+    @property
+    def is_evening(self) -> bool:
+        return self.edition == "evening"
+
+    @property
+    def edition_title(self) -> str:
+        """消息和完整版里显示的标题；title 本身用于归档目录页等不分版的地方。"""
+        return self.evening.title if self.is_evening else self.title
+
+    @property
+    def highlights_heading(self) -> str:
+        return "今晚要点" if self.is_evening else "今日要点"
+
+    def for_evening(self) -> Config:
+        """晚间版的配置：只保留晚间版的板块和来源，各来源只看最近 window_hours 小时内的内容。
+        没有发布时间的来源（比较列表页的博客）本来就只推新出现的文章，不受影响。"""
+        evening = self.evening
+        sources = []
+        for opts in self.sources:
+            if opts.get("section") not in evening.sections:
+                continue
+            window = min(float(opts.get("window_hours", evening.window_hours)), evening.window_hours)
+            sources.append({**opts, "window_hours": window})
+        return replace(
+            self,
+            edition="evening",
+            max_items=evening.max_items,
+            sections=tuple(s for s in self.sections if s.key in evening.sections),
+            sources=tuple(sources),
+            llm=replace(self.llm, highlights=evening.highlights),
+        )
 
 
 def _require(data: dict[str, Any], key: str, where: str) -> Any:
@@ -144,6 +192,21 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
         if llm.batch_size < 1:
             raise ConfigError("llm.yaml 的 batch_size 至少为 1")
 
+    evening = Evening()
+    if raw_evening := raw.get("evening"):
+        evening = Evening(
+            enabled=bool(raw_evening.get("enabled", evening.enabled)),
+            title=str(raw_evening.get("title", evening.title)),
+            max_items=int(raw_evening.get("max_items", evening.max_items)),
+            min_items=int(raw_evening.get("min_items", evening.min_items)),
+            sections=tuple(str(k) for k in raw_evening.get("sections", evening.sections)),
+            window_hours=float(raw_evening.get("window_hours", evening.window_hours)),
+            highlights=int(raw_evening.get("highlights", evening.highlights)),
+            latest_hour=int(raw_evening.get("latest_hour", evening.latest_hour)),
+        )
+    if unknown := [k for k in evening.sections if k not in section_keys]:
+        raise ConfigError(f"evening.sections 里的 {', '.join(unknown)} 不在 sections 里")
+
     return Config(
         title=str(digest.get("title", "每日简报")),
         timezone=str(digest.get("timezone", "Asia/Shanghai")),
@@ -155,4 +218,5 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
         min_outside_focus=min_outside,
         diversity=diversity,
         llm=llm,
+        evening=evening,
     )

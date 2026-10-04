@@ -97,13 +97,13 @@ def numbering(items: list[Item]) -> dict[str, int]:
     return {item.key: n for n, item in enumerate(items, 1)}
 
 
-def render_highlights(highlights: list[Highlight], items: list[Item]) -> str | None:
+def render_highlights(highlights: list[Highlight], items: list[Item], heading: str = "今日要点") -> str | None:
     numbers = numbering(items)
     lines = [
         f"{n}. {md_text(h.text)} {grey(f'第 {numbers[h.key]} 条')}"
         for n, h in enumerate((h for h in highlights if h.key in numbers), 1)
     ]
-    return "**今日要点**\n\n" + "\n".join(lines) if lines else None
+    return f"**{heading}**\n\n" + "\n".join(lines) if lines else None
 
 
 def _compose(
@@ -117,8 +117,8 @@ def _compose(
     overview = f"{len(items)} 条 · 约 {reading_minutes(items)} 分钟"
     if topics := topic_summary(items):
         overview += f"｜{topics}"
-    lines = [f"### {config.title} · {date_label(now)}", grey(overview)]
-    if block := render_highlights(highlights, items):
+    lines = [f"### {config.edition_title} · {date_label(now)}", grey(overview)]
+    if block := render_highlights(highlights, items, config.highlights_heading):
         lines.append(block)
     number = 0
     for section, section_items in sections:
@@ -145,7 +145,7 @@ def render(selection: Selection, config: Config, now: datetime, archive_url: str
 
     items = [item for _, section_items in sections for item in section_items]
     shown = [h for h in highlights if h.key in numbering(items)]
-    title = f"{config.title} {len(items)} 条"
+    title = f"{config.edition_title} {len(items)} 条"
     # 通知栏只显示标题：有今日要点时放第一条要点，否则放第一条的标题
     if shown:
         title += f"｜{shown[0].text}"
