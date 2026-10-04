@@ -115,7 +115,7 @@ GitHub 默认不在 fork 出来的仓库里运行工作流。打开你仓库的 
 
 运行成功但群里没有消息时，检查是不是勾选了「只生成预览」。
 
-定时任务没有按时运行时，先确认 Actions 已经启用（第 2 步）。GitHub 的定时任务在高峰期可能会晚几十分钟。另外，公开仓库连续 60 天没有活动时，GitHub 会自动停用定时任务，到 Actions 页面重新启用即可。
+定时任务没有按时运行时，先确认 Actions 已经启用（第 2 步）。GitHub 的定时任务在高峰期可能会晚几十分钟，甚至被丢弃，这时会由 08:37 或 09:37 的备用触发补上。另外，公开仓库连续 60 天没有活动时，GitHub 会自动停用定时任务，到 Actions 页面重新启用即可。
 
 ### 用私有仓库
 
@@ -147,7 +147,7 @@ git push https://github.com/<你的用户名>/<私有仓库名>.git main
 
 | 想调整什么 | 改哪里 |
 | --- | --- |
-| 推送时间 | [`.github/workflows/daily.yml`](.github/workflows/daily.yml) 里的 `cron`。这里用 UTC 时间，等于北京时间减 8 小时。例如想在中午 12 点前后收到，写 `47 3 * * *`（北京时间 11:47 触发） |
+| 推送时间 | [`.github/workflows/daily.yml`](.github/workflows/daily.yml) 里的三行 `cron`：第一行是主触发，后两行是备用触发。这里用 UTC 时间，等于北京时间减 8 小时。例如想在中午 12 点前后收到，三行依次写 `47 3 * * *`、`37 4 * * *`、`37 5 * * *` |
 | 简报标题 | [`config/sources.yaml`](config/sources.yaml) 里的 `digest.title` |
 | 每天的总条数 | `config/sources.yaml` 里的 `digest.max_items`，默认 15 |
 | 板块的顺序、名称、图标和条数上限 | `config/sources.yaml` 里的 `sections` |
@@ -212,7 +212,8 @@ git push https://github.com/<你的用户名>/<私有仓库名>.git main
 
 ## 定时推送和归档
 
-- 每天北京时间 07:47 触发（`.github/workflows/daily.yml` 里的 cron，UTC 23:47）。GitHub 的定时任务整点最拥挤，常常延迟，所以提前十几分钟，消息通常在 8 点前后送达。改时间只需改 cron。
+- 每天北京时间 07:47 触发（`.github/workflows/daily.yml` 里的 cron，UTC 23:47）。GitHub 的定时任务整点最拥挤，常常延迟，所以提前十几分钟，消息通常在 8 点前后送达。
+- 负载高时 GitHub 会直接丢弃定时任务，不会补跑，所以 08:37 和 09:37 还各有一次备用触发。当天已经推送过时，备用触发会直接跳过。改推送时间时，这三行 cron 要一起改。
 - 定时任务同一天只推一次：GitHub 延迟或重复触发时会跳过。手动运行（取消“只生成预览”）总会发送，内容是去掉已推送条目后剩下的。
 - 每天的完整版存在 `state` 分支的 `archive/YYYY/MM-DD.md`，包括全部入选条目、大模型评分和排序靠前的落选条目及原因；钉钉消息末尾的“完整版与落选条目”就链到这里。归档永久保留，不会自动删除。
 - 回查历史：`state` 分支的 `archive/` 下的 README 是目录页（本仓库的在[这里](https://github.com/kekemao00/digest-bot/tree/state/archive)），按月列出每天的条数、领域分布和三条要点；`archive/items.jsonl` 每行一条推送过的内容（日期、标题、原标题、摘要、链接、来源、领域、评分），可以下载后检索或统计。GitHub 的代码搜索不覆盖 `state` 分支，要全文搜索时用这个文件。
