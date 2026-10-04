@@ -93,7 +93,7 @@ GitHub 默认不在 fork 出来的仓库里运行工作流。打开你仓库的 
 
 运行结束后，群里会收到第一条简报。你的仓库里会多出一个 `state` 分支，存着去重记录和当天的完整版。
 
-之后每天北京时间 07:47 自动运行，消息通常在 8 点前后送达，不需要再做任何操作。
+之后每天北京时间 07:47 起自动运行。GitHub 自带的定时任务不保证准点，偶尔会晚几个小时；想每天 8 点前准时收到，再花 5 分钟做一下[准点推送](#准点推送推荐)的设置。
 
 第一次运行时要注意两点：
 - Anthropic、Meta AI、DeepSeek、Mistral 的博客没有 RSS。第一次正式运行只会记下现有的文章，从第二天起才会推送新文章。
@@ -115,7 +115,7 @@ GitHub 默认不在 fork 出来的仓库里运行工作流。打开你仓库的 
 
 运行成功但群里没有消息时，检查是不是勾选了「只生成预览」。
 
-定时任务没有按时运行时，先确认 Actions 已经启用（第 2 步）。GitHub 的定时任务在高峰期可能会晚几十分钟，甚至被丢弃，这时会由 08:37 或 09:37 的备用触发补上。另外，公开仓库连续 60 天没有活动时，GitHub 会自动停用定时任务，到 Actions 页面重新启用即可。
+定时任务没有按时运行时，先确认 Actions 已经启用（第 2 步）。GitHub 自带的定时任务在高峰期可能晚几个小时，甚至被丢弃，这时由 08:37 或 09:37 的备用触发补上；要准点，见[准点推送](#准点推送推荐)。另外，公开仓库连续 60 天没有活动时，GitHub 会自动停用定时任务，到 Actions 页面重新启用即可。
 
 ### 用私有仓库
 
@@ -147,7 +147,7 @@ git push https://github.com/<你的用户名>/<私有仓库名>.git main
 
 | 想调整什么 | 改哪里 |
 | --- | --- |
-| 推送时间 | [`.github/workflows/daily.yml`](.github/workflows/daily.yml) 里的三行 `cron`：第一行是主触发，后两行是备用触发。这里用 UTC 时间，等于北京时间减 8 小时。例如想在中午 12 点前后收到，三行依次写 `47 3 * * *`、`37 4 * * *`、`37 5 * * *` |
+| 推送时间 | 用了[准点推送](#准点推送推荐)时，改 cron-job.org 上的执行时间。[`.github/workflows/daily.yml`](.github/workflows/daily.yml) 里的三行 `cron` 是 GitHub 自带的兜底触发，用 UTC 时间，等于北京时间减 8 小时，改成比准点时间稍晚即可。例如想在中午 12 点前后收到，三行依次写 `47 3 * * *`、`37 4 * * *`、`37 5 * * *` |
 | 简报标题 | [`config/sources.yaml`](config/sources.yaml) 里的 `digest.title` |
 | 每天的总条数 | `config/sources.yaml` 里的 `digest.max_items`，默认 15 |
 | 板块的顺序、名称、图标和条数上限 | `config/sources.yaml` 里的 `sections` |
@@ -212,14 +212,66 @@ git push https://github.com/<你的用户名>/<私有仓库名>.git main
 
 ## 定时推送和归档
 
-- 每天北京时间 07:47 触发（`.github/workflows/daily.yml` 里的 cron，UTC 23:47）。GitHub 的定时任务整点最拥挤，常常延迟，所以提前十几分钟，消息通常在 8 点前后送达。
-- 负载高时 GitHub 会直接丢弃定时任务，不会补跑，所以 08:37 和 09:37 还各有一次备用触发。当天已经推送过时，备用触发会直接跳过。改推送时间时，这三行 cron 要一起改。
-- 定时任务同一天只推一次：GitHub 延迟或重复触发时会跳过。手动运行（取消“只生成预览”）总会发送，内容是去掉已推送条目后剩下的。
+- 推送有两路触发。主路是外部定时服务每天 07:47 准点调用，需要设置一次，见下面的[准点推送](#准点推送推荐)。兜底是 GitHub 自带的定时任务，在 07:47、08:37、09:37 各触发一次（`.github/workflows/daily.yml` 里的三行 cron，用 UTC 时间）。
+- GitHub 自带的定时任务不保证准点：负载高时会延迟，严重时直接丢弃，也不补跑。整点最拥挤，UTC 0 点（北京 8 点）前后尤其严重。2026-10-04 07:47 的触发就晚了 3 小时，10:52 才运行。
+- 每天只推一次：定时触发（包括外部定时服务）到达时，如果当天已经推送过就跳过，没推过就推送，没有截止时间，所以晚到的兜底触发也会推送。手动运行（取消“只生成预览”）总会发送，内容是去掉已推送条目后剩下的。
 - 每天的完整版存在 `state` 分支的 `archive/YYYY/MM-DD.md`，包括全部入选条目、大模型评分和排序靠前的落选条目及原因；钉钉消息末尾的“完整版与落选条目”就链到这里。归档永久保留，不会自动删除。
 - 回查历史：`state` 分支的 `archive/` 下的 README 是目录页（本仓库的在[这里](https://github.com/kekemao00/digest-bot/tree/state/archive)），按月列出每天的条数、领域分布和三条要点；`archive/items.jsonl` 每行一条推送过的内容（日期、标题、原标题、摘要、链接、来源、领域、评分），可以下载后检索或统计。GitHub 的代码搜索不覆盖 `state` 分支，要全文搜索时用这个文件。
 - `state` 分支还存着去重记录（`state.json`，只保留最近 30 天），和代码历史分开。
 - 钉钉配置有误、推送失败或所有信息源都抓取失败时，这次运行会在 Actions 页面标红，GitHub 也会按你的通知设置发邮件提醒。
 - 公开仓库连续 60 天没有活动时，GitHub 会自动停用定时任务，停用后在 Actions 页面重新启用即可。
+
+### 准点推送（推荐）
+
+用免费的 [cron-job.org](https://cron-job.org) 每天 07:47 调用 GitHub 的接口启动「每日简报」，通常 1 分钟内开始运行，8 点前送达。GitHub 自带的定时任务保留作兜底，外部服务出问题时也不会漏推。
+
+**第 1 步：建一个只能触发 Actions 的 token**
+
+在 GitHub 右上角头像 → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → Generate new token：
+
+| 选项 | 填什么 |
+| --- | --- |
+| Token name | `digest-bot 定时触发` |
+| Expiration | 一年。到期前 GitHub 会发邮件提醒，换一个新 token 填回 cron-job.org 即可；过期期间由 GitHub 自带的定时任务兜底 |
+| Repository access | Only select repositories，只选这个仓库 |
+| Permissions | Repository permissions 里把 **Actions** 设为 **Read and write**，其他都不用加（Metadata 只读会自动带上） |
+
+生成后复制 token，它只显示一次。这个 token 只能启动和查看本仓库的工作流，不能改代码，也读不到 Secrets。万一泄露，最多被人多触发几次推送；在同一个页面删掉它就失效了。
+
+**第 2 步：在 cron-job.org 上建定时任务**
+
+注册并登录后，点 **CREATE CRONJOB**：
+
+- Title：`digest-bot 每日简报`
+- URL：`https://api.github.com/repos/<你的用户名>/<仓库名>/actions/workflows/daily.yml/dispatches`
+- 执行时间：每天 07:47，时区选 `Asia/Shanghai`
+- 打开失败通知，接口出错时会发邮件
+
+再到 **ADVANCED** 里设置：
+
+- Request method：`POST`
+- Headers，逐行添加：
+
+  | Key | Value |
+  | --- | --- |
+  | `Accept` | `application/vnd.github+json` |
+  | `Authorization` | `Bearer <第 1 步的 token>` |
+  | `X-GitHub-Api-Version` | `2022-11-28` |
+  | `Content-Type` | `application/json` |
+
+- Request body：
+
+  ```json
+  {"ref": "main", "inputs": {"dry_run": "false", "scheduled": "true"}}
+  ```
+
+  `scheduled` 让这次运行和定时触发一样，当天已经推送过就跳过，所以外部服务重试或者和兜底触发撞在一起，也不会重复推送。
+
+**第 3 步：测试**
+
+保存后点 **TEST RUN**。返回 `204` 就是成功，Actions 页面会多出一次「每日简报」运行。当天已经推送过的话，这次运行会在日志里写「今天已经推送过」并跳过，所以白天随时可以测试。
+
+返回 `401` 说明 token 填错或已过期；`404` 说明 URL 里的仓库名不对，或者 token 没有选这个仓库；`422` 说明 Request body 格式不对。
 
 ## 配置大模型（可选）
 
@@ -240,7 +292,7 @@ git push https://github.com/<你的用户名>/<私有仓库名>.git main
 ## 安全
 
 - 密钥只存在 GitHub Secrets，代码会拒绝把消息发往 `oapi.dingtalk.com` 以外的地址，日志里不会出现 webhook 地址、token 或签名。
-- 每日任务分成两步：生成和推送的任务能读到密钥，但没有写仓库的权限；保存数据的任务有写权限，但不接触任何密钥，也不运行 Python 依赖，只把数据提交到 `state` 分支。只由手动或定时触发，外部提交的 PR 拿不到任何密钥。
+- 每日任务分成两步：生成和推送的任务能读到密钥，但没有写仓库的权限；保存数据的任务有写权限，但不接触任何密钥，也不运行 Python 依赖，只把数据提交到 `state` 分支。只由手动、定时或外部定时服务触发，外部提交的 PR 拿不到任何密钥。外部定时服务用的 token 只有本仓库的 Actions 权限，见[准点推送](#准点推送推荐)。
 - 第三方 Action 按 commit SHA 固定版本，Python 依赖带哈希安装，Dependabot 每月检查更新。
 - 外部内容进入消息前会转义 Markdown，链接只允许 http(s)。
 - 大模型：地址必须是 https，不跟随跳转，日志里不出现地址、密钥和模型原始输出。抓来的内容在提示词里标明是数据；模型的输出只取几个文本字段，去掉其中的链接、按长度截断，再和外部内容一样转义。消息里的链接全部来自原始数据，即使网页内容试图操纵模型，也只能影响一句文字，加不了链接。

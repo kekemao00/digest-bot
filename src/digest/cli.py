@@ -36,6 +36,12 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
         default=_truthy(os.environ.get("DIGEST_DRY_RUN")),
         help="只生成预览，不发送（也可用环境变量 DIGEST_DRY_RUN=true）",
     )
+    parser.add_argument(
+        "--scheduled",
+        action="store_true",
+        default=_truthy(os.environ.get("DIGEST_SCHEDULED")),
+        help="按定时推送处理：当天已经推送过就跳过（也可用环境变量 DIGEST_SCHEDULED=true）",
+    )
     parser.add_argument("--out", type=Path, help="把钉钉消息和完整版写到这个目录")
     parser.add_argument(
         "--archive-dir",
@@ -100,8 +106,9 @@ def main(argv: list[str] | None = None) -> int:
     with make_client() as client:
         channel: DingTalk | None = None
         if not args.dry_run:
-            # 定时任务可能因为 GitHub 延迟或手动重跑在同一天触发两次，只推一次
-            if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and state.last_sent == now.date().isoformat():
+            # 定时推送有几路触发（外部定时服务和 GitHub 自带的定时任务互为备用），同一天会到达多次，只推一次
+            scheduled = args.scheduled or os.environ.get("GITHUB_EVENT_NAME") == "schedule"
+            if scheduled and state.last_sent == now.date().isoformat():
                 log.info("今天（%s）已经推送过，定时任务不再重复推送", state.last_sent)
                 return 0
             # 钉钉配置有误时尽早失败，不白白抓取和调用大模型

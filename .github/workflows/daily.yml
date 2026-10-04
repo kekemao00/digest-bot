@@ -1,20 +1,24 @@
 name: 每日简报
 
+# 准点推送靠外部定时服务（如 cron-job.org）每天 07:47 调用 workflow_dispatch，带 scheduled=true，
+# 设置方法见 README「准点推送」。下面 GitHub 自带的定时任务只作兜底：它不保证准点，
+# 负载高时会延迟几个小时（2026-10-04 的 07:47 晚了 3 小时才运行），严重时直接丢弃、不补跑。
+# 几路触发同一天都会到达，谁先到谁推送，后到的读到当天已推送就跳过
 on:
   schedule:
-    # 北京时间 07:47（UTC 23:47）触发。GitHub 的定时任务整点最拥挤、常常延迟，
-    # 提前十几分钟触发，消息通常在 8 点前后送达
-    - cron: "47 23 * * *"
-    # 备用触发：负载高时 GitHub 会直接丢弃定时任务，不补跑（2026-10-04 的 07:47 就没有触发）。
-    # 当天已经推送过时，这两次读到去重状态后直接跳过，不会重复推送
-    - cron: "37 0 * * *"  # 北京时间 08:37
-    - cron: "37 1 * * *"  # 北京时间 09:37
+    - cron: "47 23 * * *"  # 北京时间 07:47
+    - cron: "37 0 * * *"   # 北京时间 08:37
+    - cron: "37 1 * * *"   # 北京时间 09:37
   workflow_dispatch:
     inputs:
       dry_run:
         description: 只生成预览，不发送到钉钉
         type: boolean
         default: true
+      scheduled:
+        description: 外部定时服务调用时用，手动运行不用勾：当天已经推送过就跳过
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -55,6 +59,7 @@ jobs:
           PYTHONPATH: src
           # 手动运行时按勾选决定；定时运行时 inputs 为空，即正式发送
           DIGEST_DRY_RUN: ${{ inputs.dry_run }}
+          DIGEST_SCHEDULED: ${{ inputs.scheduled }}
           DINGTALK_WEBHOOK: ${{ secrets.DINGTALK_WEBHOOK }}
           DINGTALK_SECRET: ${{ secrets.DINGTALK_SECRET }}
           # 三项都配置了才启用大模型，否则用原文标题和简介
