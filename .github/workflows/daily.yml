@@ -9,9 +9,10 @@ run-name: >-
   || inputs.scheduled && '准点触发'
   || '手动推送') }}
 
-# 准点推送靠外部定时服务（如 cron-job.org）每天 07:47 和 19:47 调用 workflow_dispatch，带 scheduled=true，
-# 晚上那次再带 edition=evening，设置方法见 README「准点推送」。下面 GitHub 自带的定时任务只作兜底：
-# 它不保证准点，负载高时会延迟几个小时（2026-10-04 的 07:47 晚了 3 小时才运行），严重时直接丢弃、不补跑。
+# 准点推送靠外部定时服务（如 cron-job.org）每天 07:30 和 19:30 调用 workflow_dispatch，带 scheduled=true，
+# 晚上那次再带 edition=evening，设置方法见 README「准点推送」。下面 GitHub 自带的定时任务只作兜底，
+# 时间避开 GitHub 最拥挤的整点，并排在准点触发之后。
+# GitHub 的定时任务不保证准点，负载高时会延迟几个小时（2026-10-04 的 07:47 晚了 3 小时才运行），严重时直接丢弃、不补跑。
 # 几路触发同一天都会到达，每一版谁先到谁推送，后到的读到这一版今天已处理过就跳过
 on:
   schedule:
