@@ -17,6 +17,33 @@ FIXTURES = Path(__file__).parent / "fixtures"
 NOW = datetime(2026, 10, 3, 8, 2, tzinfo=ZoneInfo("Asia/Shanghai"))
 
 
+# 运行环境里的这些变量会改变程序行为：CI 里有 GitHub Actions 的 Summary、步骤输出和事件名，
+# 本地可能配着钉钉和大模型。测试一律从干净的环境开始，需要的变量由各测试自己设置，
+# 否则测试里用假数据跑出的简报会写进 CI 运行页面的 Summary
+HOST_ENV = (
+    "GITHUB_STEP_SUMMARY",
+    "GITHUB_OUTPUT",
+    "GITHUB_EVENT_NAME",
+    "GITHUB_REPOSITORY",
+    "GITHUB_SERVER_URL",
+    "DIGEST_DRY_RUN",
+    "DIGEST_SCHEDULED",
+    "DIGEST_EDITION",
+    "DIGEST_CRON",
+    "DINGTALK_WEBHOOK",
+    "DINGTALK_SECRET",
+    "LLM_BASE_URL",
+    "LLM_API_KEY",
+    "LLM_MODEL",
+)
+
+
+@pytest.fixture(autouse=True)
+def clean_env(monkeypatch):
+    for name in HOST_ENV:
+        monkeypatch.delenv(name, raising=False)
+
+
 @pytest.fixture
 def config():
     return load_config()
