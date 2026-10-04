@@ -131,6 +131,23 @@ def test_scheduled_run_sends_once_per_day(network, monkeypatch):
     assert len(network) == 2
 
 
+def test_external_scheduler_sends_once_per_day(network, monkeypatch):
+    # 外部定时服务通过 workflow_dispatch 触发并带上 scheduled=true，和 GitHub 自带的定时任务一样每天只推一次
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "workflow_dispatch")
+    monkeypatch.setenv("DIGEST_SCHEDULED", "true")
+    assert cli.main([]) == 0
+    assert cli.main([]) == 0  # 外部服务重试：跳过
+    assert len(network) == 1
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "schedule")
+    monkeypatch.setenv("DIGEST_SCHEDULED", "")  # GitHub 自带的定时任务晚到，inputs 为空：同样跳过
+    assert cli.main([]) == 0
+    assert len(network) == 1
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "workflow_dispatch")
+    monkeypatch.setenv("DIGEST_SCHEDULED", "false")  # 手动运行照常发送
+    assert cli.main([]) == 0
+    assert len(network) == 2
+
+
 def test_missing_webhook_fails_before_fetching(network, monkeypatch):
     fetched = []
     network.routes["hn.algolia.com"] = lambda request: fetched.append(request) or httpx.Response(500)
