@@ -218,8 +218,10 @@ git push https://github.com/<你的用户名>/<私有仓库名>.git main
 - 每天的完整版存在 `state` 分支的 `archive/YYYY/MM-DD.md`，包括全部入选条目、大模型评分和排序靠前的落选条目及原因；钉钉消息末尾的“完整版与落选条目”就链到这里。归档永久保留，不会自动删除。
 - 回查历史：`state` 分支的 `archive/` 下的 README 是目录页（本仓库的在[这里](https://github.com/kekemao00/digest-bot/tree/state/archive)），按月列出每天的条数、领域分布和三条要点；`archive/items.jsonl` 每行一条推送过的内容（日期、标题、原标题、摘要、链接、来源、领域、评分），可以下载后检索或统计。GitHub 的代码搜索不覆盖 `state` 分支，要全文搜索时用这个文件。
 - `state` 分支还存着去重记录（`state.json`，只保留最近 30 天），和代码历史分开。
+- Actions 页面上，每次运行的名称标明了触发方式：「准点触发」「GitHub 兜底」「预览」「手动推送」。一天里真正推送的只有先到的那一次，其余的点进去，Summary 写着「已推送过，跳过」。
+- 推送成功后，去重记录和完整版要提交到 `state` 分支。这一步遇到网络错误会自动重试，避免下一路触发读不到「今天已推送」而重复推送。
 - 钉钉配置有误、推送失败或所有信息源都抓取失败时，这次运行会在 Actions 页面标红，GitHub 也会按你的通知设置发邮件提醒。
-- 公开仓库连续 60 天没有活动时，GitHub 会自动停用定时任务，停用后在 Actions 页面重新启用即可。
+- 公开仓库连续 60 天没有活动时，GitHub 会自动停用「每日简报」工作流，外部定时服务也触发不了（cron-job.org 会收到 `422` 并发邮件）。停用后在 Actions 页面重新启用即可。
 
 ### 准点推送（推荐）
 
@@ -255,9 +257,11 @@ git push https://github.com/<你的用户名>/<私有仓库名>.git main
   | Key | Value |
   | --- | --- |
   | `Accept` | `application/vnd.github+json` |
-  | `Authorization` | `Bearer <第 1 步的 token>` |
+  | `Authorization` | `Bearer github_pat_…`（`Bearer`、一个空格、再接第 1 步的 token） |
   | `X-GitHub-Api-Version` | `2022-11-28` |
   | `Content-Type` | `application/json` |
+
+  Authorization 的值最容易填错：开头的 `Bearer ` 不能省，只填 token 会返回 `401`。
 
 - Request body：
 
@@ -269,9 +273,16 @@ git push https://github.com/<你的用户名>/<私有仓库名>.git main
 
 **第 3 步：测试**
 
-保存后点 **TEST RUN**。返回 `204` 就是成功，Actions 页面会多出一次「每日简报」运行。当天已经推送过的话，这次运行会在日志里写「今天已经推送过」并跳过，所以白天随时可以测试。
+保存后点 **TEST RUN**。返回 `204` 就是成功，Actions 页面会多出一次「每日简报 · 准点触发」。当天已经推送过的话，这次运行的 Summary 会写「已推送过，跳过」，不会重复发消息，所以白天随时可以测试。
 
-返回 `401` 说明 token 填错或已过期；`404` 说明 URL 里的仓库名不对，或者 token 没有选这个仓库；`422` 说明 Request body 格式不对。
+返回其他状态码时：
+
+| 状态码 | 原因 |
+| --- | --- |
+| `401` | GitHub 没认出 token。最常见的是 Authorization 的值漏了开头的 `Bearer `；其次是 token 没复制完整、首尾带了空格，或者已过期、被删除。ADVANCED 里的 HTTP authentication 要保持关闭 |
+| `403` | token 没有 Actions 的写权限，回第 1 步检查 Permissions |
+| `404` | URL 里的用户名或仓库名不对，或者 token 没有选这个仓库 |
+| `422` | Request body 格式不对，或者「每日简报」工作流因为 60 天没有活动被停用了，见[定时推送和归档](#定时推送和归档) |
 
 ## 配置大模型（可选）
 

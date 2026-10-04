@@ -18,6 +18,18 @@ if git diff --cached --quiet; then
   exit 0
 fi
 git commit -q -m "简报数据 $(TZ=Asia/Shanghai date +%Y-%m-%d)"
-# token 只在这一条命令里出现在 URL 中，不写进 git 配置
-git push -q "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" HEAD:refs/heads/state
-echo "state 已保存"
+# 消息已经推送出去了，这里保存失败的话，下一路定时触发读不到「今天已推送」，会把同样的内容再推一遍，
+# 所以遇到网络抖动要重试。同一时间只有一次运行在写 state 分支，不会有冲突
+for attempt in 1 2 3; do
+  # token 只在这一条命令里出现在 URL 中，不写进 git 配置
+  if git push -q "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" HEAD:refs/heads/state; then
+    echo "state 已保存"
+    exit 0
+  fi
+  if [ "$attempt" -lt 3 ]; then
+    echo "state 保存失败，$((attempt * 10)) 秒后重试" >&2
+    sleep $((attempt * 10))
+  fi
+done
+echo "state 保存失败，已重试 3 次" >&2
+exit 1
