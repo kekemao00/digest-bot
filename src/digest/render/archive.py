@@ -32,7 +32,7 @@ def render(selection: Selection, config: Config, now: datetime, status: str | No
     matcher = InterestMatcher(config.focus)
     items = selection.items
     lines = [
-        f"# {config.title} · {now:%Y-%m-%d} 周{WEEKDAYS[now.weekday()]}",
+        f"# {config.edition_title} · {now:%Y-%m-%d} 周{WEEKDAYS[now.weekday()]}",
         "",
         f"> 生成于 {now:%H:%M}（{config.timezone}）· 候选 {selection.candidates} 条 · 入选 {len(items)} 条",
     ]
@@ -44,7 +44,7 @@ def render(selection: Selection, config: Config, now: datetime, status: str | No
     numbers = numbering(items)
     highlights = [h for h in selection.highlights if h.key in numbers]
     if highlights:
-        lines += ["", "## 今日要点", ""]
+        lines += ["", f"## {config.highlights_heading}", ""]
         lines += [f"{n}. {md_text(h.text)}（第 {numbers[h.key]} 条）" for n, h in enumerate(highlights, 1)]
     number = 0
     for section, section_items in selection.sections:

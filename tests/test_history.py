@@ -47,3 +47,23 @@ def test_rerun_replaces_the_day_and_keeps_history(config, hn_source, hn_items, t
     assert readme.index("10月4日") < readme.index("9月30日")
     assert "[旧条目](https://old.test)" in readme
     assert "共 2 天" in readme
+
+
+def test_evening_edition_listed_apart(config, hn_source, hn_items, tmp_path):
+    morning = selection_for(config, hn_source, hn_items)
+    history.update(tmp_path, morning, config, date(2026, 10, 4))
+    evening_config = config.for_evening()
+    evening = selection_for(evening_config, hn_source, hn_items[:3])
+    history.update(tmp_path, evening, evening_config, date(2026, 10, 4))
+    history.update(tmp_path, evening, evening_config, date(2026, 10, 4))  # 晚间版重跑只替换晚间版的记录
+
+    rows = [json.loads(line) for line in (tmp_path / "items.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert [r["edition"] for r in rows].count("morning") == len(morning.items)
+    assert [r["edition"] for r in rows].count("evening") == len(evening.items)
+    readme = (tmp_path / "README.md").read_text(encoding="utf-8")
+    assert readme.startswith("# 每日简报归档") and "共 1 天" in readme
+    # 同一天晚间版在上
+    evening_line = f"- [10月4日 周日 晚间](2026/10-04-evening.md) · {len(evening.items)} 条"
+    morning_line = f"- [10月4日 周日](2026/10-04.md) · {len(morning.items)} 条"
+    assert evening_line in readme and morning_line in readme
+    assert readme.index(evening_line) < readme.index(morning_line)

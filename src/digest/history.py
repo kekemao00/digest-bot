@@ -33,6 +33,7 @@ def records(selection: Selection, config: Config, today: date) -> list[dict[str,
             rows.append(
                 {
                     "date": today.isoformat(),
+                    "edition": config.edition,
                     "n": numbers[item.key],
                     "section": section.name,
                     "title": item.title_zh or item.title,
@@ -52,16 +53,21 @@ def records(selection: Selection, config: Config, today: date) -> list[dict[str,
     return rows
 
 
+def _edition(row: dict[str, Any]) -> str:
+    # 加晚间版之前的记录没有 edition 字段，都是早间版
+    return row.get("edition") or "morning"
+
+
 def update(archive_dir: Path, selection: Selection, config: Config, today: date) -> None:
-    """把当天的入选条目写进逐条清单并重建目录页。同一天重跑时替换当天的记录，不会重复。"""
+    """把这一版的入选条目写进逐条清单并重建目录页。同一天同一版重跑时替换原来的记录，不会重复。"""
     archive_dir.mkdir(parents=True, exist_ok=True)
     path = archive_dir / INDEX
     day = today.isoformat()
-    # 其他日期的行原样保留，即使某一行解析不了也不丢
+    # 其他日期和另一版的行原样保留，即使某一行解析不了也不丢
     kept: list[tuple[str, dict[str, Any]]] = []
     if path.exists():
         for line in path.read_text(encoding="utf-8").splitlines():
-            if line.strip() and (row := _row(line)).get("date") != day:
+            if line.strip() and ((row := _row(line)).get("date") != day or _edition(row) != config.edition):
                 kept.append((line, row))
     new = [(json.dumps(row, ensure_ascii=False), row) for row in records(selection, config, today)]
     path.write_text("".join(f"{line}\n" for line, _ in kept + new), encoding="utf-8")
@@ -107,13 +113,17 @@ def render_readme(rows: list[dict[str, Any]], config: Config) -> str:
         if (when.year, when.month) != month:
             month = (when.year, when.month)
             lines += ["", f"## {when.year} 年 {when.month} 月", ""]
-        day_rows = sorted(by_day[day], key=lambda r: r.get("n") or 0)
-        label = f"[{when.month}月{when.day}日 周{WEEKDAYS[when.weekday()]}]({when:%Y}/{when:%m-%d}.md)"
-        summary = f"{len(day_rows)} 条"
-        if topics := _topics(day_rows):
-            summary += f"｜{topics}"
-        lines.append(f"- {label} · {summary}  ")
-        lines.append(f"  {_gist(day_rows)}")
+        day_label = f"{when.month}月{when.day}日 周{WEEKDAYS[when.weekday()]}"
+        # 同一天里晚间版在上面，和整页最新的在最上面一致
+        for edition, suffix, name in (("evening", "-evening", " 晚间"), ("morning", "", "")):
+            edition_rows = sorted((r for r in by_day[day] if _edition(r) == edition), key=lambda r: r.get("n") or 0)
+            if not edition_rows:
+                continue
+            summary = f"{len(edition_rows)} 条"
+            if topics := _topics(edition_rows):
+                summary += f"｜{topics}"
+            lines.append(f"- [{day_label}{name}]({when:%Y}/{when:%m-%d}{suffix}.md) · {summary}  ")
+            lines.append(f"  {_gist(edition_rows)}")
     return "\n".join(lines) + "\n"
 
 

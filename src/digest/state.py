@@ -23,23 +23,33 @@ class State:
         self.keep_days = keep_days
         self.sent: dict[str, str] = {}  # 归一化 URL -> 推送日期
         self.pages: dict[str, list[str]] = {}  # 信息源 id -> 页面上见过的文章链接
-        self.last_sent: str | None = None  # 最近一次推送的日期，防止定时任务同一天推两次
+        self.last_sent: str | None = None  # 最近一次推送早间版的日期，防止定时任务同一天推两次
+        self.last_evening: str | None = None  # 最近一次处理完晚间版的日期（推送了，或达标太少不推）
         if path and path.exists():
             data = json.loads(path.read_text(encoding="utf-8"))
             if data.get("version") == VERSION:
                 self.sent = dict(data.get("sent", {}))
                 self.pages = {k: list(v) for k, v in data.get("pages", {}).items()}
                 self.last_sent = data.get("last_sent")
+                self.last_evening = data.get("last_evening")
             else:
                 log.warning("state 文件版本不匹配，按第一次运行处理")
 
     def was_sent(self, item: Item) -> bool:
         return item.canonical in self.sent
 
-    def mark_sent(self, items: list[Item], today: date) -> None:
+    def mark_sent(self, items: list[Item], today: date, edition: str = "morning") -> None:
         for item in items:
             self.sent[item.canonical] = today.isoformat()
-        self.last_sent = today.isoformat()
+        if edition == "evening":
+            self.last_evening = today.isoformat()
+        else:
+            self.last_sent = today.isoformat()
+
+    def done(self, edition: str, today: date) -> bool:
+        """这一版今天是否已经处理过（定时触发据此跳过）。"""
+        last = self.last_evening if edition == "evening" else self.last_sent
+        return last == today.isoformat()
 
     def new_links(self, source_id: str, links: list[str]) -> list[str] | None:
         """返回页面上第一次出现的链接；这个来源第一次运行时返回 None（只记录，不推送旧文章）。"""
@@ -59,6 +69,7 @@ class State:
         data = {
             "version": VERSION,
             "last_sent": self.last_sent,
+            "last_evening": self.last_evening,
             "sent": dict(sorted(self.sent.items())),
             "pages": self.pages,
         }

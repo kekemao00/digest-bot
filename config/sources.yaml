@@ -9,6 +9,18 @@ digest:
   # 即 https://github.com/<仓库>/blob/state/archive/YYYY/MM-DD.md
   archive_base_url: ""
 
+# 晚间版：每天晚上补一份短的，只看白天会更新的板块，早上推过的不再出现。
+# 推送时间由外部定时服务和 daily.yml 里北京时间 15 点以后的几行 cron 决定，见 README「准点推送」
+evening:
+  enabled: true        # 改成 false 就只推早间版
+  title: 晚间简报
+  max_items: 8         # 最多几条
+  min_items: 3         # 达标的少于这么多条，当晚不推送
+  sections: [world, tech, labs]
+  window_hours: 14     # 只看最近多少小时内发布的内容，大致从早间版推送前后算起
+  highlights: 2        # 今晚要点的条数，0 表示不写
+  latest_hour: 23      # 定时触发到这个钟点还没推送，当晚就不再推，避免深夜打扰
+
 # 板块按这里的顺序出现在消息里；icon 显示在板块标题前
 # 各板块上限之和（18）大于全天总数（15），名次靠后的自动让位
 sections:
