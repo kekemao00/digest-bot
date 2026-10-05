@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月5日 周一 晚间](2026/10-05-evening.md) · 8 条｜软件 2 · 时政 2 · AI 1 · 金融 1 · 安全 1 · 科学 1  
+  [丹麦数据泄露涉及 880 万人个人信息](https://www.cpr.dk/cpr-nyt/nyhedsarkiv/2026/okt/omfattende-uautoriseret-adgang-til-borgeres-cpr-oplysninger)；[穆迪预测 2029 年西方人口萎缩加重财政压力](https://www.cnbc.com/2026/10/05/aging-population-moodys-public-finances.html)
 - [10月5日 周一](2026/10-05.md) · 14 条｜AI 6 · 科学 3 · 软件 2 · 时政 2 · 金融 1  
   [全球液化天然气供应面临严重紧张](https://www.economist.com/finance-and-economics/2026/10/04/the-world-is-facing-an-almighty-lng-crunch)；[基辅北桥连续两天遭俄军袭击](https://www.bbc.co.uk/news/videos/cmglwkyl9djyo?at_medium=RSS&at_campaign=rss)；[花粉化石研究重建东非草原两万五千年生态变化](https://doi.org/10.1073/pnas.2607372123)
 - [10月4日 周日 晚间](2026/10-04-evening.md) · 8 条｜AI 2 · 软件 2 · 时政 2 · 社会 1 · 其他 1  
