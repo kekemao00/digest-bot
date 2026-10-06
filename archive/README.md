@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 3 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 4 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月7日 周三](2026/10-07.md) · 15 条｜AI 4 · 软件 4 · 金融 2 · 科学 2 · 社会 2 · 安全 1  
+  [弗朗西斯·哈尔岑获 2026 年诺贝尔物理学奖](https://www.nobelprize.org/prizes/physics/2026/)；[美国贸易逆差增至 1056 亿美元，高于预期](https://www.cnbc.com/2026/10/06/trade-deficit-hits-105point6-billion-widest-since-just-before-trump-tariffs-enacted-last-year.html)；[谷歌推出开放轻量多模态嵌入模型](https://deepmind.google/blog/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/)
 - [10月6日 周二 晚间](2026/10-06-evening.md) · 8 条｜AI 2 · 软件 2 · 时政 2 · 金融 1 · 社会 1  
   [世行上调东亚太平洋增长预期至 4.5%](https://www.cnbc.com/2026/10/06/world-bank-east-asia-growth-inflation-ai-exports-.html)；[ChatGPT 生成漫画出现真实漫画家签名](https://www.niemanlab.org/2026/10/chatgpt-is-adding-real-cartoonists-signatures-to-fake-new-yorker-cartoons/)
 - [10月6日 周二](2026/10-06.md) · 14 条｜软件 4 · AI 3 · 安全 2 · 社会 2 · 金融 1 · 科学 1 · 时政 1  
