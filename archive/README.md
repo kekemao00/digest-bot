@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月6日 周二 晚间](2026/10-06-evening.md) · 8 条｜AI 2 · 软件 2 · 时政 2 · 金融 1 · 社会 1  
+  [世行上调东亚太平洋增长预期至 4.5%](https://www.cnbc.com/2026/10/06/world-bank-east-asia-growth-inflation-ai-exports-.html)；[ChatGPT 生成漫画出现真实漫画家签名](https://www.niemanlab.org/2026/10/chatgpt-is-adding-real-cartoonists-signatures-to-fake-new-yorker-cartoons/)
 - [10月6日 周二](2026/10-06.md) · 14 条｜软件 4 · AI 3 · 安全 2 · 社会 2 · 金融 1 · 科学 1 · 时政 1  
   [美军将 Anthropic 列黑名单并停用其工具](https://www.bbc.co.uk/news/articles/c5j9x9pr0240o?at_medium=RSS&at_campaign=rss)；[据报英国威胁驱逐 27 名以色列外交官](https://www.aljazeera.com/news/2026/10/5/uk-threatens-to-expel-27-israeli-diplomats-over-jerusalem-consulate?traffic_source=rss)；[实验发现自主 AI 科学家存在数据泄漏等隐患](https://doi.org/10.1073/pnas.2610214123)
 - [10月5日 周一 晚间](2026/10-05-evening.md) · 8 条｜软件 2 · 时政 2 · AI 1 · 金融 1 · 安全 1 · 科学 1  
