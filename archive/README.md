@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月7日 周三 晚间](2026/10-07-evening.md) · 8 条｜软件 3 · 时政 2 · AI 1 · 金融 1 · 社会 1  
+  [印度央行因通胀风险自 2023 年来首次加息](https://www.cnbc.com/2026/10/07/india-rbi-interest-rates-inflation.html)；[AnyPS5 已映射 87% 的 PS5 系统库](https://github.com/boykopovar/AnyPS5)
 - [10月7日 周三](2026/10-07.md) · 15 条｜AI 4 · 软件 4 · 金融 2 · 科学 2 · 社会 2 · 安全 1  
   [弗朗西斯·哈尔岑获 2026 年诺贝尔物理学奖](https://www.nobelprize.org/prizes/physics/2026/)；[美国贸易逆差增至 1056 亿美元，高于预期](https://www.cnbc.com/2026/10/06/trade-deficit-hits-105point6-billion-widest-since-just-before-trump-tariffs-enacted-last-year.html)；[谷歌推出开放轻量多模态嵌入模型](https://deepmind.google/blog/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/)
 - [10月6日 周二 晚间](2026/10-06-evening.md) · 8 条｜AI 2 · 软件 2 · 时政 2 · 金融 1 · 社会 1  
