@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月8日 周四 晚间](2026/10-08-evening.md) · 6 条｜科学 2 · 金融 1 · 软件 1 · 时政 1 · 社会 1  
+  [官员称俄袭击巴士致 33 人死亡，乌袭击激增](https://www.bbc.co.uk/news/articles/c875pwq134l3o?at_medium=RSS&at_campaign=rss)；[阿波罗软件负责人汉密尔顿逝世，享年 90 岁](https://news.mit.edu/2026/margaret-hamilton-computing-pioneer-dies-1007)
 - [10月8日 周四](2026/10-08.md) · 15 条｜金融 4 · AI 3 · 软件 3 · 科学 3 · 社会 2  
   [派拉蒙天舞与华纳探索完成 1110 亿美元合并](https://arstechnica.com/tech-policy/2026/10/paramount-completes-111b-warner-merger-creating-skydance-behemoth/)；[美国一年期通胀预期升至 3.9%](https://www.cnbc.com/2026/10/07/inflation-fears-on-the-rise-as-one-year-outlook-in-fed-survey-hits-highest-since-may-2023.html)；[研究直接观测到强限域破坏水的氢键网络](https://www.nature.com/articles/s41586-026-10858-0)
 - [10月7日 周三 晚间](2026/10-07-evening.md) · 8 条｜软件 3 · 时政 2 · AI 1 · 金融 1 · 社会 1  
