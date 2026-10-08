@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 5 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 6 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月9日 周五](2026/10-09.md) · 15 条｜AI 5 · 软件 3 · 金融 2 · 科学 2 · 安全 1 · 时政 1 · 社会 1  
+  [纽约联储称关税推高 67 类商品通胀](https://www.cnbc.com/2026/10/08/inflation-tariffs-trump-fed-consumer-goods.html)；[OpenAI 介绍 GPT-6 及面向所有人的智能界面](https://openai.com/index/gpt-6-for-everyone/)；[研究发现 RNA 催化源于动态结构集合](https://www.nature.com/articles/s41586-026-11140-z)
 - [10月8日 周四 晚间](2026/10-08-evening.md) · 6 条｜科学 2 · 金融 1 · 软件 1 · 时政 1 · 社会 1  
   [官员称俄袭击巴士致 33 人死亡，乌袭击激增](https://www.bbc.co.uk/news/articles/c875pwq134l3o?at_medium=RSS&at_campaign=rss)；[阿波罗软件负责人汉密尔顿逝世，享年 90 岁](https://news.mit.edu/2026/margaret-hamilton-computing-pioneer-dies-1007)
 - [10月8日 周四](2026/10-08.md) · 15 条｜金融 4 · AI 3 · 软件 3 · 科学 3 · 社会 2  
