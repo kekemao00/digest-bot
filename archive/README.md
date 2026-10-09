@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 6 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 7 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月10日 周六](2026/10-10.md) · 15 条｜AI 5 · 金融 3 · 科学 2 · 时政 2 · 软件 1 · 安全 1 · 社会 1  
+  [特朗普宣布允许俄罗斯进行柴油交易，泽连斯基批评](https://www.bbc.co.uk/news/articles/cm1dwgr666wno?at_medium=RSS&at_campaign=rss)；[美国人偿债能力恶化，债务警报达大衰退以来水平](https://www.cnbc.com/2026/10/09/american-debt-delinquency.html)；[研究实现带反馈回路的钍-229 光学核钟](https://www.nature.com/articles/s41586-026-11084-4)
 - [10月9日 周五 晚间](2026/10-09-evening.md) · 8 条  
   [纽约一名男子遭 ICE 特工枪击](https://www.bbc.co.uk/news/articles/c59vzk9yypn3o?at_medium=RSS&at_campaign=rss)；[前 OpenAI 员工称因提出安全担忧被解雇](https://www.aljazeera.com/economy/2026/10/9/ex-openai-staff-say-they-were-fired-for-raising-safety-concerns?traffic_source=rss)
 - [10月9日 周五](2026/10-09.md) · 15 条｜AI 5 · 软件 3 · 金融 2 · 科学 2 · 安全 1 · 时政 1 · 社会 1  
