@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月9日 周五 晚间](2026/10-09-evening.md) · 8 条  
+  [纽约一名男子遭 ICE 特工枪击](https://www.bbc.co.uk/news/articles/c59vzk9yypn3o?at_medium=RSS&at_campaign=rss)；[前 OpenAI 员工称因提出安全担忧被解雇](https://www.aljazeera.com/economy/2026/10/9/ex-openai-staff-say-they-were-fired-for-raising-safety-concerns?traffic_source=rss)
 - [10月9日 周五](2026/10-09.md) · 15 条｜AI 5 · 软件 3 · 金融 2 · 科学 2 · 安全 1 · 时政 1 · 社会 1  
   [纽约联储称关税推高 67 类商品通胀](https://www.cnbc.com/2026/10/08/inflation-tariffs-trump-fed-consumer-goods.html)；[OpenAI 介绍 GPT-6 及面向所有人的智能界面](https://openai.com/index/gpt-6-for-everyone/)；[研究发现 RNA 催化源于动态结构集合](https://www.nature.com/articles/s41586-026-11140-z)
 - [10月8日 周四 晚间](2026/10-08-evening.md) · 6 条｜科学 2 · 金融 1 · 软件 1 · 时政 1 · 社会 1  
