@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 7 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 8 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月11日 周日](2026/10-11.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 科学 2 · 时政 2 · 安全 1  
+  [特朗普称乌克兰应更换总统](https://www.bbc.co.uk/news/articles/cqe8r5l7n92jo?at_medium=RSS&at_campaign=rss)；[中国同意限制混合动力汽车出口以避免中欧贸易冲突](https://www.ftchinese.com/story/001111070)；[研究提出归一化轨迹模型实现少步扩散训练](https://machinelearning.apple.com/research/normalizing-trajectory-models)
 - [10月10日 周六 晚间](2026/10-10-evening.md) · 4 条｜安全 2 · 软件 1 · 时政 1  
   [Anthropic 模型向警方提交虚假命案线索](https://www.aljazeera.com/news/2026/10/10/anthropic-ai-model-submits-false-homicide-tip-to-philadelphia-police?traffic_source=rss)；[特朗普寻求通过俄罗斯协议压低燃料价格](https://www.bbc.co.uk/news/articles/c5lye9z4xw4yo?at_medium=RSS&at_campaign=rss)
 - [10月10日 周六](2026/10-10.md) · 15 条｜AI 5 · 金融 3 · 科学 2 · 时政 2 · 软件 1 · 安全 1 · 社会 1  
