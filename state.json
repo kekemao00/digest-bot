@@ -1,12 +1,13 @@
 {
  "version": 1,
  "last_sent": "2026-10-10",
- "last_evening": "2026-10-09",
+ "last_evening": "2026-10-10",
  "sent": {
   "1011now.com/2026/09/30/more-questions-than-answers-about-lincolns-google-data-center-water-electricity-usage": "2026-10-06",
   "aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model": "2026-10-04",
   "alexalejandre.com/programming/lisp/janet-for-the-x32-abi": "2026-10-07",
   "aljazeera.com/economy/2026/10/9/ex-openai-staff-say-they-were-fired-for-raising-safety-concerns?traffic_source=rss": "2026-10-09",
+  "aljazeera.com/news/2026/10/10/anthropic-ai-model-submits-false-homicide-tip-to-philadelphia-police?traffic_source=rss": "2026-10-10",
   "aljazeera.com/news/2026/10/4/is-the-sudanese-army-gaining-momentum-against-the-rsf?traffic_source=rss": "2026-10-04",
   "aljazeera.com/news/2026/10/4/us-withdraws-b-1-bomber-aircraft-from-uks-fairford-base-amid-iran-fears?traffic_source=rss": "2026-10-05",
   "aljazeera.com/news/2026/10/5/fbi-arrests-chinese-foreign-agent-for-spying-on-taiwan-presidents-son?traffic_source=rss": "2026-10-05",
@@ -33,6 +34,7 @@
   "bbc.co.uk/news/articles/c58jzyer1kr0o?at_campaign=rss&at_medium=RSS": "2026-10-06",
   "bbc.co.uk/news/articles/c59vzk9yypn3o?at_campaign=rss&at_medium=RSS": "2026-10-09",
   "bbc.co.uk/news/articles/c5j9x9pr0240o?at_campaign=rss&at_medium=RSS": "2026-10-06",
+  "bbc.co.uk/news/articles/c5lye9z4xw4yo?at_campaign=rss&at_medium=RSS": "2026-10-10",
   "bbc.co.uk/news/articles/c6e3x21ev9wwo?at_campaign=rss&at_medium=RSS": "2026-10-08",
   "bbc.co.uk/news/articles/c875pwq134l3o?at_campaign=rss&at_medium=RSS": "2026-10-08",
   "bbc.co.uk/news/articles/c8kgezxn54qko?at_campaign=rss&at_medium=RSS": "2026-10-07",
@@ -43,6 +45,7 @@
   "bbc.co.uk/news/articles/cqj6jenp26zyo?at_campaign=rss&at_medium=RSS": "2026-10-05",
   "bbc.co.uk/news/articles/cqzjx7z2r4gko?at_campaign=rss&at_medium=RSS": "2026-10-07",
   "bbc.co.uk/news/videos/cmglwkyl9djyo?at_campaign=rss&at_medium=RSS": "2026-10-05",
+  "beaksec.github.io/posts/telegram-desktop-one-click-account-takeover": "2026-10-10",
   "bevy.org/news/bevy-0-20": "2026-10-09",
   "cambridge.org/core/services/aop-cambridge-core/content/view/30CC4826561366615BFAEC807CDE28A7/S0007125026108046a.pdf/adhd-autism-or-complex-trauma-the-complicated-nature-of-the-question.pdf": "2026-10-05",
   "cbc.ca/radio/asithappens/milwaukee-swatting-couple-9.7370118": "2026-10-07",
@@ -134,6 +137,7 @@
   "quantamagazine.org/how-does-life-unfold-a-landscape-metaphor-comes-into-its-own-20261009": "2026-10-10",
   "quantamagazine.org/is-ai-the-end-of-math-as-we-know-it-20261005": "2026-10-06",
   "quantamagazine.org/sea-monkeys-show-scientists-how-to-rewrite-a-rule-of-turbulence-20261002": "2026-10-04",
+  "rea.tools/": "2026-10-10",
   "research.google/blog/open-and-emergent-problems-in-agentic-privacy-and-security-a-contextual-angle": "2026-10-06",
   "research.google/blog/toward-provably-private-learning-from-federated-data": "2026-10-05",
   "reuters.com/world/us-imposes-sanctions-international-criminal-court-hours-after-former-judge-wins-2026-10-09": "2026-10-10",
@@ -184,8 +188,8 @@
    "https://ai.meta.com/blog/alta-daily-fashion-app-segment-anything/"
   ],
   "deepseek": [
-   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260910",
+   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260821",
    "https://api-docs.deepseek.com/news/news260813",
    "https://api-docs.deepseek.com/news/news260424",

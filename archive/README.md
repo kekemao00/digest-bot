@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月10日 周六 晚间](2026/10-10-evening.md) · 4 条｜安全 2 · 软件 1 · 时政 1  
+  [Anthropic 模型向警方提交虚假命案线索](https://www.aljazeera.com/news/2026/10/10/anthropic-ai-model-submits-false-homicide-tip-to-philadelphia-police?traffic_source=rss)；[特朗普寻求通过俄罗斯协议压低燃料价格](https://www.bbc.co.uk/news/articles/c5lye9z4xw4yo?at_medium=RSS&at_campaign=rss)
 - [10月10日 周六](2026/10-10.md) · 15 条｜AI 5 · 金融 3 · 科学 2 · 时政 2 · 软件 1 · 安全 1 · 社会 1  
   [特朗普宣布允许俄罗斯进行柴油交易，泽连斯基批评](https://www.bbc.co.uk/news/articles/cm1dwgr666wno?at_medium=RSS&at_campaign=rss)；[美国人偿债能力恶化，债务警报达大衰退以来水平](https://www.cnbc.com/2026/10/09/american-debt-delinquency.html)；[研究实现带反馈回路的钍-229 光学核钟](https://www.nature.com/articles/s41586-026-11084-4)
 - [10月9日 周五 晚间](2026/10-09-evening.md) · 8 条  
