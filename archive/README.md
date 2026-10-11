@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 8 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 9 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月12日 周一](2026/10-12.md) · 11 条｜软件 4 · AI 2 · 时政 2 · 社会 2 · 科学 1  
+  [美俄达成柴油交易，欧洲盟友表示支持乌克兰](https://www.ftchinese.com/story/001111075)；[AirLLM 让 70B 模型可在单张 4GB 显卡推理](https://github.com/lyogavin/airllm)；[研究提出意识由相互作用的自我模式构成](https://doi.org/10.1073/pnas.2628598123)
 - [10月11日 周日 晚间](2026/10-11-evening.md) · 7 条  
   [教宗利奥因肺部发现肿块将接受手术](https://www.bbc.co.uk/news/articles/c6m2dnngvw8xo?at_medium=RSS&at_campaign=rss)；[马斯克称将在印度推出低价星链服务](https://www.aljazeera.com/economy/2026/10/11/musk-vows-affordable-starlink-in-india-as-he-escalates-feud-with-ambani?traffic_source=rss)
 - [10月11日 周日](2026/10-11.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 科学 2 · 时政 2 · 安全 1  
