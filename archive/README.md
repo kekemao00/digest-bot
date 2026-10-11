@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月11日 周日 晚间](2026/10-11-evening.md) · 7 条  
+  [教宗利奥因肺部发现肿块将接受手术](https://www.bbc.co.uk/news/articles/c6m2dnngvw8xo?at_medium=RSS&at_campaign=rss)；[马斯克称将在印度推出低价星链服务](https://www.aljazeera.com/economy/2026/10/11/musk-vows-affordable-starlink-in-india-as-he-escalates-feud-with-ambani?traffic_source=rss)
 - [10月11日 周日](2026/10-11.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 科学 2 · 时政 2 · 安全 1  
   [特朗普称乌克兰应更换总统](https://www.bbc.co.uk/news/articles/cqe8r5l7n92jo?at_medium=RSS&at_campaign=rss)；[中国同意限制混合动力汽车出口以避免中欧贸易冲突](https://www.ftchinese.com/story/001111070)；[研究提出归一化轨迹模型实现少步扩散训练](https://machinelearning.apple.com/research/normalizing-trajectory-models)
 - [10月10日 周六 晚间](2026/10-10-evening.md) · 4 条｜安全 2 · 软件 1 · 时政 1  
