@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 9 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 10 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月13日 周二](2026/10-13.md) · 14 条｜AI 6 · 金融 3 · 时政 2 · 软件 1 · 安全 1 · 科学 1  
+  [印度 9 月零售通胀升至 5.54%，高于预期](https://www.cnbc.com/2026/10/12/india-inflation-oil-energy-iran-war.html)；[研究揭示细菌通过类端粒酶逆转录抗病毒](https://www.nature.com/articles/s41586-026-11250-8)；[黑客远程启动欧洲超市冰柜自动除霜](https://www.tomshardware.com/tech-industry/cyber-security/unprecedented-cyberattack-cripples-supermarket-fridges-across-europe-as-hackers-activate-automatic-defrosting-delivery-and-store-prices-also-impacted-by-incident)
 - [10月12日 周一 晚间](2026/10-12-evening.md) · 7 条｜金融 2 · 软件 2 · 硬件 1 · 安全 1 · 时政 1  
   [Hall 与 Woodford 因宏观经济模型研究获诺贝尔经济学奖](https://www.cnbc.com/2026/10/12/nobel-economics-prize-winner-woodford-hall.html)；[芬兰要求 Google 暂停数据中心建设，引发环保争议](https://www.theguardian.com/technology/2026/oct/06/google-datacentres-finland-temporary-halt-environmental-impact-assessment)
 - [10月12日 周一](2026/10-12.md) · 11 条｜软件 4 · AI 2 · 时政 2 · 社会 2 · 科学 1  
