@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月12日 周一 晚间](2026/10-12-evening.md) · 7 条｜金融 2 · 软件 2 · 硬件 1 · 安全 1 · 时政 1  
+  [Hall 与 Woodford 因宏观经济模型研究获诺贝尔经济学奖](https://www.cnbc.com/2026/10/12/nobel-economics-prize-winner-woodford-hall.html)；[芬兰要求 Google 暂停数据中心建设，引发环保争议](https://www.theguardian.com/technology/2026/oct/06/google-datacentres-finland-temporary-halt-environmental-impact-assessment)
 - [10月12日 周一](2026/10-12.md) · 11 条｜软件 4 · AI 2 · 时政 2 · 社会 2 · 科学 1  
   [美俄达成柴油交易，欧洲盟友表示支持乌克兰](https://www.ftchinese.com/story/001111075)；[AirLLM 让 70B 模型可在单张 4GB 显卡推理](https://github.com/lyogavin/airllm)；[研究提出意识由相互作用的自我模式构成](https://doi.org/10.1073/pnas.2628598123)
 - [10月11日 周日 晚间](2026/10-11-evening.md) · 7 条  
