@@ -1,7 +1,7 @@
 {
  "version": 1,
  "last_sent": "2026-10-13",
- "last_evening": "2026-10-12",
+ "last_evening": "2026-10-13",
  "sent": {
   "1011now.com/2026/09/30/more-questions-than-answers-about-lincolns-google-data-center-water-electricity-usage": "2026-10-06",
   "aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model": "2026-10-04",
@@ -10,6 +10,7 @@
   "aljazeera.com/economy/2026/10/9/ex-openai-staff-say-they-were-fired-for-raising-safety-concerns?traffic_source=rss": "2026-10-09",
   "aljazeera.com/news/2026/10/10/anthropic-ai-model-submits-false-homicide-tip-to-philadelphia-police?traffic_source=rss": "2026-10-10",
   "aljazeera.com/news/2026/10/12/if-netanyahu-goes-does-anything-really-change-for-palestinians?traffic_source=rss": "2026-10-12",
+  "aljazeera.com/news/2026/10/13/israeli-forces-raid-palestinian-ngos-and-hospital-in-occupied-west-bank?traffic_source=rss": "2026-10-13",
   "aljazeera.com/news/2026/10/4/is-the-sudanese-army-gaining-momentum-against-the-rsf?traffic_source=rss": "2026-10-04",
   "aljazeera.com/news/2026/10/4/us-withdraws-b-1-bomber-aircraft-from-uks-fairford-base-amid-iran-fears?traffic_source=rss": "2026-10-05",
   "aljazeera.com/news/2026/10/5/fbi-arrests-chinese-foreign-agent-for-spying-on-taiwan-presidents-son?traffic_source=rss": "2026-10-05",
@@ -48,6 +49,7 @@
   "bbc.co.uk/news/articles/c875pwq134l3o?at_campaign=rss&at_medium=RSS": "2026-10-08",
   "bbc.co.uk/news/articles/c8kgezxn54qko?at_campaign=rss&at_medium=RSS": "2026-10-07",
   "bbc.co.uk/news/articles/c8zxl62yzxzxo?at_campaign=rss&at_medium=RSS": "2026-10-04",
+  "bbc.co.uk/news/articles/c9y7lgg2vdggo?at_campaign=rss&at_medium=RSS": "2026-10-13",
   "bbc.co.uk/news/articles/ckgel9044vqeo?at_campaign=rss&at_medium=RSS": "2026-10-09",
   "bbc.co.uk/news/articles/ckreyjzzzywqo?at_campaign=rss&at_medium=RSS": "2026-10-04",
   "bbc.co.uk/news/articles/cm1dwgr666wno?at_campaign=rss&at_medium=RSS": "2026-10-10",
@@ -72,6 +74,7 @@
   "cnbc.com/2026/10/08/inflation-tariffs-trump-fed-consumer-goods.html": "2026-10-09",
   "cnbc.com/2026/10/09/american-debt-delinquency.html": "2026-10-10",
   "cnbc.com/2026/10/09/judy-shelton-scott-bessent-treasury.html": "2026-10-11",
+  "cnbc.com/2026/10/12/imf-world-bank-ai-jobs-inflation-.html": "2026-10-13",
   "cnbc.com/2026/10/12/india-inflation-oil-energy-iran-war.html": "2026-10-13",
   "cnbc.com/2026/10/12/nobel-economics-prize-winner-woodford-hall.html": "2026-10-12",
   "conversableeconomist.com/2026/09/28/i-would-like-the-value-of-my-home-to-rise-while-my-property-taxes-fall": "2026-10-11",
@@ -89,6 +92,7 @@
   "doi.org/10.1073/pnas.2619427123": "2026-10-07",
   "doi.org/10.1073/pnas.2619911123": "2026-10-11",
   "doi.org/10.1073/pnas.2628598123": "2026-10-12",
+  "doi.org/10.1111/acel.70751": "2026-10-13",
   "economist.com/finance-and-economics/2026/10/01/financial-astrology-is-a-serious-business-in-india": "2026-10-04",
   "economist.com/finance-and-economics/2026/10/04/the-world-is-facing-an-almighty-lng-crunch": "2026-10-05",
   "economist.com/finance-and-economics/2026/10/05/the-bond-market-sell-off-is-helping-the-dollar": "2026-10-06",
@@ -132,6 +136,8 @@
   "huggingface.co/blog/microsoft/thinkingbox": "2026-10-04",
   "huggingface.co/blog/tiiuae/falcon-emirati": "2026-10-06",
   "insideclimatenews.org/news/07102026/exxonmobil-climate-deception-new-evidence": "2026-10-12",
+  "intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/d-series.html": "2026-10-13",
+  "japannews.yomiuri.co.jp/science-nature/science/20260908-347742": "2026-10-13",
   "karagila.org/2026/openai-pp": "2026-10-09",
   "kevinboone.me/adblock.html": "2026-10-05",
   "letsencrypt.org/2026/10/07/64-day-certs.html": "2026-10-10",
@@ -169,6 +175,7 @@
   "openai.com/index/sophos": "2026-10-09",
   "openai.com/index/teens-learn-and-plan": "2026-10-10",
   "oxide.computer/blog/our-445m-series-d": "2026-10-10",
+  "patreon.com/vihart/posts/vi-harts-big-171939430": "2026-10-13",
   "penguin-mail.com/": "2026-10-07",
   "phoronix.com/news/XDC-2026-Valve-Timur-AMDGPU": "2026-10-05",
   "quake-srp.pages.dev/": "2026-10-09",
@@ -209,6 +216,7 @@
   "wallhop.io/": "2026-10-11",
   "wiro.world/posts/calling-c-func-without-naming-it": "2026-10-09",
   "yossarian.net/til/post/rust-s-derive-often-implies-inline": "2026-10-04",
+  "yyhh.org/blog/2026/10/ai-is-a-tool": "2026-10-13",
   "ziglang.org/download/0.17.0/release-notes.html": "2026-10-04"
  },
  "pages": {
@@ -242,8 +250,8 @@
    "https://ai.meta.com/blog/alta-daily-fashion-app-segment-anything/"
   ],
   "deepseek": [
-   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260910",
+   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260821",
    "https://api-docs.deepseek.com/news/news260813",
    "https://api-docs.deepseek.com/news/news260424",

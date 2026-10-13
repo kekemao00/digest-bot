@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月13日 周二 晚间](2026/10-13-evening.md) · 8 条｜科学 1 · 社会 1 · 其他 6  
+  [研究发现，80 岁供者血细胞可变为年轻干细胞](https://doi.org/10.1111/acel.70751)；[中国 2024 年研发支出首次超过美国，居全球首位](https://japannews.yomiuri.co.jp/science-nature/science/20260908-347742/)
 - [10月13日 周二](2026/10-13.md) · 14 条｜AI 6 · 金融 3 · 时政 2 · 软件 1 · 安全 1 · 科学 1  
   [印度 9 月零售通胀升至 5.54%，高于预期](https://www.cnbc.com/2026/10/12/india-inflation-oil-energy-iran-war.html)；[研究揭示细菌通过类端粒酶逆转录抗病毒](https://www.nature.com/articles/s41586-026-11250-8)；[黑客远程启动欧洲超市冰柜自动除霜](https://www.tomshardware.com/tech-industry/cyber-security/unprecedented-cyberattack-cripples-supermarket-fridges-across-europe-as-hackers-activate-automatic-defrosting-delivery-and-store-prices-also-impacted-by-incident)
 - [10月12日 周一 晚间](2026/10-12-evening.md) · 7 条｜金融 2 · 软件 2 · 硬件 1 · 安全 1 · 时政 1  
