@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 10 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 11 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月14日 周三](2026/10-14.md) · 15 条｜AI 6 · 软件 5 · 科学 2 · 金融 1 · 安全 1  
+  [经济学家预计 9 月 CPI 环比上涨 0.6%，同比上涨 3.6%](https://www.cnbc.com/2026/10/13/september-consumer-price-index-inflation.html)；[研究发现数据受限时混入高资源语言数据优于激进调参](https://machinelearning.apple.com/research/mix-dont-tune)；[研究实现二维交错磁体的原子尺度自旋探测](https://www.nature.com/articles/s41586-026-11257-1)
 - [10月13日 周二 晚间](2026/10-13-evening.md) · 8 条｜科学 1 · 社会 1 · 其他 6  
   [研究发现，80 岁供者血细胞可变为年轻干细胞](https://doi.org/10.1111/acel.70751)；[中国 2024 年研发支出首次超过美国，居全球首位](https://japannews.yomiuri.co.jp/science-nature/science/20260908-347742/)
 - [10月13日 周二](2026/10-13.md) · 14 条｜AI 6 · 金融 3 · 时政 2 · 软件 1 · 安全 1 · 科学 1  
