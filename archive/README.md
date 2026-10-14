@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 11 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 12 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月15日 周四](2026/10-15.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 安全 2 · 科学 2 · 社会 1  
+  [美国 9 月年度通胀率升至 3.7%，汽油涨价主导](https://www.bbc.co.uk/news/articles/cwy8lx3pg4k2o?at_medium=RSS&at_campaign=rss)；[GroundingPI 用视觉原理提升机器人视觉定位](https://arxiv.org/abs/2609.39601)；[碰撞使三重奏星系失去暗物质，挑战替代理论](https://www.quantamagazine.org/triplet-of-ghostly-galaxies-hints-at-what-dark-matter-is-and-isnt-20261014/)
 - [10月14日 周三 晚间](2026/10-14-evening.md) · 7 条｜金融 3 · AI 2 · 软件 1 · 时政 1  
   [俄军袭击乌克兰能源设施，致 60 万人断电](https://www.bbc.co.uk/news/articles/cm2d6e62p49do?at_medium=RSS&at_campaign=rss)；[Google DeepMind 与新加坡合作开发端侧反诈 AI](https://deepmind.google/blog/on-device-ai-scam-detection-mddi/)
 - [10月14日 周三](2026/10-14.md) · 15 条｜AI 6 · 软件 5 · 科学 2 · 金融 1 · 安全 1  
