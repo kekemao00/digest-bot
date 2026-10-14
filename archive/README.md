@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月14日 周三 晚间](2026/10-14-evening.md) · 7 条｜金融 3 · AI 2 · 软件 1 · 时政 1  
+  [俄军袭击乌克兰能源设施，致 60 万人断电](https://www.bbc.co.uk/news/articles/cm2d6e62p49do?at_medium=RSS&at_campaign=rss)；[Google DeepMind 与新加坡合作开发端侧反诈 AI](https://deepmind.google/blog/on-device-ai-scam-detection-mddi/)
 - [10月14日 周三](2026/10-14.md) · 15 条｜AI 6 · 软件 5 · 科学 2 · 金融 1 · 安全 1  
   [经济学家预计 9 月 CPI 环比上涨 0.6%，同比上涨 3.6%](https://www.cnbc.com/2026/10/13/september-consumer-price-index-inflation.html)；[研究发现数据受限时混入高资源语言数据优于激进调参](https://machinelearning.apple.com/research/mix-dont-tune)；[研究实现二维交错磁体的原子尺度自旋探测](https://www.nature.com/articles/s41586-026-11257-1)
 - [10月13日 周二 晚间](2026/10-13-evening.md) · 8 条｜科学 1 · 社会 1 · 其他 6  
