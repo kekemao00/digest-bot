@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月15日 周四 晚间](2026/10-15-evening.md) · 4 条｜金融 2 · AI 1 · 时政 1  
+  [泽连斯基称乌克兰将恢复袭击俄炼油厂](https://www.bbc.co.uk/news/articles/cqwyrnwd9dw1o?at_medium=RSS&at_campaign=rss)；[LFM2.5-24B-A2B 发布，面向快速端侧智能体](https://www.liquid.ai/blog/lfm2-5-24b-a2b)
 - [10月15日 周四](2026/10-15.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 安全 2 · 科学 2 · 社会 1  
   [美国 9 月年度通胀率升至 3.7%，汽油涨价主导](https://www.bbc.co.uk/news/articles/cwy8lx3pg4k2o?at_medium=RSS&at_campaign=rss)；[GroundingPI 用视觉原理提升机器人视觉定位](https://arxiv.org/abs/2609.39601)；[碰撞使三重奏星系失去暗物质，挑战替代理论](https://www.quantamagazine.org/triplet-of-ghostly-galaxies-hints-at-what-dark-matter-is-and-isnt-20261014/)
 - [10月14日 周三 晚间](2026/10-14-evening.md) · 7 条｜金融 3 · AI 2 · 软件 1 · 时政 1  
