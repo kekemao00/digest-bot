@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 12 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 13 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月16日 周五](2026/10-16.md) · 15 条｜AI 4 · 软件 3 · 科学 3 · 社会 3 · 金融 2  
+  [近一半造礁珊瑚面临更高灭绝风险](https://www.nature.com/articles/s41586-026-11263-3)；[美国 PPI 走高，美联储或仍可能加息](https://www.cnbc.com/2026/10/15/pce-ppi-september-fed-reserve-rate-hike.html)；[Google DeepMind 用 AI 加速抗菌肽发现](https://deepmind.google/blog/accelerating-antimicrobial-discovery/)
 - [10月15日 周四 晚间](2026/10-15-evening.md) · 4 条｜金融 2 · AI 1 · 时政 1  
   [泽连斯基称乌克兰将恢复袭击俄炼油厂](https://www.bbc.co.uk/news/articles/cqwyrnwd9dw1o?at_medium=RSS&at_campaign=rss)；[LFM2.5-24B-A2B 发布，面向快速端侧智能体](https://www.liquid.ai/blog/lfm2-5-24b-a2b)
 - [10月15日 周四](2026/10-15.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 安全 2 · 科学 2 · 社会 1  
