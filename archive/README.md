@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月16日 周五 晚间](2026/10-16-evening.md) · 5 条｜软件 2 · 社会 2 · AI 1  
+  [美国俄勒冈州小学遇袭，3 名儿童及 1 名教师死亡](https://www.bbc.co.uk/news/articles/cm89zp48k4kzo?at_medium=RSS&at_campaign=rss)；[印度语言预训练规模达 2.8 万亿词元](https://huggingface.co/blog/nvidia/scaling-indic-pretraining)
 - [10月16日 周五](2026/10-16.md) · 15 条｜AI 4 · 软件 3 · 科学 3 · 社会 3 · 金融 2  
   [近一半造礁珊瑚面临更高灭绝风险](https://www.nature.com/articles/s41586-026-11263-3)；[美国 PPI 走高，美联储或仍可能加息](https://www.cnbc.com/2026/10/15/pce-ppi-september-fed-reserve-rate-hike.html)；[Google DeepMind 用 AI 加速抗菌肽发现](https://deepmind.google/blog/accelerating-antimicrobial-discovery/)
 - [10月15日 周四 晚间](2026/10-15-evening.md) · 4 条｜金融 2 · AI 1 · 时政 1  

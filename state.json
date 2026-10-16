@@ -1,7 +1,7 @@
 {
  "version": 1,
  "last_sent": "2026-10-16",
- "last_evening": "2026-10-15",
+ "last_evening": "2026-10-16",
  "sent": {
   "1011now.com/2026/09/30/more-questions-than-answers-about-lincolns-google-data-center-water-electricity-usage": "2026-10-06",
   "aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model": "2026-10-04",
@@ -12,6 +12,7 @@
   "aljazeera.com/news/2026/10/12/if-netanyahu-goes-does-anything-really-change-for-palestinians?traffic_source=rss": "2026-10-12",
   "aljazeera.com/news/2026/10/13/israeli-forces-raid-palestinian-ngos-and-hospital-in-occupied-west-bank?traffic_source=rss": "2026-10-13",
   "aljazeera.com/news/2026/10/14/how-do-iranians-move-money-abroad-to-avoid-us-sanctions?traffic_source=rss": "2026-10-14",
+  "aljazeera.com/news/2026/10/16/tribals-in-indias-odisha-allege-forgery-behind-lands-taken-for-adani-mine?traffic_source=rss": "2026-10-16",
   "aljazeera.com/news/2026/10/4/is-the-sudanese-army-gaining-momentum-against-the-rsf?traffic_source=rss": "2026-10-04",
   "aljazeera.com/news/2026/10/4/us-withdraws-b-1-bomber-aircraft-from-uks-fairford-base-amid-iran-fears?traffic_source=rss": "2026-10-05",
   "aljazeera.com/news/2026/10/5/fbi-arrests-chinese-foreign-agent-for-spying-on-taiwan-presidents-son?traffic_source=rss": "2026-10-05",
@@ -64,6 +65,7 @@
   "bbc.co.uk/news/articles/ckreyjzzzywqo?at_campaign=rss&at_medium=RSS": "2026-10-04",
   "bbc.co.uk/news/articles/cm1dwgr666wno?at_campaign=rss&at_medium=RSS": "2026-10-10",
   "bbc.co.uk/news/articles/cm2d6e62p49do?at_campaign=rss&at_medium=RSS": "2026-10-14",
+  "bbc.co.uk/news/articles/cm89zp48k4kzo?at_campaign=rss&at_medium=RSS": "2026-10-16",
   "bbc.co.uk/news/articles/cqe8r5l7n92jo?at_campaign=rss&at_medium=RSS": "2026-10-11",
   "bbc.co.uk/news/articles/cqj6jenp26zyo?at_campaign=rss&at_medium=RSS": "2026-10-05",
   "bbc.co.uk/news/articles/cqwyrnwd9dw1o?at_campaign=rss&at_medium=RSS": "2026-10-15",
@@ -170,6 +172,7 @@
   "herecomesthemoon.net/2026/10/async-rust-where-does-the-scheduler-live": "2026-10-07",
   "huggingface.co/blog/allenai/impactful-scheduling": "2026-10-11",
   "huggingface.co/blog/microsoft/thinkingbox": "2026-10-04",
+  "huggingface.co/blog/nvidia/scaling-indic-pretraining": "2026-10-16",
   "huggingface.co/blog/tiiuae/falcon-emirati": "2026-10-06",
   "insideclimatenews.org/news/07102026/exxonmobil-climate-deception-new-evidence": "2026-10-12",
   "intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/d-series.html": "2026-10-13",
@@ -180,6 +183,7 @@
   "letsencrypt.org/2026/10/07/64-day-certs.html": "2026-10-10",
   "lineageos.org/Changelog-32": "2026-10-12",
   "liquid.ai/blog/lfm2-5-24b-a2b": "2026-10-15",
+  "lore.kernel.org/lkml/CAHk-=whTs09_ozN+e09GU68N1wPP56MUzDjrg9rnKxQUa0A_4Q@mail.gmail.com": "2026-10-16",
   "lwn.net/SubscriberLink/1097760/2be4d9e3eeb59039": "2026-10-08",
   "machinelearning.apple.com/research/language-discrimination-multilingual-learning": "2026-10-05",
   "machinelearning.apple.com/research/limits-confidence-diffusion": "2026-10-04",
@@ -206,6 +210,7 @@
   "news.ycombinator.com/item?id=49949438": "2026-10-04",
   "news.ycombinator.com/item?id=50038458": "2026-10-11",
   "niemanlab.org/2026/10/chatgpt-is-adding-real-cartoonists-signatures-to-fake-new-yorker-cartoons": "2026-10-06",
+  "niemanlab.org/2026/10/metas-new-commercial-terms-will-allow-the-scraping-of-news-sites-legal-experts-say": "2026-10-16",
   "nishtahir.com/build-your-own-decision-model": "2026-10-11",
   "nobelprize.org/prizes/physics/2026": "2026-10-07",
   "nolanlawson.com/2026/10/03/why-dont-more-developers-use-the-platform": "2026-10-04",
@@ -309,8 +314,8 @@
    "https://ai.meta.com/blog/alta-daily-fashion-app-segment-anything/"
   ],
   "deepseek": [
-   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260910",
+   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260821",
    "https://api-docs.deepseek.com/news/news260813",
    "https://api-docs.deepseek.com/news/news260424",
