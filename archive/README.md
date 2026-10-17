@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 14 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 15 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月18日 周日](2026/10-18.md) · 15 条｜AI 5 · 金融 2 · 安全 2 · 社会 2 · 软件 1 · 科学 1 · 其他 2  
+  [美债收益率超 5%，推高家庭与政府借贷成本](https://www.cnbc.com/2026/10/15/treasury-yields-deficit-national-debt-ai.html)；[法国生活成本抗议后发生骚乱，逾千人被捕](https://www.bbc.co.uk/news/articles/c6d937wedj7jo?at_medium=RSS&at_campaign=rss)；[研究揭示纤毛连接蛋白缺陷与纤毛运动障碍关联](https://www.science.org/doi/abs/10.1126/science.aei5957?af=R)
 - [10月17日 周六 晚间](2026/10-17-evening.md) · 4 条｜金融 2 · AI 1 · 时政 1  
   [美国 2026 财年赤字近 2 万亿美元，同比增 12%](https://www.cnbc.com/2026/10/16/us-budget-deficit-2026.html)；[特朗普以国家安全为由暂停多项对俄制裁](https://www.bbc.co.uk/news/articles/cxr5yvzv7rp0o?at_medium=RSS&at_campaign=rss)
 - [10月17日 周六](2026/10-17.md) · 15 条｜AI 4 · 软件 4 · 金融 2 · 科学 2 · 硬件 1 · 安全 1 · 时政 1  
