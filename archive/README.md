@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月17日 周六 晚间](2026/10-17-evening.md) · 4 条｜金融 2 · AI 1 · 时政 1  
+  [美国 2026 财年赤字近 2 万亿美元，同比增 12%](https://www.cnbc.com/2026/10/16/us-budget-deficit-2026.html)；[特朗普以国家安全为由暂停多项对俄制裁](https://www.bbc.co.uk/news/articles/cxr5yvzv7rp0o?at_medium=RSS&at_campaign=rss)
 - [10月17日 周六](2026/10-17.md) · 15 条｜AI 4 · 软件 4 · 金融 2 · 科学 2 · 硬件 1 · 安全 1 · 时政 1  
   [约旦河西岸定居者袭击致巴民众及美记者受伤](https://www.bbc.co.uk/news/articles/c65ynk7212vqo?at_medium=RSS&at_campaign=rss)；[研究用机器学习校正未来 2 至 6 周天气预报误差](https://www.nature.com/articles/s41586-026-11126-x)；[新型电子皮肤让机器人感知纹理并操控易损物体](https://www.nature.com/articles/s42256-026-01325-6)
 - [10月16日 周五 晚间](2026/10-16-evening.md) · 5 条｜软件 2 · 社会 2 · AI 1  

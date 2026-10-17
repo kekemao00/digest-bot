@@ -1,12 +1,13 @@
 {
  "version": 1,
  "last_sent": "2026-10-17",
- "last_evening": "2026-10-16",
+ "last_evening": "2026-10-17",
  "sent": {
   "1011now.com/2026/09/30/more-questions-than-answers-about-lincolns-google-data-center-water-electricity-usage": "2026-10-06",
   "aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model": "2026-10-04",
   "alexalejandre.com/programming/lisp/janet-for-the-x32-abi": "2026-10-07",
   "aljazeera.com/economy/2026/10/11/musk-vows-affordable-starlink-in-india-as-he-escalates-feud-with-ambani?traffic_source=rss": "2026-10-11",
+  "aljazeera.com/economy/2026/10/17/war-spillovers-debt-threaten-low-income-nations-imf-chief-warns?traffic_source=rss": "2026-10-17",
   "aljazeera.com/economy/2026/10/9/ex-openai-staff-say-they-were-fired-for-raising-safety-concerns?traffic_source=rss": "2026-10-09",
   "aljazeera.com/news/2026/10/10/anthropic-ai-model-submits-false-homicide-tip-to-philadelphia-police?traffic_source=rss": "2026-10-10",
   "aljazeera.com/news/2026/10/12/if-netanyahu-goes-does-anything-really-change-for-palestinians?traffic_source=rss": "2026-10-12",
@@ -27,6 +28,7 @@
   "anthropic.com/news/cyber-verification-program": "2026-10-07",
   "anthropic.com/news/genesis-mission-commitment": "2026-10-09",
   "anthropic.com/research/ecdsa-curve-origins": "2026-10-17",
+  "api-docs.deepseek.com/news/news261017": "2026-10-17",
   "apnews.com/article/h1b-visa-program-vance-microsoft-e7b3a407f822702b269ee277d21343ea": "2026-10-09",
   "arstechnica.com/tech-policy/2026/10/paramount-completes-111b-warner-merger-creating-skydance-behemoth": "2026-10-08",
   "arxiv.org/abs/2609.38839": "2026-10-07",
@@ -77,6 +79,7 @@
   "bbc.co.uk/news/articles/cvp8glg97393o?at_campaign=rss&at_medium=RSS": "2026-10-13",
   "bbc.co.uk/news/articles/cwg5jq4vlddzo?at_campaign=rss&at_medium=RSS": "2026-10-14",
   "bbc.co.uk/news/articles/cwy8lx3pg4k2o?at_campaign=rss&at_medium=RSS": "2026-10-15",
+  "bbc.co.uk/news/articles/cxr5yvzv7rp0o?at_campaign=rss&at_medium=RSS": "2026-10-17",
   "bbc.co.uk/news/videos/cmglwkyl9djyo?at_campaign=rss&at_medium=RSS": "2026-10-05",
   "bbc.com/news/articles/c64g1l5389kvo": "2026-10-13",
   "beaksec.github.io/posts/telegram-desktop-one-click-account-takeover": "2026-10-10",
@@ -104,6 +107,7 @@
   "cnbc.com/2026/10/15/pce-ppi-september-fed-reserve-rate-hike.html": "2026-10-16",
   "cnbc.com/2026/10/15/uk-gdp-august-2026-economy.html": "2026-10-15",
   "cnbc.com/2026/10/16/kevin-warsh-fed-october-rate-hike-interest-rates-markets.html": "2026-10-17",
+  "cnbc.com/2026/10/16/us-budget-deficit-2026.html": "2026-10-17",
   "conversableeconomist.com/2026/09/28/i-would-like-the-value-of-my-home-to-rise-while-my-property-taxes-fall": "2026-10-11",
   "cpr.dk/cpr-nyt/nyhedsarkiv/2026/okt/omfattende-uautoriseret-adgang-til-borgeres-cpr-oplysninger": "2026-10-05",
   "csoonline.com/article/4234854/ai-agents-arent-going-rogue-frontier-labs-are-skipping-security-basics.html": "2026-10-15",
@@ -329,6 +333,7 @@
    "https://ai.meta.com/blog/alta-daily-fashion-app-segment-anything/"
   ],
   "deepseek": [
+   "https://api-docs.deepseek.com/news/news261017",
    "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260910",
    "https://api-docs.deepseek.com/news/news260821",
