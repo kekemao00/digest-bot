@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月18日 周日 晚间](2026/10-18-evening.md) · 6 条｜时政 3 · 社会 2 · AI 1  
+  [法国抗议出现骚乱，约 1800 人被捕](https://www.bbc.co.uk/news/articles/c574pdzl0k4no?at_medium=RSS&at_campaign=rss)；[DeepSeek 搜索抓取定价每千次 0.75 美元](https://api-docs.deepseek.com/guides/search/)
 - [10月18日 周日](2026/10-18.md) · 15 条｜AI 5 · 金融 2 · 安全 2 · 社会 2 · 软件 1 · 科学 1 · 其他 2  
   [美债收益率超 5%，推高家庭与政府借贷成本](https://www.cnbc.com/2026/10/15/treasury-yields-deficit-national-debt-ai.html)；[法国生活成本抗议后发生骚乱，逾千人被捕](https://www.bbc.co.uk/news/articles/c6d937wedj7jo?at_medium=RSS&at_campaign=rss)；[研究揭示纤毛连接蛋白缺陷与纤毛运动障碍关联](https://www.science.org/doi/abs/10.1126/science.aei5957?af=R)
 - [10月17日 周六 晚间](2026/10-17-evening.md) · 4 条｜金融 2 · AI 1 · 时政 1  
