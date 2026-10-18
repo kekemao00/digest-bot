@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 15 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 16 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月19日 周一](2026/10-19.md) · 13 条｜软件 4 · AI 3 · 金融 2 · 时政 2 · 社会 2  
+  [法国多地骚乱，马克龙呼吁冷静与秩序](https://www.bbc.co.uk/news/articles/cw240zl08dm5o?at_medium=RSS&at_campaign=rss)；[伊朗战争引发硫磺供应风险，或冲击矿业农业](https://www.economist.com/finance-and-economics/2026/10/15/a-shortage-of-sulphur-could-hurt-mines-and-farms-everywhere)；[研究提出注意力引导的大语言模型调控框架](https://doi.org/10.1073/pnas.2609978123)
 - [10月18日 周日 晚间](2026/10-18-evening.md) · 6 条｜时政 3 · 社会 2 · AI 1  
   [法国抗议出现骚乱，约 1800 人被捕](https://www.bbc.co.uk/news/articles/c574pdzl0k4no?at_medium=RSS&at_campaign=rss)；[DeepSeek 搜索抓取定价每千次 0.75 美元](https://api-docs.deepseek.com/guides/search/)
 - [10月18日 周日](2026/10-18.md) · 15 条｜AI 5 · 金融 2 · 安全 2 · 社会 2 · 软件 1 · 科学 1 · 其他 2  
