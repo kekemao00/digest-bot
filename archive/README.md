@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月19日 周一 晚间](2026/10-19-evening.md) · 6 条｜软件 3 · 金融 1 · 时政 1 · 社会 1  
+  [中国第三季度 GDP 增长 4.5%，超出预期](https://www.aljazeera.com/economy/2026/10/19/chinas-economy-grows-4-5-percent-in-q3-beating-forecasts?traffic_source=rss)；[Linux 7.3 版本发布](https://lwn.net/Articles/1101143/)
 - [10月19日 周一](2026/10-19.md) · 13 条｜软件 4 · AI 3 · 金融 2 · 时政 2 · 社会 2  
   [法国多地骚乱，马克龙呼吁冷静与秩序](https://www.bbc.co.uk/news/articles/cw240zl08dm5o?at_medium=RSS&at_campaign=rss)；[伊朗战争引发硫磺供应风险，或冲击矿业农业](https://www.economist.com/finance-and-economics/2026/10/15/a-shortage-of-sulphur-could-hurt-mines-and-farms-everywhere)；[研究提出注意力引导的大语言模型调控框架](https://doi.org/10.1073/pnas.2609978123)
 - [10月18日 周日 晚间](2026/10-18-evening.md) · 6 条｜时政 3 · 社会 2 · AI 1  
