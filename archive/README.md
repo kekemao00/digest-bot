@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 16 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 17 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月20日 周二](2026/10-20.md) · 15 条｜AI 6 · 科学 3 · 软件 2 · 金融 1 · 硬件 1 · 安全 1 · 时政 1  
+  [法国多地骚乱后实施宵禁](https://www.bbc.co.uk/news/articles/cx30ez03djyqo?at_medium=RSS&at_campaign=rss)；[Mistral 推出时间序列基础模型](https://mistral.ai/news/timestral/)；[催化膜在常温常压下破坏六种 PFAS](https://doi.org/10.1073/pnas.2613985123)
 - [10月19日 周一 晚间](2026/10-19-evening.md) · 6 条｜软件 3 · 金融 1 · 时政 1 · 社会 1  
   [中国第三季度 GDP 增长 4.5%，超出预期](https://www.aljazeera.com/economy/2026/10/19/chinas-economy-grows-4-5-percent-in-q3-beating-forecasts?traffic_source=rss)；[Linux 7.3 版本发布](https://lwn.net/Articles/1101143/)
 - [10月19日 周一](2026/10-19.md) · 13 条｜软件 4 · AI 3 · 金融 2 · 时政 2 · 社会 2  
