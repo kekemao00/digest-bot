@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月20日 周二 晚间](2026/10-20-evening.md) · 8 条｜AI 3 · 时政 3 · 金融 1 · 软件 1  
+  [DeepSeek 开源推理引擎](https://github.com/deepseek-ai/DeepInfer)；[德国选择党 42 万余封被黑邮件遭披露](https://www.heistberlin.com/news/afd-leak-what-421-179-hacked-emails-show-about-the-german-far-right/)
 - [10月20日 周二](2026/10-20.md) · 15 条｜AI 6 · 科学 3 · 软件 2 · 金融 1 · 硬件 1 · 安全 1 · 时政 1  
   [法国多地骚乱后实施宵禁](https://www.bbc.co.uk/news/articles/cx30ez03djyqo?at_medium=RSS&at_campaign=rss)；[Mistral 推出时间序列基础模型](https://mistral.ai/news/timestral/)；[催化膜在常温常压下破坏六种 PFAS](https://doi.org/10.1073/pnas.2613985123)
 - [10月19日 周一 晚间](2026/10-19-evening.md) · 6 条｜软件 3 · 金融 1 · 时政 1 · 社会 1  
