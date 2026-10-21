@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月21日 周三 晚间](2026/10-21-evening.md) · 8 条｜安全 2 · AI 1 · 金融 1 · 软件 1 · 科学 1 · 时政 1 · 社会 1  
+  [联合国网站称 1.5°C 温控目标已不可行](https://unric.org/en/unep-emissions-gap-report-2026-1-5-degree-overshoot/)；[英国通胀升至 3.5%，强化加息预期](https://www.cnbc.com/2026/10/21/inflation-uk-cpi-interest-rates.html)
 - [10月21日 周三](2026/10-21.md) · 15 条｜AI 3 · 软件 3 · 金融 2 · 安全 2 · 科学 2 · 时政 2 · 其他 1  
   [乌方称美乌情报共享已恢复正常](https://www.bbc.co.uk/news/articles/cq5ynkx3xy11o?at_medium=RSS&at_campaign=rss)；[EMudhra 中间证书颁发机构遭入侵](https://emudhra.we-have-a-problem.com/)；[研究发现气候变暖削弱城市绿化降温效益](https://doi.org/10.1073/pnas.2616535123)
 - [10月20日 周二 晚间](2026/10-20-evening.md) · 8 条｜AI 3 · 时政 3 · 金融 1 · 软件 1  
