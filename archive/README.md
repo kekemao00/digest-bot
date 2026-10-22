@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 19 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 20 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月23日 周五](2026/10-23.md) · 15 条｜AI 4 · 安全 3 · 科学 3 · 金融 2 · 软件 2 · 时政 1  
+  [Meta 因剑桥分析案被罚 250 亿美元](https://www.cnbc.com/2026/10/21/meta-new-mexico-cambridge-analytica-penalty.html)；[美国首次申领失业金人数降至 19.4 万](https://www.cnbc.com/2026/10/22/jobless-claims-record-low-weekly.html)；[Matrix-Game 4.0 构建实时可玩世界](https://arxiv.org/abs/2610.27999)
 - [10月22日 周四 晚间](2026/10-22-evening.md) · 8 条｜AI 2 · 金融 1 · 软件 1 · 安全 1 · 科学 1 · 时政 1 · 社会 1  
   [金融公司竞相开发 AI 算力交易工具](https://www.economist.com/finance-and-economics/2026/10/22/ai-compute-is-the-new-oil-and-needs-a-new-market)；[研究提出 o(n log n)整数乘法算法](https://web.maths.unsw.edu.au/~davidharvey/research/subnlogn.pdf)
 - [10月22日 周四](2026/10-22.md) · 15 条｜AI 6 · 金融 2 · 软件 2 · 社会 2 · 安全 1 · 科学 1 · 时政 1  
