@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月22日 周四 晚间](2026/10-22-evening.md) · 8 条｜AI 2 · 金融 1 · 软件 1 · 安全 1 · 科学 1 · 时政 1 · 社会 1  
+  [金融公司竞相开发 AI 算力交易工具](https://www.economist.com/finance-and-economics/2026/10/22/ai-compute-is-the-new-oil-and-needs-a-new-market)；[研究提出 o(n log n)整数乘法算法](https://web.maths.unsw.edu.au/~davidharvey/research/subnlogn.pdf)
 - [10月22日 周四](2026/10-22.md) · 15 条｜AI 6 · 金融 2 · 软件 2 · 社会 2 · 安全 1 · 科学 1 · 时政 1  
   [墨西哥前检察官因美方参与缉毒行动被控叛国](https://www.bbc.co.uk/news/articles/ckx2qpw4rjd7o?at_medium=RSS&at_campaign=rss)；[eMudhra 证书机构密钥被曝毫秒内遭破解](https://scotthelme.co.uk/eight-bits-of-trust-emudhras-ca-keys-cracked-in-milliseconds/)；[研究提出整合可穿戴与临床数据的健康智能体](https://www.nature.com/articles/s41586-026-11161-8)
 - [10月21日 周三 晚间](2026/10-21-evening.md) · 8 条｜安全 2 · AI 1 · 金融 1 · 软件 1 · 科学 1 · 时政 1 · 社会 1  
