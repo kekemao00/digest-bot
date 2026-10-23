@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 20 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 21 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月24日 周六](2026/10-24.md) · 15 条｜软件 4 · AI 3 · 科学 3 · 安全 2 · 时政 2 · 金融 1  
+  [肯尼亚报告第二例埃博拉死亡，疫情已波及四国](https://www.aljazeera.com/news/2026/10/23/kenya-announces-second-ebola-death-says-no-evidence-of-community-spread?traffic_source=rss)；[CNBC 民调：特朗普经济支持率创新低](https://www.cnbc.com/2026/10/22/trump-economic-approval-rating-midterms-poll.html)；[研究发现嵌酶聚酯可在深海近乎完全降解](https://www.nature.com/articles/s41586-026-11192-1)
 - [10月23日 周五 晚间](2026/10-23-evening.md) · 8 条｜AI 3 · 软件 3 · 金融 1 · 时政 1  
   [分析称海峡若再关闭，全球储油或仅撑一两月](https://www.aljazeera.com/news/2026/10/23/are-global-oil-reserves-sufficient-to-withstand-renewed-us-iran-war?traffic_source=rss)；[Anthropic 介绍大模型辅助软件形式化验证](https://www.anthropic.com/research/formal-verification)
 - [10月23日 周五](2026/10-23.md) · 15 条｜AI 4 · 安全 3 · 科学 3 · 金融 2 · 软件 2 · 时政 1  
