@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月23日 周五 晚间](2026/10-23-evening.md) · 8 条｜AI 3 · 软件 3 · 金融 1 · 时政 1  
+  [分析称海峡若再关闭，全球储油或仅撑一两月](https://www.aljazeera.com/news/2026/10/23/are-global-oil-reserves-sufficient-to-withstand-renewed-us-iran-war?traffic_source=rss)；[Anthropic 介绍大模型辅助软件形式化验证](https://www.anthropic.com/research/formal-verification)
 - [10月23日 周五](2026/10-23.md) · 15 条｜AI 4 · 安全 3 · 科学 3 · 金融 2 · 软件 2 · 时政 1  
   [Meta 因剑桥分析案被罚 250 亿美元](https://www.cnbc.com/2026/10/21/meta-new-mexico-cambridge-analytica-penalty.html)；[美国首次申领失业金人数降至 19.4 万](https://www.cnbc.com/2026/10/22/jobless-claims-record-low-weekly.html)；[Matrix-Game 4.0 构建实时可玩世界](https://arxiv.org/abs/2610.27999)
 - [10月22日 周四 晚间](2026/10-22-evening.md) · 8 条｜AI 2 · 金融 1 · 软件 1 · 安全 1 · 科学 1 · 时政 1 · 社会 1  
