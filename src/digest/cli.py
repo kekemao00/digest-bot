@@ -11,7 +11,7 @@ import httpx
 
 from digest.channels.base import ChannelError
 from digest.channels.dingtalk import DingTalk
-from digest import history
+from digest import history, kev
 from digest.config import Config, load_config
 from digest.http import make_client
 from digest.llm import build_enricher
@@ -19,6 +19,8 @@ from digest.models import Item
 from digest.pipeline import Selection, select
 from digest.render import archive, dingtalk
 from digest.sources import build_sources
+from digest.sources.base import Source
+from digest.sources.kev import KnownExploited
 from digest.state import State
 
 log = logging.getLogger("digest")
@@ -202,6 +204,11 @@ def main(argv: list[str] | None = None) -> int:
             log.error("所有信息源都抓取失败，今天不推送")
             return 1
 
+        catalog = exploited_catalog(client, sources, candidates, config)
+        if marked := kev.annotate(candidates, catalog):
+            log.info("%d 条候选提到的漏洞已列入 CISA 已知被利用漏洞目录", marked)
+        # 按天限量的领域（如安全）要算上今天另一版已经推过的
+        sent_today = history.topics_sent(args.archive_dir, now.date(), config.edition) if args.archive_dir else None
         enricher = build_enricher(client, config)
         selection = select(
             candidates,
@@ -210,6 +217,7 @@ def main(argv: list[str] | None = None) -> int:
             state,
             review=enricher.review if enricher else None,
             dedupe=enricher.duplicates if enricher else None,
+            topics_sent=sent_today,
         )
         # 晚间版是补充，达标的太少就不打扰
         quiet = config.is_evening and len(selection.items) < config.evening.min_items
@@ -267,6 +275,24 @@ def main(argv: list[str] | None = None) -> int:
             except Exception as exc:  # 目录页只是方便回查，不能因此丢掉去重状态
                 log.warning("归档目录更新失败：%s", type(exc).__name__)
     return 0
+
+
+def exploited_catalog(
+    client: httpx.Client, sources: list[Source], candidates: list[Item], config: Config
+) -> kev.Catalog | None:
+    """CISA 已知被利用漏洞目录：早间版的漏洞来源已经下载过就直接用；晚间版没有这个来源，
+    有候选提到 CVE 编号时才单独下载。下载失败只是少了“已被利用”的标注，照常推送。"""
+    if not config.mark_exploited:
+        return None
+    if catalog := next((s.catalog for s in sources if isinstance(s, KnownExploited) and s.catalog), None):
+        return catalog
+    if not any(kev.cve_ids(item.title, item.summary) for item in candidates):
+        return None
+    try:
+        return kev.Catalog.fetch(client)
+    except Exception as exc:  # 标注只是增强
+        log.warning("已知被利用漏洞目录下载失败，这次不标注：%s %s", type(exc).__name__, _safe_detail(exc))
+        return None
 
 
 def _safe_detail(exc: Exception) -> str:

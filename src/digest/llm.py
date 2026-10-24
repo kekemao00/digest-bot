@@ -30,6 +30,8 @@ log = logging.getLogger("digest.llm")
 
 PROMPTS = ROOT / "prompts"
 KINDS = ("研究", "发布", "新闻", "深度", "教程", "观点", "营销", "招聘", "活动", "其他")
+SECURITY = "安全"
+PATCH_STATES = ("已修复", "未修复")
 # 送给模型的简介长度上限：够判断内容，又不至于让单批请求太长
 SUMMARY_CHARS = 600
 MAX_RESPONSE_BYTES = 1_000_000
@@ -311,6 +313,8 @@ class Enricher:
                 "domain": item.domain or "",
                 "title": item.title,
                 "summary": truncate(clean(item.summary or ""), SUMMARY_CHARS),
+                # 程序核对 CISA 目录得到的事实，不是抓来的文本
+                **({"exploited": f"{item.exploited.cve} 已列入 CISA 已知被利用漏洞目录"} if item.exploited else {}),
             }
             for n, item in enumerate(batch, 1)
         ]
@@ -358,6 +362,11 @@ class Enricher:
         item.subject = clean_output(entry.get("subject"), 12)
         topic = entry.get("topic")
         item.topic = topic if topic in TOPICS else None
+        # 补丁状态和技术点只对安全条目有意义；补丁状态只认两个固定值，其余一律当作原文没说
+        security = item.topic == SECURITY
+        patch = entry.get("patch")
+        item.patch = patch if security and patch in PATCH_STATES else None
+        item.lesson = clean_output(entry.get("lesson"), 30, sentence=True) if security else None
 
     def _verdict(self, item: Item) -> str | None:
         if item.kind and item.kind in self.settings.reject_kinds:

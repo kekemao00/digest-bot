@@ -67,3 +67,25 @@ def test_evening_edition_listed_apart(config, hn_source, hn_items, tmp_path):
     morning_line = f"- [10月4日 周日](2026/10-04.md) · {len(morning.items)} 条"
     assert evening_line in readme and morning_line in readme
     assert readme.index(evening_line) < readme.index(morning_line)
+
+
+def test_security_fields_and_topics_sent(config, hn_source, hn_items, tmp_path):
+    from datetime import date as day
+
+    from digest.models import Exploited
+
+    selection = selection_for(config, hn_source, hn_items)
+    first, second = selection.items[:2]
+    first.topic, first.cves, first.patch, first.lesson = "安全", ["CVE-2026-11111"], "已修复", "技术点"
+    first.exploited = Exploited("CVE-2026-11111", day(2026, 10, 2))
+    second.topic = "安全"
+    history.update(tmp_path, selection, config, date(2026, 10, 4))
+
+    row = json.loads((tmp_path / "items.jsonl").read_text(encoding="utf-8").splitlines()[0])
+    assert (row["cves"], row["exploited"], row["patch"], row["lesson"]) == (
+        ["CVE-2026-11111"], "CVE-2026-11111", "已修复", "技术点")
+    # 晚间版要算上早间版推过的；早间版自己重跑时不算自己，别的日子也不算
+    assert history.topics_sent(tmp_path, date(2026, 10, 4), "evening")["安全"] == 2
+    assert history.topics_sent(tmp_path, date(2026, 10, 4), "morning") == {}
+    assert history.topics_sent(tmp_path, date(2026, 10, 5), "evening") == {}
+    assert history.topics_sent(tmp_path / "missing", date(2026, 10, 4), "evening") == {}

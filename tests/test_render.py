@@ -110,3 +110,24 @@ def test_topic_tags_and_summary(hn_items):
     for item in hn_items:
         item.topic = None
     assert dingtalk.topic_summary(hn_items) is None
+
+
+def test_security_item_lines():
+    from datetime import date, datetime, timezone
+
+    from digest.models import Exploited, Item
+
+    item = Item(source="cisa-kev", source_name="CISA 被利用漏洞", section="security", id="CVE-2026-11111",
+                title="Acme Gateway OS Command Injection Vulnerability", url="https://security.acme.example/a",
+                published_at=datetime.now(timezone.utc), extras=["CVE-2026-11111", "CWE-78"],
+                links=[("NVD", "https://nvd.nist.gov/vuln/detail/CVE-2026-11111")],
+                exploited=Exploited("CVE-2026-11111", date(2026, 10, 2), ransomware=True))
+    item.title_zh, item.one_liner, item.topic = "Acme 网关命令注入漏洞", "未登录即可执行系统命令", "安全"
+    item.patch, item.lesson = "已修复", "参数直接拼进 shell 命令"
+    lines = dingtalk.render_item(3, item).split(dingtalk.LINE)
+    assert lines[0].startswith("**3. [Acme 网关命令注入漏洞](https://security.acme.example/a)**")
+    assert lines[1:3] == ["未登录即可执行系统命令", "💡 技术点：参数直接拼进 shell 命令"]
+    assert lines[3] == dingtalk.grey(
+        "⚠️ 已被利用，勒索软件在用 · 🩹 已修复 · CISA 被利用漏洞 · CVE-2026-11111 · CWE-78"
+        " · [NVD](https://nvd.nist.gov/vuln/detail/CVE-2026-11111)"
+    )

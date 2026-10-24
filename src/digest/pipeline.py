@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from collections.abc import Callable
+from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
 
 from digest.config import Config, Section
@@ -71,6 +71,13 @@ def spread_topics(items: list[Item], decay: float) -> list[Item]:
     return ordered
 
 
+def keep_evidence(primary: Item, other: Item) -> None:
+    """合并时保留被并掉的条目带来的漏洞信息，比如 HN 讨论的正是 CISA 目录里那条漏洞的厂商公告。"""
+    primary.cves = list(dict.fromkeys([*primary.cves, *other.cves]))
+    if other.exploited and (not primary.exploited or other.exploited.added < primary.exploited.added):
+        primary.exploited = other.exploited
+
+
 def merge_duplicates(candidates: list[Item], order: dict[str, int]) -> tuple[list[Item], list[Rejected]]:
     """同一篇文章在多个来源出现时合并为一条：保留配置里靠前的来源，其他来源作为“另见”。"""
     groups: dict[str, list[Item]] = defaultdict(list)
@@ -82,6 +89,7 @@ def merge_duplicates(candidates: list[Item], order: dict[str, int]) -> tuple[lis
         group.sort(key=lambda i: order.get(i.source, len(order)))
         primary, rest = group[0], group[1:]
         for other in rest:
+            keep_evidence(primary, other)
             if other.source == primary.source:
                 rejected.append(Rejected(other, "重复条目"))
                 continue
@@ -120,11 +128,27 @@ def _rank(items: list[Item], sources: dict[str, Source], matcher: InterestMatche
         item.rank = base * matcher.weight(item.focus) * boost * quality_factor(item.quality)
 
 
+def best_first(ordered: list[tuple[float, Item]], topics: Iterable[str]) -> list[tuple[float, Item]]:
+    """单独限量的领域名额很少，留给大模型评分最高的：这些条目在名单里占的位置不变，
+    按评分从高到低重新排进这些位置。评分相同时保持原来的先后。"""
+    result = list(ordered)
+    for topic in topics:
+        slots = [n for n, (_, item) in enumerate(result) if item.topic == topic]
+        best = sorted((result[n][1] for n in slots), key=lambda i: -(i.quality or 0))
+        for n, item in zip(slots, best, strict=True):
+            result[n] = (result[n][0], item)
+    return result
+
+
 def _allocate(
-    items: list[Item], sources: dict[str, Source], config: Config, scale: int = 1
+    items: list[Item],
+    sources: dict[str, Source],
+    config: Config,
+    scale: int = 1,
+    topics_sent: Mapping[str, int] | None = None,
 ) -> tuple[list[tuple[Section, list[Item]]], list[Rejected]]:
     """按来源和板块配额、总量上限、领域覆盖面、侧重之外的保底名额分配名额。
-    scale > 1 时按放大的配额挑出送审名单。"""
+    scale > 1 时按放大的配额挑出送审名单。topics_sent 是今天另一版已经推送的各领域条数。"""
     qualified: dict[str, list[Item]] = {s.key: [] for s in config.sections}
     for item in items:
         qualified[item.section].append(item)
@@ -156,14 +180,23 @@ def _allocate(
     diversity = config.diversity
     # 领域标签来自大模型；没有标签的条目不受领域上限约束
     topic_cap = max(1, math.floor(diversity.max_topic_share * total))
+    # 单独限量的领域按天计，另一版推过的也算在内
+    sent = topics_sent or {}
+    hard_caps = {t: max(0, n - sent.get(t, 0)) * scale for t, n in diversity.topic_limits.items()}
+    ordered = best_first(ordered, hard_caps)
 
     chosen: list[Item] = []
     chosen_keys: set[str] = set()
     per_section = {key: 0 for key in limits}
     per_topic: dict[str, int] = defaultdict(int)
 
+    def over_limit(item: Item) -> bool:
+        return item.topic in hard_caps and per_topic[item.topic] >= hard_caps[item.topic]
+
     def fits(item: Item, capped: bool = True) -> bool:
         if len(chosen) >= total or item.key in chosen_keys or per_section[item.section] >= limits[item.section]:
+            return False
+        if over_limit(item):
             return False
         return not (capped and item.topic and per_topic[item.topic] >= topic_cap)
 
@@ -192,7 +225,7 @@ def _allocate(
     for _, item in ordered:
         if fits(item):
             take(item)
-    # 4. 达标的候选不够时放宽领域上限，不留空位
+    # 4. 达标的候选不够时放宽领域占比上限，不留空位（单独限量的领域除外）
     for _, item in ordered:
         if fits(item, capped=False):
             take(item)
@@ -201,7 +234,10 @@ def _allocate(
         if item.key in chosen_keys:
             continue
         section = config.section_by_key[item.section]
-        if item.topic and per_topic[item.topic] >= topic_cap:
+        if over_limit(item):
+            limit = diversity.topic_limits[item.topic]
+            rejected.append(Rejected(item, f"“{item.topic}”领域每天最多 {limit} 条"))
+        elif item.topic and per_topic[item.topic] >= topic_cap:
             rejected.append(Rejected(item, f"“{item.topic}”领域当天已有 {per_topic[item.topic]} 条"))
         elif per_section[item.section] >= limits[item.section]:
             rejected.append(Rejected(item, f"超出“{section.name}”板块上限 {section.limit} 条"))
@@ -232,6 +268,7 @@ def merge_events(pool: list[Item], groups: list[list[str]]) -> tuple[list[Item],
             continue
         primary = members[0]
         for other in members[1:]:
+            keep_evidence(primary, other)
             primary.also.append(Also(other.source_name, other.discussion_url or other.url))
             dropped.add(other.key)
             rejected.append(Rejected(other, f"与“{primary.title_zh or primary.title}”是同一事件，已合并"))
@@ -246,12 +283,13 @@ def _review_rounds(
     review: Review,
     rounds: int,
     first_scale: int,
+    topics_sent: Mapping[str, int] | None = None,
 ) -> tuple[list[Item], list[Rejected]]:
     """只审有机会入选的条目：第一轮可以多审一些作为替补，之后每轮补审新进入名单的条目。"""
     rejected: list[Rejected] = []
     for round_ in range(rounds):
         _rank(pool, sources, matcher)
-        sections, _ = _allocate(pool, sources, config, scale=first_scale if round_ == 0 else 1)
+        sections, _ = _allocate(pool, sources, config, scale=first_scale if round_ == 0 else 1, topics_sent=topics_sent)
         todo = [item for _, section_items in sections for item in section_items if not item.reviewed]
         if not todo:
             break
@@ -270,9 +308,10 @@ def select(
     state: State | None = None,
     review: Review | None = None,
     dedupe: Dedupe | None = None,
+    topics_sent: Mapping[str, int] | None = None,
 ) -> Selection:
     """把候选条目压成当天的简报：合并、跨天去重、门槛、大模型审阅、事件去重、排序、配额、
-    领域覆盖面、侧重之外的保底名额。"""
+    领域覆盖面、侧重之外的保底名额。topics_sent 是今天另一版已经推送的各领域条数，用于按天限量的领域。"""
     by_source = {s.id: s for s in sources}
     order = {s.id: n for n, s in enumerate(sources)}
     matcher = InterestMatcher(config.focus)
@@ -295,20 +334,24 @@ def select(
     rejected += merged_away
 
     if review:
-        pool, dropped = _review_rounds(pool, by_source, config, matcher, review, MAX_REVIEW_ROUNDS, first_scale=2)
+        pool, dropped = _review_rounds(
+            pool, by_source, config, matcher, review, MAX_REVIEW_ROUNDS, first_scale=2, topics_sent=topics_sent
+        )
         rejected += dropped
         if dedupe:
             # 链接不同但报道同一件事（如官方博客和 HN 讨论）的条目，只在当天名单里找，合并后补位
             _rank(pool, by_source, matcher)
-            sections, _ = _allocate(pool, by_source, config)
+            sections, _ = _allocate(pool, by_source, config, topics_sent=topics_sent)
             pool, merged = merge_events(pool, dedupe([item for _, items in sections for item in items]))
             rejected += merged
             if merged:
-                pool, dropped = _review_rounds(pool, by_source, config, matcher, review, 1, first_scale=1)
+                pool, dropped = _review_rounds(
+                    pool, by_source, config, matcher, review, 1, first_scale=1, topics_sent=topics_sent
+                )
                 rejected += dropped
 
     _rank(pool, by_source, matcher)
-    sections, not_chosen = _allocate(pool, by_source, config)
+    sections, not_chosen = _allocate(pool, by_source, config, topics_sent=topics_sent)
     rejected += not_chosen
     rejected.sort(key=lambda r: r.item.rank, reverse=True)
     return Selection(sections=sections, rejected=rejected, candidates=total_candidates)

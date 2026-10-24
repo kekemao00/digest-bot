@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import date, datetime
 from urllib.parse import urlsplit
 
 from digest.urls import canonical_url
@@ -28,6 +28,15 @@ class Also:
 
     source_name: str
     url: str
+
+
+@dataclass(frozen=True)
+class Exploited:
+    """CISA「已知被利用漏洞目录」（KEV）里的一条记录：这个漏洞已经确认被实际利用。"""
+
+    cve: str
+    added: date  # 列入目录的日期
+    ransomware: bool = False  # 目录注明已被勒索软件团伙使用
 
 
 @dataclass
@@ -58,6 +67,8 @@ class Item:
     extras: list[str] = field(default_factory=list)  # 额外的元信息，如编程语言、arXiv 分类
     links: list[tuple[str, str]] = field(default_factory=list)  # 额外链接，如论文代码仓库
     also: list[Also] = field(default_factory=list)
+    cves: list[str] = field(default_factory=list)  # 标题和简介里提到的 CVE 编号
+    exploited: Exploited | None = None  # 提到的漏洞在 CISA 已知被利用漏洞目录里时填写，不靠大模型判断
     # 以下几项由大模型审阅后填写，没有大模型时保持为空
     reviewed: bool = False  # 是否已送审（失败的也算，避免反复重试）
     title_zh: str | None = None  # 中文标题
@@ -66,6 +77,9 @@ class Item:
     kind: str | None = None  # 内容类型，如研究、发布、观点
     subject: str | None = None  # 论文和期刊的学科，如“神经科学”
     topic: str | None = None  # 领域标签，TOPICS 里的一个
+    # 只有安全条目才填：原文是否说明已有补丁（“已修复”或“未修复”），和可以学的技术点
+    patch: str | None = None
+    lesson: str | None = None
     llm_focus: list[str] | None = None  # 大模型判断的侧重领域，有它时代替关键词匹配
     focus: list[str] = field(default_factory=list)  # 命中的侧重领域 key
     rank: float = 0.0  # 排序分，由筛选流程计算

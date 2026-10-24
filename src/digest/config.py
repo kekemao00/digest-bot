@@ -6,6 +6,8 @@ from typing import Any
 
 import yaml
 
+from digest.models import TOPICS
+
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG_DIR = ROOT / "config"
 
@@ -37,6 +39,8 @@ class Diversity:
     max_topic_share: float = 0.4  # 单一领域每天最多占总条数的比例
     min_topics: int = 4  # 每天至少覆盖几个领域（候选里有的话）
     topic_decay: float = 0.85  # 同一来源里同领域每多一条，排序分乘以这个系数
+    # 单独限量的领域：每天（早晚两版合计）最多几条，名额给大模型评分最高的，候选不够时也不放宽
+    topic_limits: dict[str, int] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -81,6 +85,7 @@ class Config:
     llm: LLMSettings = LLMSettings()
     evening: Evening = Evening()
     edition: str = "morning"  # morning 早间版，evening 晚间版
+    mark_exploited: bool = True  # 用 CISA 已知被利用漏洞目录核对条目里的 CVE 编号，标注“已被利用”
     section_by_key: dict[str, Section] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -169,9 +174,14 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
             max_topic_share=float(raw_div.get("max_topic_share", diversity.max_topic_share)),
             min_topics=int(raw_div.get("min_topics", diversity.min_topics)),
             topic_decay=float(raw_div.get("topic_decay", diversity.topic_decay)),
+            topic_limits={str(k): int(v) for k, v in (raw_div.get("topic_limits") or {}).items()},
         )
         if not 0.0 < diversity.max_topic_share <= 1.0 or not 0.0 < diversity.topic_decay <= 1.0:
             raise ConfigError("diversity 的 max_topic_share 和 topic_decay 必须在 0 到 1 之间")
+        if unknown := [t for t in diversity.topic_limits if t not in TOPICS]:
+            raise ConfigError(f"diversity.topic_limits 里的 {', '.join(unknown)} 不是领域标签，可选：{', '.join(TOPICS)}")
+        if any(n < 0 for n in diversity.topic_limits.values()):
+            raise ConfigError("diversity.topic_limits 的条数不能是负数")
 
     llm = LLMSettings()
     llm_path = config_dir / "llm.yaml"
@@ -212,6 +222,7 @@ def load_config(config_dir: Path = CONFIG_DIR) -> Config:
         timezone=str(digest.get("timezone", "Asia/Shanghai")),
         max_items=int(digest.get("max_items", 15)),
         archive_base_url=str(digest.get("archive_base_url") or ""),
+        mark_exploited=bool(digest.get("mark_exploited", True)),
         sections=sections,
         sources=sources,
         focus=focus,
