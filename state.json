@@ -1,7 +1,7 @@
 {
  "version": 1,
  "last_sent": "2026-10-24",
- "last_evening": "2026-10-23",
+ "last_evening": "2026-10-24",
  "sent": {
   "1011now.com/2026/09/30/more-questions-than-answers-about-lincolns-google-data-center-water-electricity-usage": "2026-10-06",
   "aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model": "2026-10-04",
@@ -22,6 +22,7 @@
   "aljazeera.com/news/2026/10/18/funeral-held-for-75-palestinians-after-remains-recovered-from-gaza-ruins?traffic_source=rss": "2026-10-18",
   "aljazeera.com/news/2026/10/23/are-global-oil-reserves-sufficient-to-withstand-renewed-us-iran-war?traffic_source=rss": "2026-10-23",
   "aljazeera.com/news/2026/10/23/kenya-announces-second-ebola-death-says-no-evidence-of-community-spread?traffic_source=rss": "2026-10-24",
+  "aljazeera.com/news/2026/10/24/why-is-israel-launching-a-new-military-operation-in-the-occupied-west-bank?traffic_source=rss": "2026-10-24",
   "aljazeera.com/news/2026/10/4/is-the-sudanese-army-gaining-momentum-against-the-rsf?traffic_source=rss": "2026-10-04",
   "aljazeera.com/news/2026/10/4/us-withdraws-b-1-bomber-aircraft-from-uks-fairford-base-amid-iran-fears?traffic_source=rss": "2026-10-05",
   "aljazeera.com/news/2026/10/5/fbi-arrests-chinese-foreign-agent-for-spying-on-taiwan-presidents-son?traffic_source=rss": "2026-10-05",
@@ -117,6 +118,7 @@
   "bbc.co.uk/news/articles/cvp8glg97393o?at_campaign=rss&at_medium=RSS": "2026-10-13",
   "bbc.co.uk/news/articles/cw240zl08dm5o?at_campaign=rss&at_medium=RSS": "2026-10-19",
   "bbc.co.uk/news/articles/cwg5jq4vlddzo?at_campaign=rss&at_medium=RSS": "2026-10-14",
+  "bbc.co.uk/news/articles/cwkg5md14j8go?at_campaign=rss&at_medium=RSS": "2026-10-24",
   "bbc.co.uk/news/articles/cwy8lx3pg4k2o?at_campaign=rss&at_medium=RSS": "2026-10-15",
   "bbc.co.uk/news/articles/cx30ez03djyqo?at_campaign=rss&at_medium=RSS": "2026-10-20",
   "bbc.co.uk/news/articles/cxr5yvzv7rp0o?at_campaign=rss&at_medium=RSS": "2026-10-17",
@@ -366,6 +368,7 @@
   "oxide.computer/blog/our-445m-series-d": "2026-10-10",
   "patreon.com/vihart/posts/vi-harts-big-171939430": "2026-10-13",
   "penguin-mail.com/": "2026-10-07",
+  "philipotoole.com/twelve-years-of-distributed-sqlite": "2026-10-24",
   "phillyvoice.com/philly-woman-arrested-uber-eats-robot-protest": "2026-10-18",
   "phoronix.com/news/XDC-2026-Valve-Timur-AMDGPU": "2026-10-05",
   "php.net/archive/2026.php": "2026-10-21",
@@ -493,8 +496,8 @@
    "https://ai.meta.com/blog/alta-daily-fashion-app-segment-anything/"
   ],
   "deepseek": [
-   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news261017",
+   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260910",
    "https://api-docs.deepseek.com/news/news260821",
    "https://api-docs.deepseek.com/news/news260813",

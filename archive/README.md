@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月24日 周六 晚间](2026/10-24-evening.md) · 3 条｜时政 2 · 软件 1  
+  [以军在约旦河西岸展开持续数日的军事行动](https://www.aljazeera.com/news/2026/10/24/why-is-israel-launching-a-new-military-operation-in-the-occupied-west-bank?traffic_source=rss)；[乌克兰称受限一周后星链连接恢复稳定](https://www.bbc.co.uk/news/articles/cwkg5md14j8go?at_medium=RSS&at_campaign=rss)
 - [10月24日 周六](2026/10-24.md) · 15 条｜软件 4 · AI 3 · 科学 3 · 安全 2 · 时政 2 · 金融 1  
   [肯尼亚报告第二例埃博拉死亡，疫情已波及四国](https://www.aljazeera.com/news/2026/10/23/kenya-announces-second-ebola-death-says-no-evidence-of-community-spread?traffic_source=rss)；[CNBC 民调：特朗普经济支持率创新低](https://www.cnbc.com/2026/10/22/trump-economic-approval-rating-midterms-poll.html)；[研究发现嵌酶聚酯可在深海近乎完全降解](https://www.nature.com/articles/s41586-026-11192-1)
 - [10月23日 周五 晚间](2026/10-23-evening.md) · 8 条｜AI 3 · 软件 3 · 金融 1 · 时政 1  
