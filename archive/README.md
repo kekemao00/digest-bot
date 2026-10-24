@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 21 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 22 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月25日 周日](2026/10-25.md) · 15 条｜AI 5 · 科学 3 · 金融 2 · 软件 2 · 安全 2 · 时政 1  
+  [法国数十万人示威，近千人被捕](https://www.bbc.co.uk/news/articles/c95ynd587ynzo?at_medium=RSS&at_campaign=rss)；[技术文章解析 PHP 远程代码执行漏洞](https://paper.seebug.org/3528)；[Block 介绍仅用语音训练的对话模型](https://block.xyz/dessa)
 - [10月24日 周六 晚间](2026/10-24-evening.md) · 3 条｜时政 2 · 软件 1  
   [以军在约旦河西岸展开持续数日的军事行动](https://www.aljazeera.com/news/2026/10/24/why-is-israel-launching-a-new-military-operation-in-the-occupied-west-bank?traffic_source=rss)；[乌克兰称受限一周后星链连接恢复稳定](https://www.bbc.co.uk/news/articles/cwkg5md14j8go?at_medium=RSS&at_campaign=rss)
 - [10月24日 周六](2026/10-24.md) · 15 条｜软件 4 · AI 3 · 科学 3 · 安全 2 · 时政 2 · 金融 1  
