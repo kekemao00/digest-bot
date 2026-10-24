@@ -241,3 +241,74 @@ def test_same_event_is_merged_and_backfilled(config, hn_source):
     assert [i.id for i in selection.items] == ["0", "2", "3"]  # 1 并入 0，3 补位
     assert [a.url for a in selection.items[0].also] == ["https://example.com/1"]
     assert any("同一事件" in r.reason for r in selection.rejected)
+
+
+def security_setup(config):
+    """科技热议 3 条、安全研究 2 条，安全领域每天最多 2 条。"""
+    sections = (Section("tech", "科技热议", 3), Section("security", "安全研究", 2))
+    diversity = replace(config.diversity, topic_limits={"安全": 2}, min_topics=1)
+    return replace(config, sections=sections, max_items=5, focus=(), diversity=diversity)
+
+
+def security_items():
+    from conftest import NOW
+    from digest.sources.feeds import Feed
+
+    blog = Feed({"id": "blog", "type": "feed", "section": "security", "url": "x"})
+    blog.now = NOW
+    news = [make(i, f"Story {i}", 1000 - i) for i in range(4)]
+    posts = [blog.item(id=f"p{i}", title=f"Write-up {i}", url=f"https://blog.test/{i}", published_at=NOW)
+             for i in range(3)]
+    return blog, news + posts
+
+
+def scored(topics: dict[str, str], quality: dict[str, int]):
+    def review(batch):
+        for item in batch:
+            item.topic = topics.get(item.id, "软件")
+            item.quality = quality.get(item.id, 6)
+            item.llm_focus = []
+        return {}
+
+    return review
+
+
+def test_topic_limit_goes_to_best_scored(config, hn_source):
+    one = security_setup(config)
+    blog, items = security_items()
+    topics = {"0": "安全", "1": "安全", "p0": "安全", "p1": "安全", "p2": "安全"}
+    # 热度最高的两条 HN 安全新闻评分低，安全研究里的第二篇评分最高
+    quality = {"0": 5, "1": 6, "p0": 7, "p1": 9, "p2": 6}
+    selection = select(items, [hn_source, blog], one, review=scored(topics, quality))
+    security = [i.id for i in selection.items if i.topic == "安全"]
+    assert sorted(security) == ["p0", "p1"]
+    assert len(selection.items) == 4  # 只剩 2 条非安全候选，安全也不放宽，宁可少推
+    assert any(r.reason == "“安全”领域每天最多 2 条" for r in selection.rejected)
+
+
+def test_topic_limit_counts_the_other_edition(config, hn_source):
+    one = security_setup(config)
+    blog, items = security_items()
+    topics = {"p0": "安全", "p1": "安全", "p2": "安全"}
+    review = scored(topics, {"p1": 9})
+    selection = select(items, [hn_source, blog], one, review=review, topics_sent={"安全": 1})
+    assert [i.id for i in selection.items if i.topic == "安全"] == ["p1"]
+    _, items = security_items()
+    selection = select(items, [hn_source, blog], one, review=review, topics_sent={"安全": 2})
+    assert not [i for i in selection.items if i.topic == "安全"]
+
+
+def test_merged_items_keep_exploited_evidence(config, hn_source):
+    from datetime import date
+
+    from digest.models import Exploited
+
+    discussion = make(1, "Acme Gateway advisory", 500)
+    advisory = replace(discussion, source="cisa-kev", source_name="CISA 被利用漏洞", section="security",
+                       cves=["CVE-2026-11111"], exploited=Exploited("CVE-2026-11111", date(2026, 10, 2)))
+    from digest.sources.kev import KnownExploited
+
+    kev_source = KnownExploited({"id": "cisa-kev", "type": "kev", "section": "security"})
+    selection = select([discussion, advisory], [hn_source, kev_source], config)
+    item = selection.items[0]
+    assert item.source == "hn" and item.exploited.cve == "CVE-2026-11111" and item.cves == ["CVE-2026-11111"]

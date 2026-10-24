@@ -270,3 +270,51 @@ def test_missing_webhook_fails_before_fetching(network, monkeypatch):
     monkeypatch.delenv("DINGTALK_WEBHOOK")
     assert cli.main([]) == 1
     assert fetched == [] and network == []
+
+
+def test_exploited_vulnerabilities_are_marked(network, monkeypatch, hn_payload, tmp_path):
+    from conftest import fixture_text
+
+    requests = []
+
+    def kev(request):
+        requests.append(request)
+        return httpx.Response(200, content=fixture_text("kev.json").encode())
+
+    network.routes["www.cisa.gov"] = kev
+    hn_payload["hits"][0]["title"] = "Show HN: An LLM inference server, now patched for CVE-2026-22222"
+    at(monkeypatch, datetime(2026, 10, 3, 7, 47, tzinfo=SHANGHAI))
+    assert cli.main(["--dry-run", "--out", str(tmp_path)]) == 0
+    text = (tmp_path / "dingtalk.md").read_text(encoding="utf-8")
+    # 早间版：目录本身是一个来源，下载一次，同时用来标注其他来源的条目
+    assert len(requests) == 1
+    assert "Acme Gateway OS Command Injection Vulnerability" in text
+    assert text.count("⚠️ 已被利用") == 2
+
+    # 晚间版没有这个来源：有候选提到 CVE 编号才下载
+    monkeypatch.setenv("DIGEST_EDITION", "evening")
+    at(monkeypatch, datetime(2026, 10, 3, 19, 47, tzinfo=SHANGHAI))
+    assert cli.main(["--dry-run", "--out", str(tmp_path)]) == 0
+    assert len(requests) == 2
+    assert "⚠️ 已被利用" in (tmp_path / "dingtalk.md").read_text(encoding="utf-8")
+    hn_payload["hits"][0]["title"] = "Show HN: An LLM inference server"
+    assert cli.main(["--dry-run", "--out", str(tmp_path)]) == 0
+    assert len(requests) == 2
+
+
+def test_evening_counts_security_items_sent_in_the_morning(network, monkeypatch, tmp_path):
+    archive = tmp_path / "archive"
+    archive.mkdir()
+    rows = [{"date": "2026-10-04", "edition": "morning", "topic": "安全", "n": n} for n in (1, 2)]
+    (archive / "items.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
+    seen = {}
+
+    def fake_select(*args, **kwargs):
+        seen.update(kwargs["topics_sent"])
+        return cli.Selection(sections=[])
+
+    monkeypatch.setattr(cli, "select", fake_select)
+    monkeypatch.setenv("DIGEST_EDITION", "evening")
+    at(monkeypatch, EVENING)
+    assert cli.main(["--dry-run", "--archive-dir", str(archive)]) == 0
+    assert seen == {"安全": 2}

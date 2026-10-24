@@ -8,6 +8,9 @@ digest:
   # 完整版归档的地址前缀。留空时用本仓库 state 分支上的 archive/ 目录，
   # 即 https://github.com/<仓库>/blob/state/archive/YYYY/MM-DD.md
   archive_base_url: ""
+  # 条目里提到的 CVE 编号在美国 CISA「已知被利用漏洞目录」里时，标注“已被利用”。
+  # 以这份公开目录为准，不靠大模型猜；改成 false 就不下载目录、不标注
+  mark_exploited: true
 
 # 晚间版：每天晚上补一份短的，只看白天会更新的板块，早上推过的不再出现。
 # 推送时间由外部定时服务和 daily.yml 里北京时间 15 点以后的几行 cron 决定，见 README「准点推送」
@@ -22,10 +25,12 @@ evening:
   latest_hour: 23      # 定时触发到这个钟点还没推送，当晚就不再推，避免深夜打扰
 
 # 板块按这里的顺序出现在消息里；icon 显示在板块标题前
-# 各板块上限之和（18）大于全天总数（15），名次靠后的自动让位
+# 各板块上限之和（20）大于全天总数（15），名次靠后的自动让位
 sections:
   - {key: world, name: 世界与财经, icon: 🌍, limit: 3}
   - {key: tech, name: 科技热议, icon: 🗞️, limit: 5}
+  # 安全领域每天最多几条另由 interests.yaml 的 topic_limits 控制，科技热议里的安全新闻也算在内
+  - {key: security, name: 安全研究, icon: 🛡️, limit: 2}
   - {key: labs, name: 实验室动态, icon: 🧪, limit: 2}
   - {key: papers, name: 论文, icon: 📄, limit: 3}
   - {key: journals, name: 期刊与科学, icon: 📚, limit: 3}
@@ -117,6 +122,44 @@ sources:
     min_score: 20
     # HN 的量大得多，Lobsters 的第一条大约排在 HN 第二、三条之后
     weight: 0.4
+
+  # ---- 安全研究 ----
+  # 一手材料，偏学习和防御研究：已确认被利用的漏洞、漏洞复现和原理分析、攻击技术研究。
+  # 只放早间版；HN 和 Lobsters 上的安全新闻仍在科技热议里，和这里合计每天最多 2 条，评分高的优先
+  - id: cisa-kev
+    type: kev
+    name: CISA 被利用漏洞
+    section: security
+    # 新收录的漏洞，按收录日期算；一天常有好几个，只取一个
+    window_hours: 72
+    max_items: 1
+
+  # 先知社区（阿里云）：渗透测试和漏洞分析的中文技术文章，量大，每天只取一篇
+  - id: xianzhi
+    type: feed
+    name: 先知社区
+    section: security
+    url: https://xz.aliyun.com/feed
+    window_hours: 48
+    max_items: 1
+
+  # 知道创宇 404 实验室的 Paper：中文漏洞原理分析和安全论文译介，每周几篇
+  - id: seebug-paper
+    type: feed
+    name: Seebug Paper
+    section: security
+    url: https://paper.seebug.org/rss/
+    window_hours: 168
+    max_items: 1
+
+  # PortSwigger（Burp Suite 的开发方）研究团队：Web 攻击技术的原创研究，每月一两篇
+  - id: portswigger-research
+    type: feed
+    name: PortSwigger Research
+    section: security
+    url: https://portswigger.net/research/rss
+    window_hours: 168
+    max_items: 1
 
   # ---- 实验室动态 ----
   # 有 RSS 的用 feed；没有 RSS 的用 page：比较列表页，新出现的文章才算

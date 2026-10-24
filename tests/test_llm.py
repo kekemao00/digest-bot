@@ -247,3 +247,36 @@ def test_duplicates_failure_is_harmless(config):
     tool, _ = enricher(config, lambda r: httpx.Response(500))
     assert tool.duplicates([make_item(1, "a"), make_item(2, "b")]) == []
     assert tool.duplicates([make_item(1, "a")]) == []
+
+
+def test_security_fields(config):
+    from datetime import date
+
+    from digest.models import Exploited
+
+    vuln = make_item(1, "Exploiting a deserialization bug in Acme Gateway (CVE-2026-11111)")
+    vuln.exploited = Exploited("CVE-2026-11111", date(2026, 10, 2))
+    other = make_item(2, "Rust 2.0 roadmap")
+    reply = {"items": [
+        {"id": "1", "title_zh": "Acme 网关反序列化漏洞利用", "score": 8, "topic": "安全", "patch": "已修复",
+         "lesson": "反序列化时信任了类型字段，导致任意代码执行。"},
+        {"id": "2", "title_zh": "Rust 2.0 路线图", "score": 7, "topic": "软件", "patch": "已修复", "lesson": "不该有"},
+    ]}
+    tool, requests = enricher(config, lambda r: llm_reply(reply))
+    tool.review([vuln, other])
+    assert (vuln.patch, vuln.lesson) == ("已修复", "反序列化时信任了类型字段，导致任意代码执行")
+    # 补丁状态和技术点只给安全条目
+    assert (other.patch, other.lesson) == (None, None)
+    # 是否已被利用由程序核对后告诉模型
+    _, entries = llm_entries(requests[0])
+    assert entries[0]["exploited"] == "CVE-2026-11111 已列入 CISA 已知被利用漏洞目录"
+    assert "exploited" not in entries[1]
+
+
+def test_patch_state_must_be_known_value(config):
+    item = make_item(1, "Some bug")
+    reply = {"items": [{"id": "1", "topic": "安全", "patch": "可能修复了", "lesson": "https://evil.example 看这里"}]}
+    tool, _ = enricher(config, lambda r: llm_reply(reply))
+    tool.review([item])
+    assert item.patch is None
+    assert item.lesson == "看这里"

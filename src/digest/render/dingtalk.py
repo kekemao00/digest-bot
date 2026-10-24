@@ -41,6 +41,11 @@ def meta_parts(item: Item, original: bool = False) -> list[str]:
     parts: list[str] = []
     if original and item.title_zh:
         parts.append(md_text(item.title))
+    # 安全条目先说最要紧的：是否已被实际利用（以 CISA 目录为准）、有没有补丁
+    if item.exploited:
+        parts.append("⚠️ 已被利用" + ("，勒索软件在用" if item.exploited.ransomware else ""))
+    if item.patch:
+        parts.append(f"🩹 {md_text(item.patch)}")
     if heat := item.score_text or (count_label(item.score) if item.score else None):
         parts.append(f"🔥 {md_text(heat)}")
     if item.comments and item.discussion_url and (url := safe_url(item.discussion_url)):
@@ -75,6 +80,11 @@ def topic_summary(items: list[Item]) -> str | None:
     return " · ".join(f"{t} {counts[t]}" for t in ranked)
 
 
+def lesson_line(item: Item) -> str | None:
+    """安全条目可以学的技术点，单独一行。"""
+    return f"💡 技术点：{md_text(item.lesson)}" if item.lesson else None
+
+
 def section_heading(section: Section) -> str:
     return f"{section.icon} {section.name}" if section.icon else section.name
 
@@ -88,6 +98,8 @@ def render_item(number: int, item: Item) -> str:
     lines = [first]
     if item.blurb:
         lines.append(md_text(truncate(item.blurb, 120)))
+    if lesson := lesson_line(item):
+        lines.append(lesson)
     lines.append(grey(" · ".join(meta_parts(item))))
     return LINE.join(lines)
 

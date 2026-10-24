@@ -48,6 +48,11 @@ def records(selection: Selection, config: Config, today: date) -> list[dict[str,
                     "focus": matcher.names(item.focus),
                     "highlight_rank": rank,
                     "highlight": text,
+                    # 安全条目的核对依据：以后可以统计推过的漏洞里有多少后来被列入已知被利用漏洞目录
+                    "cves": item.cves,
+                    "exploited": item.exploited.cve if item.exploited else None,
+                    "patch": item.patch,
+                    "lesson": item.lesson,
                 }
             )
     return rows
@@ -56,6 +61,18 @@ def records(selection: Selection, config: Config, today: date) -> list[dict[str,
 def _edition(row: dict[str, Any]) -> str:
     # 加晚间版之前的记录没有 edition 字段，都是早间版
     return row.get("edition") or "morning"
+
+
+def topics_sent(archive_dir: Path, today: date, edition: str) -> Counter[str]:
+    """今天另一版已经推送的各领域条数，用于按天限量的领域（比如晚间版要算上早间版推过的安全条目）。"""
+    path = archive_dir / INDEX
+    if not path.exists():
+        return Counter()
+    day = today.isoformat()
+    rows = (_row(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip())
+    return Counter(
+        row["topic"] for row in rows if row.get("date") == day and _edition(row) != edition and row.get("topic")
+    )
 
 
 def update(archive_dir: Path, selection: Selection, config: Config, today: date) -> None:

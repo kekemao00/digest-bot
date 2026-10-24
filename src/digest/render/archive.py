@@ -6,7 +6,7 @@ from digest.config import Config
 from digest.interests import InterestMatcher
 from digest.models import Item
 from digest.pipeline import Selection
-from digest.render.dingtalk import meta_parts, numbering, section_heading, topic_summary, topic_tag
+from digest.render.dingtalk import lesson_line, meta_parts, numbering, section_heading, topic_summary, topic_tag
 from digest.render.text import WEEKDAYS, md_text, safe_url
 
 # 落选条目只列分数最高的这么多条，太长就没人看了
@@ -20,6 +20,8 @@ def _link(text: str, url: str | None) -> str:
 
 def _meta(item: Item, matcher: InterestMatcher) -> str:
     parts = meta_parts(item, original=True)
+    if item.exploited:
+        parts.append(f"{item.exploited.cve} 于 {item.exploited.added:%Y-%m-%d} 列入 CISA 已知被利用漏洞目录")
     if names := matcher.names(item.focus):
         parts.append("侧重：" + "、".join(names))
     if item.quality is not None:
@@ -55,6 +57,8 @@ def render(selection: Selection, config: Config, now: datetime, status: str | No
             lines.append(f"{number}. **{_link(item.title_zh or item.title, item.url)}**{tag}  ")
             if item.blurb:
                 lines.append(f"   {md_text(item.blurb)}  ")
+            if lesson := lesson_line(item):
+                lines.append(f"   {lesson}  ")
             lines.append(f"   {_meta(item, matcher)}")
     if not items:
         lines += ["", "今天没有达到门槛的内容。"]

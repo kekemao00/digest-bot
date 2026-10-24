@@ -22,6 +22,13 @@ focus:
     keywords: [trading, trader, traders, quant, quantitative, "market making", "order book",
                HFT, "high-frequency", hedge, "hedge fund", options, futures, derivatives,
                portfolio, backtest, backtesting, arbitrage, 交易, 量化]
+  - key: security
+    name: 安全
+    weight: 1.3
+    keywords: [CVE, vulnerability, vulnerabilities, exploit, exploits, exploitation, "zero-day", 0day,
+               pentest, pentesting, "penetration testing", "red team", RCE, XSS, SSRF, CSRF, "SQL injection",
+               "privilege escalation", "sandbox escape", "memory corruption", fuzzing, "reverse engineering",
+               malware, ransomware, backdoor, CTF, 漏洞, 渗透, 提权, 逆向, 网络安全, 勒索]
 
 # 防止信息茧房：每天至少这么多比例的名额留给侧重领域之外的高分内容
 min_outside_focus: 0.34
@@ -34,3 +41,6 @@ diversity:
   min_topics: 4
   # 同一来源里同领域每多一条，排序分打这个折扣，避免一个来源连续推同一类内容
   topic_decay: 0.85
+  # 单独限量的领域：每天最多几条，早晚两版合计。名额给大模型评分最高的几条，宁少勿滥，候选不够时也不放宽
+  topic_limits:
+    安全: 2

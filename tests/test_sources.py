@@ -189,3 +189,36 @@ def test_feed_can_rank_by_editorial_order(config):
     source = Feed({"id": "w", "type": "feed", "section": "world", "url": "https://news.test/rss", "rank": "order"})
     items = fetch_with(source, rss)
     assert [source.base_score(i) for i in items] == [100.0, 98.0, 96.0]
+
+
+def test_known_exploited_vulnerabilities(config):
+    from digest.sources.kev import KnownExploited
+
+    source = KnownExploited(source_options(config, "cisa-kev"))
+    items = fetch_with(source, fixture_text("kev.json"))
+    # NOW 是 10-03 早上，只看最近 72 小时收录的；格式不对的行跳过
+    assert [i.id for i in items] == ["CVE-2026-11111", "CVE-2026-22222"]
+    acme, media = items
+    assert acme.title == "Acme Gateway OS Command Injection Vulnerability"
+    assert acme.url == "https://security.acme.example/advisories/ACME-2026-07"  # 优先链到厂商公告
+    assert acme.links == [("NVD", "https://nvd.nist.gov/vuln/detail/CVE-2026-11111")]
+    assert acme.extras == ["CVE-2026-11111", "CWE-78"]
+    assert acme.cves == ["CVE-2026-11111"]
+    assert acme.exploited.added.isoformat() == "2026-10-02" and acme.exploited.ransomware
+    assert media.url == "https://nvd.nist.gov/vuln/detail/CVE-2026-22222" and media.links == []
+    assert not media.exploited.ransomware
+    # 越新越靠前，勒索软件在用的再往前
+    assert source.base_score(acme) > source.base_score(media)
+    assert source.catalog.lookup("cve-2025-33333").cve == "CVE-2025-33333"
+
+
+def test_empty_kev_catalog_is_an_error(config):
+    from digest.sources.kev import KnownExploited
+
+    source = KnownExploited(source_options(config, "cisa-kev"))
+    try:
+        fetch_with(source, '{"vulnerabilities": []}')
+    except ValueError as exc:
+        assert "目录" in str(exc)
+    else:
+        raise AssertionError("应当报错")
