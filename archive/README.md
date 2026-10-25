@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月25日 周日 晚间](2026/10-25-evening.md) · 6 条｜时政 4 · 社会 2  
+  [卢拉寻求第四任期，对阵博索纳罗之子](https://www.bbc.co.uk/news/articles/cxp8g21j4648o?at_medium=RSS&at_campaign=rss)；[美国传媒、影视和艺术业流失 20 万岗位](https://www.apricitas.io/p/ai-and-the-fall-of-the-creative-class)
 - [10月25日 周日](2026/10-25.md) · 15 条｜AI 5 · 科学 3 · 金融 2 · 软件 2 · 安全 2 · 时政 1  
   [法国数十万人示威，近千人被捕](https://www.bbc.co.uk/news/articles/c95ynd587ynzo?at_medium=RSS&at_campaign=rss)；[技术文章解析 PHP 远程代码执行漏洞](https://paper.seebug.org/3528)；[Block 介绍仅用语音训练的对话模型](https://block.xyz/dessa)
 - [10月24日 周六 晚间](2026/10-24-evening.md) · 3 条｜时政 2 · 软件 1  
