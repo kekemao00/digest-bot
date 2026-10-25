@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 22 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 23 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月26日 周一](2026/10-26.md) · 15 条｜AI 3 · 金融 2 · 软件 2 · 硬件 2 · 安全 2 · 科学 2 · 时政 2  
+  [武契奇承认其政党败给学生抗议运动](https://www.bbc.co.uk/news/articles/cw5yn3xlprpmo?at_medium=RSS&at_campaign=rss)；[电荷密度预测新框架较部分方法提速逾十倍](https://www.nature.com/articles/s42256-026-01326-5)；[CODE 服务器漏洞遭利用，可远程执行代码](https://help.nextcloud.com/t/to-collabora-built-in-user-update-asap/250516)
 - [10月25日 周日 晚间](2026/10-25-evening.md) · 6 条｜时政 4 · 社会 2  
   [卢拉寻求第四任期，对阵博索纳罗之子](https://www.bbc.co.uk/news/articles/cxp8g21j4648o?at_medium=RSS&at_campaign=rss)；[美国传媒、影视和艺术业流失 20 万岗位](https://www.apricitas.io/p/ai-and-the-fall-of-the-creative-class)
 - [10月25日 周日](2026/10-25.md) · 15 条｜AI 5 · 科学 3 · 金融 2 · 软件 2 · 安全 2 · 时政 1  
