@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 23 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 24 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月27日 周二](2026/10-27.md) · 15 条｜AI 5 · 时政 3 · 安全 2 · 金融 1 · 软件 1 · 科学 1 · 社会 1 · 其他 1  
+  [卢拉逆转赢得巴西大选，获第四任期](https://www.bbc.co.uk/news/articles/ckm23y3mg1yyo?at_medium=RSS&at_campaign=rss)；[Anthropic 上市注册文件公开](https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm)；[PHP 未认证远程代码执行漏洞已遭利用](https://www.php.net/)
 - [10月26日 周一 晚间](2026/10-26-evening.md) · 5 条｜时政 3 · AI 1 · 软件 1  
   [委内瑞拉反对派领袖马查多流亡数月后返国](https://www.bbc.co.uk/news/articles/cq8ez592pp0eo?at_medium=RSS&at_campaign=rss)；[IBM 首席执行官称开放权重模型本地运行成本低](https://www.theregister.com/systems/2026/10/22/ibm-ceo-says-open-weight-models-are-now-irresistibly-good-and-cheap-on-prem/5304640)
 - [10月26日 周一](2026/10-26.md) · 15 条｜AI 3 · 金融 2 · 软件 2 · 硬件 2 · 安全 2 · 科学 2 · 时政 2  
