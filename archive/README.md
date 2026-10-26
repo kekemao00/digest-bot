@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月26日 周一 晚间](2026/10-26-evening.md) · 5 条｜时政 3 · AI 1 · 软件 1  
+  [委内瑞拉反对派领袖马查多流亡数月后返国](https://www.bbc.co.uk/news/articles/cq8ez592pp0eo?at_medium=RSS&at_campaign=rss)；[IBM 首席执行官称开放权重模型本地运行成本低](https://www.theregister.com/systems/2026/10/22/ibm-ceo-says-open-weight-models-are-now-irresistibly-good-and-cheap-on-prem/5304640)
 - [10月26日 周一](2026/10-26.md) · 15 条｜AI 3 · 金融 2 · 软件 2 · 硬件 2 · 安全 2 · 科学 2 · 时政 2  
   [武契奇承认其政党败给学生抗议运动](https://www.bbc.co.uk/news/articles/cw5yn3xlprpmo?at_medium=RSS&at_campaign=rss)；[电荷密度预测新框架较部分方法提速逾十倍](https://www.nature.com/articles/s42256-026-01326-5)；[CODE 服务器漏洞遭利用，可远程执行代码](https://help.nextcloud.com/t/to-collabora-built-in-user-update-asap/250516)
 - [10月25日 周日 晚间](2026/10-25-evening.md) · 6 条｜时政 4 · 社会 2  
