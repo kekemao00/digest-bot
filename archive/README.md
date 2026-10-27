@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月27日 周二 晚间](2026/10-27-evening.md) · 7 条｜金融 2 · 软件 2 · 科学 2 · 时政 1  
+  [以色列关键选举投票率暂创数十年新高](https://www.bbc.co.uk/news/articles/c3j47l4kdez4o?at_medium=RSS&at_campaign=rss)；[OpenAI 介绍数学、计算机与物理三项新发现](https://openai.com/index/building-scientific-understanding-with-academic-communities/)
 - [10月27日 周二](2026/10-27.md) · 15 条｜AI 5 · 时政 3 · 安全 2 · 金融 1 · 软件 1 · 科学 1 · 社会 1 · 其他 1  
   [卢拉逆转赢得巴西大选，获第四任期](https://www.bbc.co.uk/news/articles/ckm23y3mg1yyo?at_medium=RSS&at_campaign=rss)；[Anthropic 上市注册文件公开](https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm)；[PHP 未认证远程代码执行漏洞已遭利用](https://www.php.net/)
 - [10月26日 周一 晚间](2026/10-26-evening.md) · 5 条｜时政 3 · AI 1 · 软件 1  
