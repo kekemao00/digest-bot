@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 24 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 25 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月28日 周三](2026/10-28.md) · 15 条｜AI 5 · 软件 3 · 金融 2 · 安全 2 · 科学 1 · 时政 1 · 社会 1  
+  [泡泡玛特第三季度销售额同比降 45% 至 50%](https://www.ftchinese.com/story/001111218)；[OpenAI 发布 GPT-6.1 Terra](https://openai.com/index/introducing-gpt-6-1-terra/)；[8 款 SVG 净化器中 6 款被绕过](https://portswigger.net/research/scalable-vector-grief)
 - [10月27日 周二 晚间](2026/10-27-evening.md) · 7 条｜金融 2 · 软件 2 · 科学 2 · 时政 1  
   [以色列关键选举投票率暂创数十年新高](https://www.bbc.co.uk/news/articles/c3j47l4kdez4o?at_medium=RSS&at_campaign=rss)；[OpenAI 介绍数学、计算机与物理三项新发现](https://openai.com/index/building-scientific-understanding-with-academic-communities/)
 - [10月27日 周二](2026/10-27.md) · 15 条｜AI 5 · 时政 3 · 安全 2 · 金融 1 · 软件 1 · 科学 1 · 社会 1 · 其他 1  
