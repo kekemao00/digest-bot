@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月28日 周三 晚间](2026/10-28-evening.md) · 6 条｜金融 2 · 软件 2 · 时政 1 · 社会 1  
+  [官员称停火范围扩大至乌克兰赫尔松全境](https://www.bbc.co.uk/news/articles/c6lye1w9p2l8o?at_medium=RSS&at_campaign=rss)；[以色列出口民调无明确赢家，股市跌逾 3%](https://www.aljazeera.com/economy/2026/10/28/israels-stock-market-drops-as-exit-polls-show-no-clear-election-winner?traffic_source=rss)
 - [10月28日 周三](2026/10-28.md) · 15 条｜AI 5 · 软件 3 · 金融 2 · 安全 2 · 科学 1 · 时政 1 · 社会 1  
   [泡泡玛特第三季度销售额同比降 45% 至 50%](https://www.ftchinese.com/story/001111218)；[OpenAI 发布 GPT-6.1 Terra](https://openai.com/index/introducing-gpt-6-1-terra/)；[8 款 SVG 净化器中 6 款被绕过](https://portswigger.net/research/scalable-vector-grief)
 - [10月27日 周二 晚间](2026/10-27-evening.md) · 7 条｜金融 2 · 软件 2 · 科学 2 · 时政 1  
