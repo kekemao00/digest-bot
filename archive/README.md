@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 25 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 26 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月29日 周四](2026/10-29.md) · 15 条｜AI 3 · 科学 3 · 金融 2 · 软件 2 · 安全 2 · 硬件 1 · 时政 1 · 社会 1  
+  [西班牙高铁相撞致至少 68 人死亡](https://www.bbc.co.uk/news/articles/c6p3g84kjqjlo?at_medium=RSS&at_campaign=rss)；[Linux 内核漏洞已遭利用，可篡改页缓存](https://git.kernel.org/stable/c/3599e6b3cc1ada96883d496a50a210d3afbb6987)；[谷歌发布新模型 Gemini 4 Carbon](https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/)
 - [10月28日 周三 晚间](2026/10-28-evening.md) · 6 条｜金融 2 · 软件 2 · 时政 1 · 社会 1  
   [官员称停火范围扩大至乌克兰赫尔松全境](https://www.bbc.co.uk/news/articles/c6lye1w9p2l8o?at_medium=RSS&at_campaign=rss)；[以色列出口民调无明确赢家，股市跌逾 3%](https://www.aljazeera.com/economy/2026/10/28/israels-stock-market-drops-as-exit-polls-show-no-clear-election-winner?traffic_source=rss)
 - [10月28日 周三](2026/10-28.md) · 15 条｜AI 5 · 软件 3 · 金融 2 · 安全 2 · 科学 1 · 时政 1 · 社会 1  
