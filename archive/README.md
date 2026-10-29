@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 26 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 27 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月30日 周五](2026/10-30.md) · 15 条｜AI 5 · 科学 3 · 金融 2 · 安全 2 · 社会 2 · 时政 1  
+  [美国第三季度 GDP 增长 3.4%，超预期](https://www.cnbc.com/2026/10/29/pce-inflation-report-september-2026-.html)；[Mistral 发布 Large 4 模型权重](https://mistral.ai/news/mistral-large-4-oss/)；[DoorDash 宣布拟收购 Instacart](https://about.doordash.com/en-us/news/doordash-to-acquire-instacart)
 - [10月29日 周四 晚间](2026/10-29-evening.md) · 8 条｜AI 2 · 金融 2 · 软件 2 · 时政 1 · 社会 1  
   [欧洲央行行长拉加德将于 2 月卸任](https://www.cnbc.com/2026/10/29/lagarde-ecb-stand-down.html)；[StackOverflow 月提问量降至千条以下](https://data.stackexchange.com/stackoverflow/query/1926661#graph?t=1)
 - [10月29日 周四](2026/10-29.md) · 15 条｜AI 3 · 科学 3 · 金融 2 · 软件 2 · 安全 2 · 硬件 1 · 时政 1 · 社会 1  
