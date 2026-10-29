@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月29日 周四 晚间](2026/10-29-evening.md) · 8 条｜AI 2 · 金融 2 · 软件 2 · 时政 1 · 社会 1  
+  [欧洲央行行长拉加德将于 2 月卸任](https://www.cnbc.com/2026/10/29/lagarde-ecb-stand-down.html)；[StackOverflow 月提问量降至千条以下](https://data.stackexchange.com/stackoverflow/query/1926661#graph?t=1)
 - [10月29日 周四](2026/10-29.md) · 15 条｜AI 3 · 科学 3 · 金融 2 · 软件 2 · 安全 2 · 硬件 1 · 时政 1 · 社会 1  
   [西班牙高铁相撞致至少 68 人死亡](https://www.bbc.co.uk/news/articles/c6p3g84kjqjlo?at_medium=RSS&at_campaign=rss)；[Linux 内核漏洞已遭利用，可篡改页缓存](https://git.kernel.org/stable/c/3599e6b3cc1ada96883d496a50a210d3afbb6987)；[谷歌发布新模型 Gemini 4 Carbon](https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/)
 - [10月28日 周三 晚间](2026/10-28-evening.md) · 6 条｜金融 2 · 软件 2 · 时政 1 · 社会 1  
