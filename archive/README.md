@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 27 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 28 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 10 月
 
+- [10月31日 周六](2026/10-31.md) · 15 条｜AI 4 · 科学 3 · 金融 2 · 安全 2 · 时政 2 · 软件 1 · 其他 1  
+  [沃什倾向较高利率，保留政策调整空间](https://www.cnbc.com/2026/10/29/kevin-warsh-fed-october-rate-decision-december-hike.html)；[Ivanti 可预测标识符漏洞已遭实际利用](https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US)；[OpenAI 将遵循网站 AI 训练偏好信号](https://openai.com/index/helping-websites-express-ai-training-preferences)
 - [10月30日 周五 晚间](2026/10-30-evening.md) · 7 条｜AI 2 · 金融 2 · 软件 2 · 时政 1  
   [AI 搜索冲击广告，谷歌市值缩水 5000 亿美元](https://www.bbc.co.uk/news/articles/cm9qzdqpxy48o?at_medium=RSS&at_campaign=rss)；[《新报》被俄列为“外国代理人”，面临关闭](https://www.aljazeera.com/news/2026/10/30/russia-forces-closure-of-investigative-newspaper-novaya-gazeta?traffic_source=rss)
 - [10月30日 周五](2026/10-30.md) · 15 条｜AI 5 · 科学 3 · 金融 2 · 安全 2 · 社会 2 · 时政 1  
