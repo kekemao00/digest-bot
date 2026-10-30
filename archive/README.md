@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月30日 周五 晚间](2026/10-30-evening.md) · 7 条｜AI 2 · 金融 2 · 软件 2 · 时政 1  
+  [AI 搜索冲击广告，谷歌市值缩水 5000 亿美元](https://www.bbc.co.uk/news/articles/cm9qzdqpxy48o?at_medium=RSS&at_campaign=rss)；[《新报》被俄列为“外国代理人”，面临关闭](https://www.aljazeera.com/news/2026/10/30/russia-forces-closure-of-investigative-newspaper-novaya-gazeta?traffic_source=rss)
 - [10月30日 周五](2026/10-30.md) · 15 条｜AI 5 · 科学 3 · 金融 2 · 安全 2 · 社会 2 · 时政 1  
   [美国第三季度 GDP 增长 3.4%，超预期](https://www.cnbc.com/2026/10/29/pce-inflation-report-september-2026-.html)；[Mistral 发布 Large 4 模型权重](https://mistral.ai/news/mistral-large-4-oss/)；[DoorDash 宣布拟收购 Instacart](https://about.doordash.com/en-us/news/doordash-to-acquire-instacart)
 - [10月29日 周四 晚间](2026/10-29-evening.md) · 8 条｜AI 2 · 金融 2 · 软件 2 · 时政 1 · 社会 1  
