@@ -1,6 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 28 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 29 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+
+## 2026 年 11 月
+
+- [11月1日 周日](2026/11-01.md) · 15 条｜AI 5 · 软件 3 · 安全 2 · 科学 2 · 金融 1 · 时政 1 · 社会 1  
+  [新模型统一解析文档、图像、音频与视频](https://arxiv.org/abs/2610.39301)；[思科 ASA 与 FTD 漏洞遭利用，可致设备重启](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-tunnel-dos-s6mgkb75)；[《科学》刊载成年鱼类全身单细胞图谱](https://www.science.org/doi/abs/10.1126/science.aeg1125?af=R)
 
 ## 2026 年 10 月
 
