@@ -4,6 +4,8 @@
 
 ## 2026 年 10 月
 
+- [10月31日 周六 晚间](2026/10-31-evening.md) · 3 条｜金融 2 · 软件 1  
+  [Jio 上市融资 32 亿美元，创印度最大上市纪录](https://www.aljazeera.com/news/2026/10/31/how-ambanis-jio-became-indias-second-largest-company?traffic_source=rss)；[据报道，OpenAI 融资不足 150 亿美元](https://www.wsj.com/tech/ai/openai-raises-less-than-half-of-30-billion-target-in-latest-round-91aecdc5)
 - [10月31日 周六](2026/10-31.md) · 15 条｜AI 4 · 科学 3 · 金融 2 · 安全 2 · 时政 2 · 软件 1 · 其他 1  
   [沃什倾向较高利率，保留政策调整空间](https://www.cnbc.com/2026/10/29/kevin-warsh-fed-october-rate-decision-december-hike.html)；[Ivanti 可预测标识符漏洞已遭实际利用](https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US)；[OpenAI 将遵循网站 AI 训练偏好信号](https://openai.com/index/helping-websites-express-ai-training-preferences)
 - [10月30日 周五 晚间](2026/10-30-evening.md) · 7 条｜AI 2 · 金融 2 · 软件 2 · 时政 1  

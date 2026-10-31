@@ -1,7 +1,7 @@
 {
  "version": 1,
  "last_sent": "2026-10-31",
- "last_evening": "2026-10-30",
+ "last_evening": "2026-10-31",
  "sent": {
   "1011now.com/2026/09/30/more-questions-than-answers-about-lincolns-google-data-center-water-electricity-usage": "2026-10-06",
   "about.doordash.com/en-us/news/doordash-to-acquire-instacart": "2026-10-30",
@@ -34,6 +34,7 @@
   "aljazeera.com/news/2026/10/29/pentagon-says-iran-war-has-cost-us-taxpayers-47bn-what-that-means?traffic_source=rss": "2026-10-29",
   "aljazeera.com/news/2026/10/30/russia-forces-closure-of-investigative-newspaper-novaya-gazeta?traffic_source=rss": "2026-10-30",
   "aljazeera.com/news/2026/10/30/us-judge-orders-ethics-inquiry-into-trump-lawyers-over-golf-course-case?traffic_source=rss": "2026-10-31",
+  "aljazeera.com/news/2026/10/31/how-ambanis-jio-became-indias-second-largest-company?traffic_source=rss": "2026-10-31",
   "aljazeera.com/news/2026/10/4/is-the-sudanese-army-gaining-momentum-against-the-rsf?traffic_source=rss": "2026-10-04",
   "aljazeera.com/news/2026/10/4/us-withdraws-b-1-bomber-aircraft-from-uks-fairford-base-amid-iran-fears?traffic_source=rss": "2026-10-05",
   "aljazeera.com/news/2026/10/5/fbi-arrests-chinese-foreign-agent-for-spying-on-taiwan-presidents-son?traffic_source=rss": "2026-10-05",
@@ -231,6 +232,7 @@
   "deepmind.google/blog/on-device-ai-scam-detection-mddi": "2026-10-14",
   "deno.com/blog/cloudflare": "2026-10-10",
   "derekwessman.com/blog-1/natural": "2026-10-19",
+  "devblogs.microsoft.com/oldnewthing/20261029-00?p=112808%2F": "2026-10-31",
   "developer.chrome.com/blog/jpeg-xl-in-chrome": "2026-10-08",
   "discuss.grapheneos.org/d/41564-pixel-11-doesnt-yet-meet-the-grapheneos-security-standards-and-may-be-skipped": "2026-10-06",
   "divagr.com/blog/qwenputer": "2026-10-29",
@@ -589,6 +591,7 @@
   "wiro.world/posts/calling-c-func-without-naming-it": "2026-10-09",
   "wjcl.com/article/savannah-police-officer-ice-agent-flock-access/74135816": "2026-10-20",
   "words.filippo.io/seeds-solved": "2026-10-18",
+  "wsj.com/tech/ai/openai-raises-less-than-half-of-30-billion-target-in-latest-round-91aecdc5": "2026-10-31",
   "yossarian.net/til/post/rust-s-derive-often-implies-inline": "2026-10-04",
   "yyhh.org/blog/2026/10/ai-is-a-tool": "2026-10-13",
   "ziglang.org/download/0.17.0/release-notes.html": "2026-10-04"
@@ -643,8 +646,8 @@
    "https://ai.meta.com/blog/alta-daily-fashion-app-segment-anything/"
   ],
   "deepseek": [
-   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news261017",
+   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260910",
    "https://api-docs.deepseek.com/news/news260821",
    "https://api-docs.deepseek.com/news/news260813",
