@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 29 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 30 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月2日 周一](2026/11-02.md) · 12 条｜AI 3 · 软件 3 · 时政 3 · 社会 2 · 安全 1  
+  [赫尔松停火结束，俄袭致乌数千人断电](https://www.bbc.co.uk/news/articles/c64g1y90p71eo?at_medium=RSS&at_campaign=rss)；[研究提出材料变化时无需重训的本构建模方法](https://doi.org/10.1073/pnas.2620983123)；[Hex 推出跨平台本地语音听写工具](https://github.com/anomalyco/hex)
 - [11月1日 周日 晚间](2026/11-01-evening.md) · 4 条｜AI 1 · 软件 1 · 时政 1 · 社会 1  
   [调解方继续推动美伊谈判](https://www.aljazeera.com/news/2026/11/1/mediators-continue-us-iran-negotiations-amid-war-rhetoric-what-we-know?traffic_source=rss)；[五模型团队在编程难题测试中胜过 Fable 5](https://github.com/guregodevo/memdoor/tree/main/examples/workflows/team-solve)
 - [11月1日 周日](2026/11-01.md) · 15 条｜AI 5 · 软件 3 · 安全 2 · 科学 2 · 金融 1 · 时政 1 · 社会 1  
