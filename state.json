@@ -1,7 +1,7 @@
 {
  "version": 1,
  "last_sent": "2026-11-01",
- "last_evening": "2026-10-31",
+ "last_evening": "2026-11-01",
  "sent": {
   "1011now.com/2026/09/30/more-questions-than-answers-about-lincolns-google-data-center-water-electricity-usage": "2026-10-06",
   "about.doordash.com/en-us/news/doordash-to-acquire-instacart": "2026-10-30",
@@ -42,6 +42,7 @@
   "aljazeera.com/news/2026/10/6/palestine-weekly-olive-harvest-opens-under-assault?traffic_source=rss": "2026-10-06",
   "aljazeera.com/news/2026/10/7/us-sets-new-demands-for-iran-deal-what-are-they?traffic_source=rss": "2026-10-07",
   "aljazeera.com/news/2026/10/8/school-protests-blockades-resume-in-france-despite-pms-promise-to-act?traffic_source=rss": "2026-10-08",
+  "aljazeera.com/news/2026/11/1/mediators-continue-us-iran-negotiations-amid-war-rhetoric-what-we-know?traffic_source=rss": "2026-11-01",
   "amosbbatto.wordpress.com/2026/10/05/linux-phones-alternative": "2026-10-12",
   "anoma.ly/notes/opencode-2-0": "2026-10-16",
   "anthropic.com/claude-haiku-5-5": "2026-10-08",
@@ -150,6 +151,7 @@
   "bbc.co.uk/news/articles/cq8ez592pp0eo?at_campaign=rss&at_medium=RSS": "2026-10-26",
   "bbc.co.uk/news/articles/cq8jzkpjr28vo?at_campaign=rss&at_medium=RSS": "2026-10-30",
   "bbc.co.uk/news/articles/cqe8r5l7n92jo?at_campaign=rss&at_medium=RSS": "2026-10-11",
+  "bbc.co.uk/news/articles/cqj34gnd3n30o?at_campaign=rss&at_medium=RSS": "2026-11-01",
   "bbc.co.uk/news/articles/cqj6jenp26zyo?at_campaign=rss&at_medium=RSS": "2026-10-05",
   "bbc.co.uk/news/articles/cqwyrnwd9dw1o?at_campaign=rss&at_medium=RSS": "2026-10-15",
   "bbc.co.uk/news/articles/cqzjx7z2r4gko?at_campaign=rss&at_medium=RSS": "2026-10-07",
@@ -175,6 +177,7 @@
   "blog.enlyth.com/posts/oldest-windows-gui-app-win-11": "2026-10-28",
   "blog.mistys-internet.website/post/2026/10/29/if-you-love-a-website-back-it-up": "2026-10-30",
   "blog.mozilla.org/en/firefox/introducing-firefox-enterprise": "2026-10-15",
+  "blogs.kde.org/2026/11/01/introducing-kwi": "2026-11-01",
   "calabro.io/ohbf": "2026-10-20",
   "cambridge.org/core/services/aop-cambridge-core/content/view/30CC4826561366615BFAEC807CDE28A7/S0007125026108046a.pdf/adhd-autism-or-complex-trauma-the-complicated-nature-of-the-question.pdf": "2026-10-05",
   "carrierexplode.com/": "2026-10-11",
@@ -316,6 +319,7 @@
   "github.com/donchitos/claude-code-game-studios": "2026-10-30",
   "github.com/duartesantos8/opengym": "2026-10-06",
   "github.com/graphify-labs/graphify": "2026-10-21",
+  "github.com/guregodevo/memdoor": "2026-11-01",
   "github.com/headroomlabs-ai/headroom": "2026-10-22",
   "github.com/herdrdev/herdr-app": "2026-10-30",
   "github.com/hkuds/cli-anything": "2026-10-19",
@@ -661,8 +665,8 @@
    "https://ai.meta.com/blog/alta-daily-fashion-app-segment-anything/"
   ],
   "deepseek": [
-   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news261017",
+   "https://api-docs.deepseek.com/news/news250120",
    "https://api-docs.deepseek.com/news/news260910",
    "https://api-docs.deepseek.com/news/news260821",
    "https://api-docs.deepseek.com/news/news260813",

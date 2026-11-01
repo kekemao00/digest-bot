@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月1日 周日 晚间](2026/11-01-evening.md) · 4 条｜AI 1 · 软件 1 · 时政 1 · 社会 1  
+  [调解方继续推动美伊谈判](https://www.aljazeera.com/news/2026/11/1/mediators-continue-us-iran-negotiations-amid-war-rhetoric-what-we-know?traffic_source=rss)；[五模型团队在编程难题测试中胜过 Fable 5](https://github.com/guregodevo/memdoor/tree/main/examples/workflows/team-solve)
 - [11月1日 周日](2026/11-01.md) · 15 条｜AI 5 · 软件 3 · 安全 2 · 科学 2 · 金融 1 · 时政 1 · 社会 1  
   [新模型统一解析文档、图像、音频与视频](https://arxiv.org/abs/2610.39301)；[思科 ASA 与 FTD 漏洞遭利用，可致设备重启](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-tunnel-dos-s6mgkb75)；[《科学》刊载成年鱼类全身单细胞图谱](https://www.science.org/doi/abs/10.1126/science.aeg1125?af=R)
 
