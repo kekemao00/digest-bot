@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月2日 周一 晚间](2026/11-02-evening.md) · 7 条｜时政 2 · AI 1 · 金融 1 · 软件 1 · 安全 1 · 社会 1  
+  [韩国拟投 21.3 万亿韩元发展芯片及 AI 设施](https://www.cnbc.com/2026/11/02/south-korea-ai-spending-budget.html)；[美国劳动者所得份额降至 1947 年以来最低](https://fortune.com/article/why-did-us-workers-just-take-home-smallest-share-of-capital-since-1947-lowest-ever-recorded/)
 - [11月2日 周一](2026/11-02.md) · 12 条｜AI 3 · 软件 3 · 时政 3 · 社会 2 · 安全 1  
   [赫尔松停火结束，俄袭致乌数千人断电](https://www.bbc.co.uk/news/articles/c64g1y90p71eo?at_medium=RSS&at_campaign=rss)；[研究提出材料变化时无需重训的本构建模方法](https://doi.org/10.1073/pnas.2620983123)；[Hex 推出跨平台本地语音听写工具](https://github.com/anomalyco/hex)
 - [11月1日 周日 晚间](2026/11-01-evening.md) · 4 条｜AI 1 · 软件 1 · 时政 1 · 社会 1  
