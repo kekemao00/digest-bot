@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 30 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 31 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月3日 周二](2026/11-03.md) · 14 条｜AI 4 · 软件 3 · 科学 3 · 金融 1 · 安全 1 · 时政 1 · 社会 1  
+  [基辅称俄军轰炸乌克兰援助中心致 26 人死亡](https://www.bbc.co.uk/news/articles/cjy56dndlyz0o?at_medium=RSS&at_campaign=rss)；[中国化工品出口激增，或引发新贸易争端](https://www.ftchinese.com/story/001111263)；[OpenAI 推出 AI 日常任务能力评测基准](https://openai.com/index/lifeval)
 - [11月2日 周一 晚间](2026/11-02-evening.md) · 7 条｜时政 2 · AI 1 · 金融 1 · 软件 1 · 安全 1 · 社会 1  
   [韩国拟投 21.3 万亿韩元发展芯片及 AI 设施](https://www.cnbc.com/2026/11/02/south-korea-ai-spending-budget.html)；[美国劳动者所得份额降至 1947 年以来最低](https://fortune.com/article/why-did-us-workers-just-take-home-smallest-share-of-capital-since-1947-lowest-ever-recorded/)
 - [11月2日 周一](2026/11-02.md) · 12 条｜AI 3 · 软件 3 · 时政 3 · 社会 2 · 安全 1  
