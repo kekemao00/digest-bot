@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 31 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 32 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月4日 周三](2026/11-04.md) · 15 条｜AI 5 · 软件 3 · 金融 2 · 安全 2 · 科学 2 · 时政 1  
+  [美俄中正商讨举行三国领导人会晤](https://www.ftchinese.com/story/001111274)；[美国 9 月职位空缺增至 752 万，高于预期](https://www.cnbc.com/2026/11/03/job-openings-posted-big-september-gain-in-positive-sign-for-labor-market-ahead-of-payrolls-report.html)；[研究发现铜氧化层可同时向内外生长](https://doi.org/10.1073/pnas.2607434123)
 - [11月3日 周二 晚间](2026/11-03-evening.md) · 8 条｜金融 3 · 时政 2 · AI 1 · 软件 1 · 社会 1  
   [美国空袭伊朗格什姆岛，称行动有限且属防御性质](https://www.bbc.co.uk/news/articles/cx240mrm3g8vo?at_medium=RSS&at_campaign=rss)；[芯片股跌势蔓延，英特尔股价跌幅扩大](https://finance.yahoo.com/markets/article/the-intel-stock-collapse-is-getting-worse--and-the-37-trillion-chip-rout-is-spreading-212154947.html)
 - [11月3日 周二](2026/11-03.md) · 14 条｜AI 4 · 软件 3 · 科学 3 · 金融 1 · 安全 1 · 时政 1 · 社会 1  
