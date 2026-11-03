@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月3日 周二 晚间](2026/11-03-evening.md) · 8 条｜金融 3 · 时政 2 · AI 1 · 软件 1 · 社会 1  
+  [美国空袭伊朗格什姆岛，称行动有限且属防御性质](https://www.bbc.co.uk/news/articles/cx240mrm3g8vo?at_medium=RSS&at_campaign=rss)；[芯片股跌势蔓延，英特尔股价跌幅扩大](https://finance.yahoo.com/markets/article/the-intel-stock-collapse-is-getting-worse--and-the-37-trillion-chip-rout-is-spreading-212154947.html)
 - [11月3日 周二](2026/11-03.md) · 14 条｜AI 4 · 软件 3 · 科学 3 · 金融 1 · 安全 1 · 时政 1 · 社会 1  
   [基辅称俄军轰炸乌克兰援助中心致 26 人死亡](https://www.bbc.co.uk/news/articles/cjy56dndlyz0o?at_medium=RSS&at_campaign=rss)；[中国化工品出口激增，或引发新贸易争端](https://www.ftchinese.com/story/001111263)；[OpenAI 推出 AI 日常任务能力评测基准](https://openai.com/index/lifeval)
 - [11月2日 周一 晚间](2026/11-02-evening.md) · 7 条｜时政 2 · AI 1 · 金融 1 · 软件 1 · 安全 1 · 社会 1  
