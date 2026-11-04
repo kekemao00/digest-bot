@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 32 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 33 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月5日 周四](2026/11-05.md) · 15 条｜AI 5 · 软件 3 · 科学 2 · 时政 2 · 金融 1 · 安全 1 · 社会 1  
+  [共和党中期选举失利，党内归咎特朗普](https://www.bbc.co.uk/news/articles/c6x29rr8djy3o?at_medium=RSS&at_campaign=rss)；[京东 22 亿欧元收购德国 Ceconomy 获批](https://www.ftchinese.com/story/001111277)；[AutoDNA 整合仪器开展自主生物分子实验](https://www.nature.com/articles/s41586-026-11228-6)
 - [11月4日 周三 晚间](2026/11-04-evening.md) · 8 条｜软件 4 · 时政 2 · AI 1 · 金融 1  
   [欧元区通胀三年来首次达 4%](https://www.cnbc.com/2026/11/04/euro-zone-cpi-inflation-october-ecb-rate-hike.html)；[胡塞武装围困塔伊兹一月，物资供应受阻](https://www.aljazeera.com/news/2026/11/4/houthis-one-month-siege-on-taiz-is-creating-hell-for-yemenis-stuck-there?traffic_source=rss)
 - [11月4日 周三](2026/11-04.md) · 15 条｜AI 5 · 软件 3 · 金融 2 · 安全 2 · 科学 2 · 时政 1  
