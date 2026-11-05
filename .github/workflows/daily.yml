@@ -1,10 +1,13 @@
 name: 每日简报
 # Actions 页面上每次运行的名称标明触发方式（晚间版另外标出）。一天会有几路触发，
-# 每一版推送的只有先到的那一次，其余的点进去 Summary 写着「已推送过，跳过」
+# 每一版推送的只有先到的那一次，其余的点进去 Summary 写着「已推送过，跳过」。
+# 市场板块的预览和回测单独标出（勾了它们就会推送，「只生成预览」对它们不起作用）
 run-name: >-
   ${{ format('每日简报{0} · {1}',
   inputs.edition == 'evening' && ' · 晚间' || '',
   github.event_name == 'schedule' && 'GitHub 兜底'
+  || inputs.markets_backtest && '市场回测'
+  || inputs.markets_preview && '市场预览'
   || inputs.dry_run && '预览'
   || inputs.scheduled && '准点触发'
   || '手动推送') }}
@@ -27,7 +30,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 只生成预览，不发送到钉钉
+        description: 只生成预览，不发送到钉钉（勾了下面的市场板块预览或回测时不起作用）
         type: boolean
         default: true
       scheduled:
@@ -39,6 +42,15 @@ on:
         type: choice
         options: [morning, evening]
         default: morning
+      # 下面两项只在仓库变量 MARKETS_ENABLED 为 true 时起作用，见 README「市场与预测」
+      markets_preview:
+        description: 只推送市场板块预览（不发简报、不记账）
+        type: boolean
+        default: false
+      markets_backtest:
+        description: 跑一次 Kalshi 历史回测，结果加密保存并推送到钉钉
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -51,7 +63,8 @@ jobs:
   # 生成并推送：能读到钉钉和大模型的密钥，但没有写仓库的权限
   digest:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # 回测按 1 秒一个请求慢慢取历史数据，最长 50 分钟；定时运行时 inputs 为空，仍是 15 分钟
+    timeout-minutes: ${{ inputs.markets_backtest && 60 || 15 }}
     permissions:
       contents: read
     outputs:
@@ -61,8 +74,10 @@ jobs:
         with:
           persist-credentials: false
 
-      # 第一次运行时 state 分支还不存在，这一步会失败，程序按第一次运行处理
+      # 第一次运行时 state 分支还不存在，这一步会失败，程序按第一次运行处理。
+      # 失败时市场板块不记账（MARKETS_STATE_OK），所以第一次运行还没有账本，state 分支建好后的下一次才开始记
       - name: 读取去重状态
+        id: state
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         continue-on-error: true
         with:
@@ -80,8 +95,9 @@ jobs:
         run: python -m digest --state .state/state.json --archive-dir .state/archive
         env:
           PYTHONPATH: src
-          # 手动运行时按勾选决定；定时运行时 inputs 为空，即正式发送
-          DIGEST_DRY_RUN: ${{ inputs.dry_run }}
+          # 手动运行时按勾选决定；定时运行时 inputs 为空，即正式发送。
+          # 勾了市场板块预览或回测就是要推送，不管「只生成预览」（它默认是勾上的）
+          DIGEST_DRY_RUN: ${{ inputs.dry_run && !inputs.markets_preview && !inputs.markets_backtest }}
           DIGEST_SCHEDULED: ${{ inputs.scheduled }}
           # 手动和外部定时服务触发时按 edition 决定哪一版；GitHub 自带的定时任务按 cron 的钟点判断
           DIGEST_EDITION: ${{ inputs.edition }}
@@ -92,12 +108,22 @@ jobs:
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          # 市场与预测板块：仓库变量 MARKETS_ENABLED 为 true 才运行（没设时为空，什么都不变）。
+          # 账本钥匙只在这一步可见，程序只用它加密 .state/markets/ 下的账本，从不打印
+          MARKETS_ENABLED: ${{ vars.MARKETS_ENABLED }}
+          MARKETS_LEDGER_KEY: ${{ secrets.MARKETS_LEDGER_KEY }}
+          MARKETS_LEDGER_KEY_OLD: ${{ secrets.MARKETS_LEDGER_KEY_OLD }}
+          # 上面取 state 分支失败时 .state 是空的：这时新建的账本会在保存时盖掉分支上的钥匙记录，所以这次不记账
+          MARKETS_STATE_OK: ${{ steps.state.outcome == 'success' }}
+          DIGEST_MARKETS_PREVIEW: ${{ inputs.markets_preview }}
+          DIGEST_MARKETS_BACKTEST: ${{ inputs.markets_backtest }}
 
       # 交给下一个任务提交。.state 本身是隐藏目录，默认会被整个跳过，
       # 所以要打开 include-hidden-files，再单独排除 checkout 留下的 .git。
-      # 预览和「这一版今天已推送过」的跳过不会改动 state，不用上传
+      # 预览、市场板块预览和「这一版今天已推送过」的跳过不会改动 state，不用上传；
+      # 市场回测会把加密的结果写进 .state/markets/，照常上传（不管「只生成预览」勾没勾）
       - name: 上传去重状态和归档
-        if: ${{ inputs.dry_run != true && steps.digest.outputs.skipped != 'true' }}
+        if: ${{ (inputs.dry_run != true || inputs.markets_backtest == true) && inputs.markets_preview != true && steps.digest.outputs.skipped != 'true' }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: state
@@ -111,7 +137,7 @@ jobs:
   # 保存：只有这个任务能写仓库，而且只写 state 分支；这里不接触任何密钥，也不运行 Python 依赖
   save:
     needs: digest
-    if: ${{ inputs.dry_run != true && needs.digest.outputs.skipped != 'true' }}
+    if: ${{ (inputs.dry_run != true || inputs.markets_backtest == true) && inputs.markets_preview != true && needs.digest.outputs.skipped != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -132,10 +158,98 @@ jobs:
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: state
-          path: .state
+          path: ${{ runner.temp }}/state-artifact
+
+      # 把这次的结果放进 state 分支。去重状态和归档直接放进去；市场账本 markets/ 先和分支上的核对，
+      # 通过了才整个换成这次的（账本自检删掉的文件在分支上也删掉）。账本只能追加：分支上的钥匙记录
+      # （ledger.meta.json 里每个钥匙编号和它的盐）都还在、每个月的密文 *.jsonl.enc 只在末尾追加、
+      # 链头 head.json 的序号不倒退。对不上时（比如这次没取到 state 分支、新建了一本账）保留分支上的账本，
+      # 不要这次的账本记录，简报的去重状态和归档照常保存；核对本身出错也不让这一步失败
+      - name: 合并这次的结果
+        env:
+          ARTIFACT: ${{ runner.temp }}/state-artifact
+        run: |
+          mkdir -p .state
+          find "$ARTIFACT" -mindepth 1 -maxdepth 1 ! -name markets -exec cp -a -t .state/ {} +
+          [ -d "$ARTIFACT/markets" ] || exit 0
+          new="$ARTIFACT/markets"
+          cd .state
+          set +e
+          ok=true
+          if git rev-parse -q --verify HEAD >/dev/null 2>&1 && git cat-file -e HEAD:markets/ledger.meta.json 2>/dev/null; then
+            old_meta=$(git show HEAD:markets/ledger.meta.json)
+            kids=$(jq -r '.keys | keys[]' <<<"$old_meta") || ok=false
+            for kid in $kids; do
+              old=$(jq -cS --arg k "$kid" '.keys[$k]' <<<"$old_meta")
+              now=$(jq -cS --arg k "$kid" '.keys[$k]' "$new/ledger.meta.json" 2>/dev/null)
+              [ -n "$now" ] && [ "$old" = "$now" ] || ok=false
+            done
+            for f in $(git ls-tree --name-only HEAD markets/ | grep '\.jsonl\.enc$'); do
+              size=$(git cat-file -s "HEAD:$f")
+              [ -f "$new/${f#markets/}" ] && cmp -s -n "$size" <(git show "HEAD:$f") "$new/${f#markets/}" || ok=false
+            done
+            old_seq=$(git show HEAD:markets/head.json 2>/dev/null | jq -r '.seq' 2>/dev/null)
+            new_seq=$(jq -r '.seq' "$new/head.json" 2>/dev/null)
+            if [[ "$old_seq" =~ ^[0-9]+$ ]] && ! { [[ "$new_seq" =~ ^[0-9]+$ ]] && [ "$new_seq" -ge "$old_seq" ]; }; then
+              ok=false
+            fi
+          fi
+          if [ "$ok" != true ]; then
+            echo "::warning::市场账本和 state 分支上的对不上（不是只追加），保留分支上的账本，这次的账本记录没有保存"
+          elif ! { rm -rf markets.new && cp -a "$new" markets.new && rm -rf markets && mv markets.new markets; }; then
+            rm -rf markets.new
+            git checkout -q HEAD -- markets/ 2>/dev/null
+            echo "::warning::这次的市场账本没能放进 state 分支，保留分支上的账本"
+          fi
+          exit 0
 
       - name: 提交去重状态和归档
         run: scripts/save_state.sh
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
+
+  # 登记指纹：把规则文件 config/markets.yaml 和账本链头 .state/markets/head.json 的 SHA-256 登记到公开的透明日志
+  # （GitHub 的 artifact attestation，记在 Sigstore 的 Rekor 上），事后谁都能核对这一刻的规则和账本没被改过。
+  # 只在启用了市场板块时运行；不接触任何密钥，也不运行 Python。登记失败（比如私有仓库没有这个功能）不影响推送
+  attest:
+    needs: [digest, save]
+    # 和程序里的开关一样，变量写 true、1 或 yes 都算打开（不分大小写）
+    if: ${{ contains(fromJSON('["1", "true", "yes"]'), vars.MARKETS_ENABLED) && (inputs.dry_run != true || inputs.markets_backtest == true) && inputs.markets_preview != true && needs.digest.outputs.skipped != 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # 登记的是刚提交到 state 分支的链头（保存时如果没通过只追加的核对，分支上的和这次运行写的不一样）
+      - name: 取出 state 分支
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: state
+          path: .state
+          persist-credentials: false
+
+      # 没配账本钥匙或者还没记过账时没有链头文件，这次不登记
+      - name: 检查账本链头
+        id: head
+        run: |
+          if [ -f .state/markets/head.json ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "还没有账本链头 .state/markets/head.json，这次不登记"
+          fi
+
+      - name: 登记规则文件和账本链头的指纹
+        if: ${{ steps.head.outputs.exists == 'true' }}
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: |
+            .state/markets/head.json
+            config/markets.yaml

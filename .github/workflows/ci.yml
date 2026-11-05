@@ -26,10 +26,13 @@ jobs:
       - run: python -m pip install --require-hashes -r requirements-dev.txt
       - run: python -m pytest -q
 
-  # 用真实数据生成一份预览（不发送、不用任何密钥），结果在本次运行的 Summary 页面
+  # 用真实数据生成一份预览（不发送、不用任何密钥），结果在本次运行的 Summary 页面。
+  # 市场板块也在这里用真实数据冒烟测试：没有账本钥匙，只组装不推送不记账，
+  # Summary 和日志里只有一行状态（行数、各数据源的结果），没有任何市场内容。
+  # 市场数据源连不上时板块最多等满预算（150 秒）、回测试运行最多 240 秒，所以比测试任务多留 5 分钟
   preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -41,3 +44,9 @@ jobs:
       - run: python -m digest --dry-run
         env:
           PYTHONPATH: src
+          MARKETS_ENABLED: "true"
+      # 回测试运行：每类合约只算最近两次已结算的事件，只报计数，不推送、不保存
+      - run: python -m digest --dry-run --markets-backtest
+        env:
+          PYTHONPATH: src
+          MARKETS_ENABLED: "true"

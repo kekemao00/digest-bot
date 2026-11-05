@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 
 from digest.config import Config, Section
@@ -21,6 +21,8 @@ LINE = "  \n"
 class Message:
     title: str  # 显示在通知和会话列表预览里
     text: str
+    # 消息里实际显示的条目，按显示顺序（第 i 个是“今天第 i + 1 条”）；超长删掉的不在里面
+    items: list[Item] = field(default_factory=list)
 
 
 def grey(text: str) -> str:
@@ -164,4 +166,4 @@ def render(selection: Selection, config: Config, now: datetime, archive_url: str
     elif items:
         title += f"｜{items[0].title_zh or items[0].title}"
     title = truncate(title, 60)
-    return Message(title=title, text=text)
+    return Message(title=title, text=text, items=items)

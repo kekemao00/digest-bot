@@ -1,0 +1,151 @@
+# 市场与预测板块的规则文件。每次正式推送后（配了账本钥匙时），它的指纹和账本链头一起登记到公开透明日志
+# （见 README「市场与预测」），登记失败不影响推送。改动任何一个字节都会换指纹，改后第一次推送成功时账本里会多记一行新的规则指纹。
+# 读取是宽松的：某一项写错时只用默认值，并在运行记录里提示是哪一项；整个文件读不了（不存在、
+# 不是合法的 YAML）时板块不启用，Summary 显示「市场板块：规则文件有误，未启用」，简报照常推送。
+# 板块只在仓库变量 MARKETS_ENABLED 设为 true 时运行。
+version: 1
+
+# 谁看这个板块。owner_only：只有自己，放 Kalshi、VIX 和克利夫兰联储的数字；
+# group：群里还有别人，只放 Polymarket（Kalshi、VIX、克利夫兰联储的内容都不放）
+audience: owner_only
+
+# 每次推送时板块能用的网络预算：总时长（秒）、请求次数（重试也算）、单次请求超时（秒）、
+# 单个响应的大小上限（字节）。用完就停，已经拿到的数据照常显示
+budget:
+  seconds: 150
+  requests: 80
+  timeout: 10
+  max_bytes: 10000000
+
+# 手动跑历史回测时的预算：最多 50 分钟、4000 次请求，两次请求之间至少隔 1 秒，对 Kalshi 客气一点
+replay_budget:
+  seconds: 3000
+  requests: 4000
+  timeout: 15
+  min_interval: 1.0
+
+kalshi:
+  # 接口地址，先用第一个；连不上或服务端出错时换第二个
+  hosts:
+    - https://external-api.kalshi.com/trade-api/v2
+    - https://api.elections.kalshi.com/trade-api/v2
+  # 接下来的关键数据，每类合约最多一行。
+  # kind：fed 议息（几个互斥的结果）；ladder 阶梯（一串“高于 k”的合约，合成一个分布，给中位数和一半把握区间）。
+  # grid：公布值的最小单位（0.1 个百分点）；不写表示连续的数（非农人数）。
+  # unit：pct 百分比，jobs 人数（显示成万人）。release：用下面 releases 里的哪张官方日程表
+  key_data:
+    - {series: KXFEDDECISION, kind: fed, release: fomc, name: 美联储议息}
+    - {series: KXCPI, kind: ladder, grid: 0.1, unit: pct, release: cpi, name: CPI 环比}
+    - {series: KXCPICORE, kind: ladder, grid: 0.1, unit: pct, release: cpi, name: 核心 CPI 环比}
+    - {series: KXPAYROLLS, kind: ladder, unit: jobs, release: empsit, name: 非农新增就业}
+    - {series: KXU3, kind: ladder, grid: 0.1, unit: pct, release: empsit, name: 失业率}
+  # 每周一早上看一次的长期合约。buckets：标普500 年底点位的互斥区间；binary：单个是非题
+  weekly:
+    - {series: KXINXY, kind: buckets, name: 标普500 年底}
+    - {series: KXRECSSNBER, kind: binary, name: 美国实际 GDP 连续两季负增长}
+  days_ahead: 7                 # 早间版列出未来 7 天内公布的数据（议息另外总是列出下一次）
+  evening_hours: 12             # 晚间版只列出 12 小时内（当晚）公布的数据
+  min_open_interest: 5000       # 一个事件所有合约的持仓合计不到 5000 张就不显示，太冷清的价格不可信
+  max_spread: 0.10              # 买卖价差超过 10 个百分点的合约改用最近成交价，并标注（成交价）
+
+# 官方日程（劳工统计局、美联储），每年年底核对一次并补上下一年。
+# 表里没有的月份，程序改用 Kalshi 合约的收盘日期推算，并在两者对不上时不显示那一行
+releases:
+  # 公布时间（美东时间，夏令时、冬令时自动换算成北京时间）。必须加引号，否则 YAML 会把 14:00 读成数字
+  times_et: {cpi: "08:30", empsit: "08:30", fomc: "14:00"}
+  # 消费者物价指数（CPI 和核心 CPI 同时公布）。左边是参考月，右边是公布日期
+  # 来源：https://www.bls.gov/schedule/news_release/cpi.htm
+  cpi:
+    2026-10: 2026-11-10         # 周二
+    2026-11: 2026-12-10         # 周四
+    2026-12: 2027-01-13         # 周三
+    2027-01: 2027-02-11         # 周四
+    2027-02: 2027-03-10         # 周三
+    2027-03: 2027-04-13         # 周二
+    2027-04: 2027-05-12         # 周三
+    2027-05: 2027-06-10         # 周四
+    2027-06: 2027-07-14         # 周三
+    2027-07: 2027-08-11         # 周三
+    2027-08: 2027-09-14         # 周二
+    2027-09: 2027-10-14         # 周四
+    2027-10: 2027-11-10         # 周三
+    2027-11: 2027-12-10         # 周五
+  # 就业形势报告（非农新增就业和失业率同时公布），都在周五
+  # 来源：https://www.bls.gov/schedule/news_release/empsit.htm
+  empsit:
+    2026-10: 2026-11-06
+    2026-11: 2026-12-04
+    2026-12: 2027-01-08
+    2027-01: 2027-02-05
+    2027-02: 2027-03-05
+    2027-03: 2027-04-02
+    2027-04: 2027-05-07
+    2027-05: 2027-06-04
+    2027-06: 2027-07-02
+    2027-07: 2027-08-06
+    2027-08: 2027-09-03
+    2027-09: 2027-10-08
+    2027-10: 2027-11-05
+    2027-11: 2027-12-03
+  # 美联储议息会议发布声明的日子（会议第二天，都是周三）。美联储说每次会议的日期在上一次会议时才最终确定
+  # 来源：https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
+  fomc:
+    - 2026-12-09
+    - 2027-01-27
+    - 2027-03-17
+    - 2027-04-28
+    - 2027-06-09
+    - 2027-07-28
+    - 2027-09-15
+    - 2027-10-27
+    - 2027-12-08
+
+polymarket:
+  # 按这些标签取事件：标签名和它的编号（编号可以用 /tags/slug 接口查到）
+  tags: {finance: 120, economy: 100328, fed-rates: 100196}
+  max_pages: 2                  # 每个标签最多翻几页
+  # 不看的市场：体育、“会不会提到某个词”、短线涨跌、生死类的问题。词按不分大小写的子串匹配（标点当作空格），
+  # 词两边的空格表示那一边必须是词的边界：" say " 不会误伤 essay，" die " 不会误伤 diesel、studies、diet；
+  # 没有空格的 mention、assassinat 只是词干，mentions、assassination 也算。死讯类只排除说人死亡的说法
+  # （" s death "、" dead by " 之类），不碰 death cross、death spiral、death tax、deadline、declared dead 这些财经用语
+  exclude_tags: [sports, esports, mention-markets, up-or-down]
+  exclude_words: [mention, "up or down", " say ", tweet, " die ", " dies ", " died ", " s death ", " death of ", " death by ", " death in ", " deaths ", "death toll", " dead by ", " found dead ", assassinat, " killed "]
+  # 定价一边倒：2 到 100 天内结算、价差不超过 3 个百分点、流动性至少 1 万美元，
+  # 最一边倒的那个结果价格在 85%–97% 或 3%–15% 之间；最多显示 2 件
+  lopsided: {min_days: 2, max_days: 100, max_spread: 0.03, min_liquidity: 10000, hi: [0.85, 0.97], lo: [0.03, 0.15], max_items: 2}
+  # 过去一天的变化：先用平台的一天涨跌粗筛，再逐项核实（价格历史、盘口深度、成交钱包、结算状态、对应新闻）
+  movers:
+    mode: shadow                # shadow 只在后台记录 | show 显示在板块里（后台观察两到四周后改成 show）
+    min_days: 2                 # 离结算至少 2 天
+    max_days: 180               # 离结算最多 180 天
+    max_spread: 0.03            # 价差不超过 3 个百分点
+    min_liquidity: 50000        # 流动性至少 5 万美元
+    prefilter_change: 0.05      # 粗筛：平台给的一天涨跌至少 5 个百分点
+    min_change: 0.05            # 核实：按价格历史重算的一天变化至少 5 个百分点
+    min_spread_multiple: 2      # 变化至少是当前价差的 2 倍
+    persist_points: 2           # 最近 2 个整点的价格都维持同一方向
+    min_depth_usd: 5000         # 把价格推动 5 个百分点至少要花 5000 美元（两个方向都算）
+    min_wallets: 5              # 过去一天至少 5 个钱包主动成交
+    max_top_share: 0.5          # 最大的一个钱包不超过净成交的一半
+    max_candidates: 4           # 每次最多核实 4 个候选
+
+# 波动率指数（Cboe 每日收盘），超过 5 天没更新就不显示
+vix:
+  vix_url: https://cdn-api.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv
+  vix9d_url: https://cdn-api.cboe.com/api/global/us_indices/daily_prices/VIX9D_History.csv
+  max_age_days: 5
+
+# 克利夫兰联储的通胀实时预测，放在 CPI 和核心 CPI 旁边，注明来源
+nowcast: {url: "https://www.clevelandfed.org/-/media/files/webcharts/inflationnowcasting/nowcast_month.json"}
+
+# 对答案用的官方数据：劳工统计局首次公布值（季调）和纽约联储的联邦基金利率目标区间
+witnesses:
+  bls_v1: https://api.bls.gov/publicAPI/v1/timeseries/data/
+  series: {cpi: CUSR0000SA0, core: CUSR0000SA0L1E, payrolls: CES0000000001, u3: LNS14000000}
+  nyfed: https://markets.newyorkfed.org/api/rates/unsecured/effr/last/10.json
+
+# 概率用词：四舍五入后的整数百分比不超过左边的数时用右边的词
+bands: [[5, 几乎不可能], [20, 很不可能], [44, 不太可能], [55, 大致五五开], [79, 较可能], [94, 很可能], [100, 几乎确定]]
+
+# 大模型写的中文里出现这些词就整段不用（板块只描述价格，不给买卖建议）
+banned_words: [买入, 卖出, 持有, 做多, 做空, 看涨, 看跌, 看多, 看空, 利好, 利空, 机会, 推荐, 建议, 加仓, 减仓, 抄底, 稳赚, 必涨, 必跌, 翻倍, 牛股, 黑马, 内幕, 喊单, 高把握, 保证收益, 无风险]
