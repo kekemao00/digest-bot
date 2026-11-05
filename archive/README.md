@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月5日 周四 晚间](2026/11-05-evening.md) · 7 条｜AI 3 · 时政 2 · 金融 1 · 科学 1  
+  [美国债务上限交锋或引发市场波动](https://www.cnbc.com/2026/11/04/democrats-trump-debt-ceiling-fight.html)；[Phonon TTS 发布，支持端侧语音合成](https://huggingface.co/blog/phonon-tts)
 - [11月5日 周四](2026/11-05.md) · 15 条｜AI 5 · 软件 3 · 科学 2 · 时政 2 · 金融 1 · 安全 1 · 社会 1  
   [共和党中期选举失利，党内归咎特朗普](https://www.bbc.co.uk/news/articles/c6x29rr8djy3o?at_medium=RSS&at_campaign=rss)；[京东 22 亿欧元收购德国 Ceconomy 获批](https://www.ftchinese.com/story/001111277)；[AutoDNA 整合仪器开展自主生物分子实验](https://www.nature.com/articles/s41586-026-11228-6)
 - [11月4日 周三 晚间](2026/11-04-evening.md) · 8 条｜软件 4 · 时政 2 · AI 1 · 金融 1  
