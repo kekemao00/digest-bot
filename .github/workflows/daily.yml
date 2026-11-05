@@ -1,7 +1,7 @@
 name: 每日简报
 # Actions 页面上每次运行的名称标明触发方式（晚间版另外标出）。一天会有几路触发，
 # 每一版推送的只有先到的那一次，其余的点进去 Summary 写着「已推送过，跳过」。
-# 市场板块的预览和回测单独标出（勾了「只生成预览」时它们也只试运行，不推送）
+# 市场板块的预览和回测单独标出（勾了它们就会推送，「只生成预览」对它们不起作用）
 run-name: >-
   ${{ format('每日简报{0} · {1}',
   inputs.edition == 'evening' && ' · 晚间' || '',
@@ -30,7 +30,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 只生成预览，不发送到钉钉
+        description: 只生成预览，不发送到钉钉（勾了下面的市场板块预览或回测时不起作用）
         type: boolean
         default: true
       scheduled:
@@ -95,8 +95,9 @@ jobs:
         run: python -m digest --state .state/state.json --archive-dir .state/archive
         env:
           PYTHONPATH: src
-          # 手动运行时按勾选决定；定时运行时 inputs 为空，即正式发送
-          DIGEST_DRY_RUN: ${{ inputs.dry_run }}
+          # 手动运行时按勾选决定；定时运行时 inputs 为空，即正式发送。
+          # 勾了市场板块预览或回测就是要推送，不管「只生成预览」（它默认是勾上的）
+          DIGEST_DRY_RUN: ${{ inputs.dry_run && !inputs.markets_preview && !inputs.markets_backtest }}
           DIGEST_SCHEDULED: ${{ inputs.scheduled }}
           # 手动和外部定时服务触发时按 edition 决定哪一版；GitHub 自带的定时任务按 cron 的钟点判断
           DIGEST_EDITION: ${{ inputs.edition }}
@@ -120,9 +121,9 @@ jobs:
       # 交给下一个任务提交。.state 本身是隐藏目录，默认会被整个跳过，
       # 所以要打开 include-hidden-files，再单独排除 checkout 留下的 .git。
       # 预览、市场板块预览和「这一版今天已推送过」的跳过不会改动 state，不用上传；
-      # 市场回测会把加密的结果写进 .state/markets/，照常上传
+      # 市场回测会把加密的结果写进 .state/markets/，照常上传（不管「只生成预览」勾没勾）
       - name: 上传去重状态和归档
-        if: ${{ inputs.dry_run != true && inputs.markets_preview != true && steps.digest.outputs.skipped != 'true' }}
+        if: ${{ (inputs.dry_run != true || inputs.markets_backtest == true) && inputs.markets_preview != true && steps.digest.outputs.skipped != 'true' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: state
@@ -136,7 +137,7 @@ jobs:
   # 保存：只有这个任务能写仓库，而且只写 state 分支；这里不接触任何密钥，也不运行 Python 依赖
   save:
     needs: digest
-    if: ${{ inputs.dry_run != true && inputs.markets_preview != true && needs.digest.outputs.skipped != 'true' }}
+    if: ${{ (inputs.dry_run != true || inputs.markets_backtest == true) && inputs.markets_preview != true && needs.digest.outputs.skipped != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -214,7 +215,7 @@ jobs:
   attest:
     needs: [digest, save]
     # 和程序里的开关一样，变量写 true、1 或 yes 都算打开（不分大小写）
-    if: ${{ contains(fromJSON('["1", "true", "yes"]'), vars.MARKETS_ENABLED) && inputs.dry_run != true && inputs.markets_preview != true && needs.digest.outputs.skipped != 'true' }}
+    if: ${{ contains(fromJSON('["1", "true", "yes"]'), vars.MARKETS_ENABLED) && (inputs.dry_run != true || inputs.markets_backtest == true) && inputs.markets_preview != true && needs.digest.outputs.skipped != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     continue-on-error: true

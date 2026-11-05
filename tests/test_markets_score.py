@@ -435,7 +435,7 @@ def test_monthly_sentence_only_on_first_monday():
     assert [line.text for line in lines] == [
         "· 上周 1 件出了结果：应发生 0.1 件（正常范围 0 到 1），实际 1 件",
         "· 定价一边倒：上线以来 1 件应验 0 件（要攒到 250 到 300 件才能下结论）",
-        "· 上月 3 件已结算：价格整体偏低 24 个百分点（件数少，只作记录）",
+        "· 上月 3 件已结算，件数太少，先不算整体偏高还是偏低",
     ]
     month = lines[0].rows[0]["month"]
     assert month["period"] == "2029-03" and month["n"] == 3 and month["citl"] == pytest.approx(-0.24)
@@ -451,8 +451,29 @@ def test_monthly_sentence_when_prices_were_about_right():
         settle(4, "KXA-29MAR-Y", "2029-03-10T00:00:00Z", 0),
     ]
     lines = weekly_lines(rows, datetime(2029, 4, 2, 7, 30, tzinfo=BJT))
-    assert [line.text for line in lines] == [
-        "· 上月 2 件已结算：价格整体和实际结果相差不到 1 个百分点（件数少，只作记录）"]
+    assert [line.text for line in lines] == ["· 上月 2 件已结算，件数太少，先不算整体偏高还是偏低"]
+    assert lines[0].rows[0]["month"]["n"] == 2  # 件数少也照样记进 score 记录
+
+
+def monthly_rows(n: int, yes: int) -> list[dict]:
+    """3 月里 n 件价格都是 50% 的，其中 yes 件发生了。"""
+    rows = []
+    for i in range(n):
+        key = f"KXA-29MAR-X{i}"
+        rows.append(shown(2 * i + 1, key, "2029-03-05T23:35:00Z", "2029-03-09T13:25:00Z", p=50))
+        rows.append(settle(2 * i + 2, key, "2029-03-10T00:00:00Z", 1 if i < yes else 0))
+    return rows
+
+
+def test_monthly_sentence_needs_enough_items():
+    first = datetime(2029, 4, 2, 7, 30, tzinfo=BJT)
+    # 20 件：价格平均 50%，实际发生 70%，价格整体偏低 20 个百分点
+    assert [line.text for line in weekly_lines(monthly_rows(20, 14), first)] == [
+        "· 上月 20 件已结算：价格整体偏低 20 个百分点（件数少，只作记录）"]
+    assert [line.text for line in weekly_lines(monthly_rows(20, 10), first)] == [
+        "· 上月 20 件已结算：价格整体和实际结果相差不到 1 个百分点（件数少，只作记录）"]
+    assert [line.text for line in weekly_lines(monthly_rows(19, 14), first)] == [
+        "· 上月 19 件已结算，件数太少，先不算整体偏高还是偏低"]
 
 
 def test_ladder_interval_rebuilt_when_bounds_missing():

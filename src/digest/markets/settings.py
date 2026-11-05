@@ -154,7 +154,8 @@ class PolymarketSettings:
     exclude_tags: tuple[str, ...] = ("sports", "esports", "mention-markets", "up-or-down")
     # 不分大小写的子串匹配，所以 " say " 两边的空格是有意的
     exclude_words: tuple[str, ...] = (
-        "mention", "up or down", " say ", "tweet", " die ", " dies ", " died ", "assassinat", " killed ",
+        "mention", "up or down", " say ", "tweet", " die ", " dies ", " died ", " dead ", "death", "assassinat",
+        " killed ",
     )
     lopsided: Lopsided = field(default_factory=Lopsided)
     movers: Movers = field(default_factory=Movers)

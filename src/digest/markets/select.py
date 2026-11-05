@@ -33,7 +33,8 @@ from digest.render.text import md_text, truncate
 LAST_TRADE = "（成交价）"
 NOWCAST_CLAUSE = "克利夫兰联储模型"
 NO_REPLAY = "回测还没跑"
-FAR_LEAD = "提前这么多天的记录不足"
+FAR_LEAD = "回测只算到提前 7 天"
+NO_SLOT = "回测里这个时刻的记录不够"
 LONGSHOT = "便宜合约历来被高估"
 SHADOW = "【后台观察】"
 LONGSHOT_BELOW = 15  # 整数百分比低于这个数时加上“便宜合约历来被高估”
@@ -158,7 +159,7 @@ def replay_sub(clause: str | None, has_summary: bool, lead: int) -> str:
         return FAR_LEAD
     if not has_summary:
         return NO_REPLAY
-    return clause or FAR_LEAD
+    return clause or NO_SLOT
 
 
 def nowcast_value(rule: SeriesRule, nowcasts: Mapping[tuple[int, int], Any], period: tuple[int, int] | None,
@@ -255,7 +256,7 @@ def _ladder_line(rule, event, markets, release, expires, lead, settings, nowcast
     median = dist.median()
     q25, q75 = dist.interval50()
     low, high = bound_text(q25, rule.unit), bound_text(q75, rule.unit)
-    interval = f"一半把握就在 {low}" if low == high else f"一半把握 {low} 到 {high}"
+    interval = f"{low} 这一档就占一半以上" if low == high else f"一半把握 {low} 到 {high}"
     period = period_of(event.event_ticker)
     label = _label(rule, period)
     text = f"· {bjt_label(release)} {md_text(label)}：中位数 {bound_text(median, rule.unit)}（{interval}）"
@@ -418,7 +419,7 @@ def _buckets_line(rule, event, markets, year, now, settings) -> Line | None:
     start = _points(low_lo) if low_lo is not None else f"{_points(low_hi)} 以下"
     end = _points(high_hi) if high_hi is not None else f"{_points(high_lo)} 以上"
     name = _year_end_name(rule.name, year, now)
-    text = f"· {md_text(name)}：最可能在 {_bucket_text(*bounds[mid_i])}（一半把握 {start} 到 {end} 点）"
+    text = f"· {md_text(name)}：中位数落在 {_bucket_text(*bounds[mid_i])}（一半把握 {start} 到 {end} 点）"
     if any((m := q.mid(max_spread)) is not None and m[1] for q in quotes):
         text += LAST_TRADE
     expires = _earliest_close(markets)

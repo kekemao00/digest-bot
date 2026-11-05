@@ -325,8 +325,8 @@ def test_fed_line_skipped_when_quotes_do_not_add_up():
 def test_replay_sub_and_lead():
     assert select.replay_sub("过去 5 次同一时刻：x", True, 3) == "过去 5 次同一时刻：x"
     assert select.replay_sub(None, False, 3) == "回测还没跑"
-    assert select.replay_sub("过去 5 次", True, 8) == "提前这么多天的记录不足"
-    assert select.replay_sub(None, True, 2) == "提前这么多天的记录不足"
+    assert select.replay_sub("过去 5 次", True, 8) == "回测只算到提前 7 天"
+    assert select.replay_sub(None, True, 2) == "回测里这个时刻的记录不够"
     release = datetime(2030, 3, 6, 13, 30, tzinfo=timezone.utc)
     assert select.lead_of(NOW, release, "morning") == 2
     assert select.lead_of(NOW, release, "evening") == 0
@@ -364,7 +364,7 @@ def test_weekly_bucket_and_binary_lines():
     s = settings()
     (inx,) = kevents(inx_event())
     line = select.weekly_line(weekly_rule("KXINXY"), inx, NOW, s)
-    assert line.text == "· 标普500 今年年底：最可能在 5200–5400 点（一半把握 5000 到 5600 点）"
+    assert line.text == "· 标普500 今年年底：中位数落在 5200–5400 点（一半把握 5000 到 5600 点）"
     (row,) = line.rows
     assert row["key"] == INX and row["section"] == "weekly" and row["kind"] == "buckets"
     assert row["dist"]["q25"] == {"value": 5000, "open_side": None}

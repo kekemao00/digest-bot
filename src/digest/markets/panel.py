@@ -607,7 +607,11 @@ def _run(
     send_time = _aware(now_fn())
     lines = guard(result.lines, send_time)
     head16 = led.head16() if led is not None else None
-    message = render_panel(lines, edition, send_time, head16, _cleveland(lines), preview=mode == "preview")
+    # 账本还是空的：这次推送成功后才写下第一批记录，页脚写“账本从这一条开始记”
+    first_entry = mode == "send" and led is not None and head16 is None
+    message = render_panel(
+        lines, edition, send_time, head16, _cleveland(lines), preview=mode == "preview", first_entry=first_entry
+    )
     if mode == "dry":
         return _join(f"市场板块：{_sent_count(lines, message)} 行（公开仓库，内容已隐藏）", details, warnings)
 

@@ -187,7 +187,7 @@ def test_cdf_on_grid():
 
 def test_gap_in_grid_skips_the_event():
     # 0.2 那一档没价格被去掉，0.1 和 0.3 之间隔了一档：P(0.1 < X ≤ 0.3) = 0.5 怎么分在 0.2 和 0.3 上不知道，
-    # 中位数只能说在 (0.1, 0.3] 里。报一个假装精确的“中位数 0.3%（一半把握就在 0.3%）”不如整个不放
+    # 中位数只能说在 (0.1, 0.3] 里。报一个假装精确的“中位数 0.3%（0.3% 这一档就占一半以上）”不如整个不放
     strikes = [Strike(0.0, tight(0.94)), Strike(0.1, tight(0.75)), Strike(0.2, quote(None, None, None)),
                Strike(0.3, tight(0.25)), Strike(0.4, tight(0.06))]
     assert build_ladder(strikes, grid=0.1) is None

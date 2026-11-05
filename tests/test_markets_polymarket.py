@@ -320,6 +320,11 @@ def test_excluded_by_tag_case_insensitive():
         ("Who dies first in the example story?", True),
         ("Has the example tortoise died?", True),
         ("Will the Example Envoy be assassinated?", True),
+        ("Will the example founder's death be confirmed by June 30?", True),
+        ("Example founder dead by 2032?", True),
+        ("Example death toll above 1000 by Friday?", True),
+        # " dead " 按整词算：deadline 不算
+        ("Will the Example Board meet the deadline?", False),
     ],
 )
 def test_excluded_words(question, hit):

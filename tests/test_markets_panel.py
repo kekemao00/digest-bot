@@ -272,9 +272,9 @@ def test_build_full_monday_morning():
     result = panel.build(ctx)
     assert texts(result.lines, "key") == [LINE_CPI, LINE_JOBS, LINE_FED]
     # 议息在 17 天后，超过回测记录的 7 天
-    assert [line.sub for line in result.lines if line.section == "key"] == ["回测还没跑", "回测还没跑", "提前这么多天的记录不足"]
+    assert [line.sub for line in result.lines if line.section == "key"] == ["回测还没跑", "回测还没跑", "回测只算到提前 7 天"]
     weekly = texts(result.lines, "weekly")
-    assert weekly == ["· 标普500 今年年底：最可能在 5200–5400 点（一半把握 5000 到 5600 点）",
+    assert weekly == ["· 标普500 今年年底：中位数落在 5200–5400 点（一半把握 5000 到 5600 点）",
                       "· 2030 到 2031 年美国实际 GDP 连续两季负增长：很不可能（19%）"]
     assert texts(result.lines, "lopsided") == [LINE_HI, LINE_LO]
     assert texts(result.lines, "mover") == []  # 默认后台观察，不显示
@@ -433,8 +433,8 @@ def test_replay_clause_from_backtest_summary(monkeypatch):
     result = panel.build(make_ctx(Venues(), summary={"version": 1}))
     subs = {line.rows[0]["series"]: line.sub for line in result.lines if line.section == "key"}
     assert subs["KXCPI"] == "过去 9 次同一时刻（提前 2 天早上）：中位数平均差 0.05 个百分点"
-    assert subs["KXPAYROLLS"] == "提前这么多天的记录不足"
-    assert subs["KXFEDDECISION"] == "提前这么多天的记录不足"  # 17 天后的议息，超过 7 天
+    assert subs["KXPAYROLLS"] == "回测里这个时刻的记录不够"  # 提前 4 天，回测里没有这一项
+    assert subs["KXFEDDECISION"] == "回测只算到提前 7 天"  # 17 天后的议息，超过 7 天
     assert ("KXCPI", "M2") in seen and ("KXPAYROLLS", "M4") in seen
     assert all(series != "KXFEDDECISION" for series, _ in seen)
 
@@ -534,6 +534,8 @@ def test_run_sends_then_records(wired, tmp_path, caplog):
     assert status == "市场板块：已推送 9 行（内容不公开）；Kalshi 正常，Polymarket 正常，Cboe 正常，克利夫兰联储 正常"
     (message,) = channel.sent
     assert LINE_CPI in message.text and LINE_HI in message.text
+    # 第一次推送时账本还是空的，这一条发出去以后才开始记
+    assert message.text.endswith("｜账本从这一条开始记</font>")
     rows = ledger_rows(tmp_path)
     types = [row["type"] for row in rows]
     assert types.count("shown") == 7 and types.count("candidate") == 1
@@ -618,6 +620,7 @@ def test_preview_sends_but_never_records(wired, tmp_path):
     assert status == "市场板块预览：已推送 10 行（内容不公开）；Kalshi 正常，Polymarket 正常，Cboe 正常，克利夫兰联储 正常"
     (message,) = channel.sent
     assert "预览" in message.title and "【后台观察】" in message.text
+    assert message.text.endswith("｜账本未记录</font>")  # 预览不记账，不写“从这一条开始记”
     assert not (tmp_path / ".state").exists()
 
 

@@ -113,6 +113,14 @@ def test_footer_ledger_head():
     assert footer(HEAD16).endswith(f"｜账本 #{HEAD16}{E}")
     for bad in (None, "", "0f1e2d3c", HEAD16.upper(), HEAD16 + "00", "](http://x.invalid)abcde"):
         assert footer(bad).endswith(f"｜账本未记录{E}")
+
+    def first(head16):
+        message = render_panel([Line("vix", VIX)], "morning", NOW, head16, False, first_entry=True)
+        return message.text.rsplit(LINE, 1)[1]
+
+    # 账本还是空的、这次推送后才开始记；已经有链头时照常印链头
+    assert first(None).endswith(f"｜账本从这一条开始记{E}")
+    assert first(HEAD16).endswith(f"｜账本 #{HEAD16}{E}")
     # 不带时区的时间按北京时间处理
     assert "数据截至 07:30" in footer(None)
     assert "数据截至 07:30" in render_panel([Line("vix", VIX)], "morning", NOW.replace(tzinfo=None), None, False).text
@@ -215,8 +223,8 @@ def test_backtest_exact_text():
         "### 📈 【回测】Kalshi 过去的成绩",
         f"{G}按推送的时刻重算 Kalshi 已结算合约的价格，再和实际公布值对答案{E}",
         LINE.join([
-            "· 美联储议息（7 次）：公布当晚 19:30 市场最看好的结果对了 6 次，实际结果的平均价格 84%；提前 3 天早上对了 5 次",
-            "· CPI 环比（17 次）：公布当晚 19:30 中位数平均差 0.06 个百分点，一半把握区间命中 9 次；提前 3 天早上平均差 0.08",
+            "· 美联储议息（7 次）：公布前一晚 19:30 市场最看好的结果对了 6 次，实际结果的平均价格 84%；提前 3 天早上对了 5 次",
+            "· CPI 环比（17 次）：公布当晚 19:30 中位数平均差 0.06 个百分点，一半把握区间命中 9 次；提前 3 天早上平均差 0.08 个百分点",
             "· 非农新增就业（4 次）：提前 1 天早上中位数平均差 4.6 万人，一半把握区间命中 2 次",
             "· 新的［合约］（3 次）：公布当晚 19:30 中位数平均差 1.50",
             "· 定价一边倒的合约：价格在 85% 到 97% 的 88 个，实际发生 80 个（91%）；价格在 3% 到 15% 的 50 个，实际发生 4 个（8%）",

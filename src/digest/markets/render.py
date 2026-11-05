@@ -43,6 +43,8 @@ SETTLEMENT = "结算依据：CPI、就业数据按劳工统计局首次公布值
 CLEVELAND = "通胀模型来自克利夫兰联储"
 DISCLAIMER = "仅供个人研究，不构成投资建议｜程序和大模型自动生成，可能有误"
 NO_LEDGER = "账本未记录"
+# 账本还是空的、这次推送成功后才开始记：第一次正式推送时页脚这样写
+FIRST_ENTRY = "账本从这一条开始记"
 # 板块自己的长度上限，远低于钉钉的 MAX_BYTES；超出时先删附注，再删灰色小字，最后从末尾删行
 MAX_PANEL_BYTES = 6000
 MINUS = "\u2212"  # 负数用数学减号“−”，和中文排版更协调
@@ -95,6 +97,7 @@ def render_panel(
     head16: str | None,
     cleveland: bool,
     preview: bool = False,
+    first_entry: bool = False,
 ) -> Message | None:
     """把各行排成一条钉钉消息。没有可发的内容时返回 None：只有附注，或晚间版今晚没有数据公布。
 
@@ -103,7 +106,7 @@ def render_panel(
     """
     kept = sorted((line for line in lines if line.section in ORDER), key=lambda line: ORDER[line.section])
     title = (PREVIEW if preview else "") + TITLES.get(edition, TITLES["morning"])
-    footer = _footer(now, head16, cleveland)
+    footer = _footer(now, head16, cleveland, first_entry)
     text = _compose(title, kept, footer)
     while len(text.encode()) > MAX_PANEL_BYTES and (trimmed := _trim(kept)) is not None:
         kept = trimmed
@@ -159,9 +162,12 @@ def _entry(line: Line) -> str:
     return text
 
 
-def _footer(now: datetime, head16: str | None, cleveland: bool) -> str:
+def _footer(now: datetime, head16: str | None, cleveland: bool, first_entry: bool = False) -> str:
     basis = SETTLEMENT + (f"｜{CLEVELAND}" if cleveland else "")
-    ledger = f"账本 #{head16}" if head16 and _HEAD16.fullmatch(head16) else NO_LEDGER
+    if head16 and _HEAD16.fullmatch(head16):
+        ledger = f"账本 #{head16}"
+    else:
+        ledger = FIRST_ENTRY if first_entry else NO_LEDGER
     return grey(basis) + LINE + grey(f"{DISCLAIMER}｜数据截至 {_clock(now)}｜{ledger}")
 
 
@@ -251,16 +257,17 @@ def _labels(entry: Mapping[str, Any]) -> dict[str, Mapping[str, Any]]:
     }
 
 
-def _when(label: str) -> str:
+def _when(label: str, kind: str) -> str:
     if label == "E0":
-        return "公布当晚 19:30"
+        # 议息声明在北京时间凌晨（02:00 或 03:00），晚间版是前一天晚上发的
+        return "公布前一晚 19:30" if kind == "fed" else "公布当晚 19:30"
     days = int(label[1:])
     return "公布当天早上" if days == 0 else f"提前 {days} 天早上"
 
 
 def _series_line(ticker: str, entry: Mapping[str, Any]) -> str | None:
     """一类合约一行，例如：
-    · CPI 环比（23 次）：公布当晚 19:30 中位数平均差 0.06 个百分点，一半把握区间命中 13 次；提前 3 天早上平均差 0.08"""
+    · CPI 环比（23 次）：公布当晚 19:30 中位数平均差 0.06 个百分点，一半把握区间命中 13 次；提前 3 天早上平均差 0.08 个百分点"""
     labels = _labels(entry)
     order = ["E0"] + [f"M{d}" for d in range(8)]
     first = next((label for label in order if label in labels), None)
@@ -278,7 +285,7 @@ def _series_line(ticker: str, entry: Mapping[str, Any]) -> str | None:
         body = _ladder_text(stats, later, unit)
     if body is None:
         return None
-    when = _when(first)
+    when = _when(first, kind)
     # “19:30 中位数”中间空一格，“早上中位数”不空
     sep = " " if when[-1].isdigit() else ""
     return f"· {md_text(truncate(name, 20))}（{_int(stats.get('n'))} 次）：{when}{sep}{body}"
@@ -292,7 +299,7 @@ def _ladder_text(stats: Mapping[str, Any], later: Mapping[str, Any] | None, unit
     if (covered := _int(stats.get("covered50"))) is not None:
         text += f"，一半把握区间命中 {covered} 次"
     if later and (later_mae := _num(later.get("mae_median"))) is not None:
-        text += f"；提前 3 天早上平均差 {_error(later_mae, unit, with_unit=False)}"
+        text += f"；提前 3 天早上平均差 {_error(later_mae, unit)}"
     return text
 
 
@@ -308,11 +315,11 @@ def _fed_text(stats: Mapping[str, Any], later: Mapping[str, Any] | None) -> str 
     return text
 
 
-def _error(value: float, unit: str | None, with_unit: bool = True) -> str:
+def _error(value: float, unit: str | None) -> str:
     """平均差：百分比两位小数（个百分点），人数换成万人（一位小数）。"""
     if unit == "jobs":
-        return f"{abs(_wan(value))}" + (" 万人" if with_unit else "")
-    return f"{_half_up(abs(value), '0.01')}" + (" 个百分点" if with_unit and unit == "pct" else "")
+        return f"{abs(_wan(value))} 万人"
+    return f"{_half_up(abs(value), '0.01')}" + (" 个百分点" if unit == "pct" else "")
 
 
 def _band_stats(summary: Mapping[str, Any], key: str) -> tuple[int, int] | None:

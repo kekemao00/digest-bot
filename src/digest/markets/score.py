@@ -46,6 +46,8 @@ FOMC_MAX_AGE = timedelta(days=12)
 FOMC_AFTER_DAYS = 7  # 声明之后第一条记录离声明日不能超过这么多天
 GIVE_UP = timedelta(days=90)  # 过期这么久还查不到的合约记一条“查不到”，不再每次去问
 VERDICT = "要攒到 250 到 300 件才能下结论"
+# 每月第一个周一那句“上月价格整体偏高还是偏低”：少于这么多件时只报件数，几件的偏差没有意义
+MONTHLY_MIN = 20
 SOURCE_BLS = "bls_v1"
 SOURCE_NYFED = "nyfed"
 KALSHI = "kalshi"
@@ -390,7 +392,10 @@ def weekly_lines(rows: list[dict], now: datetime) -> list[Line]:
 
 
 def _monthly(units: list[_Unit], today: date, record: dict) -> str | None:
-    """上个月（北京时间）记下结算的各件：价格整体偏高还是偏低（mean(p) − mean(y)）。CORP 只记进 score 记录。"""
+    """上个月（北京时间）记下结算的各件：价格整体偏高还是偏低（mean(p) − mean(y)）。CORP 只记进 score 记录。
+
+    少于 MONTHLY_MIN 件时只报件数，不写偏差（统计照样记进 score 记录）。
+    """
     this_month = today.replace(day=1)
     last_month = (this_month - timedelta(days=1)).replace(day=1)
     start = datetime.combine(last_month, time(0), tzinfo=BJT)
@@ -406,6 +411,8 @@ def _monthly(units: list[_Unit], today: date, record: dict) -> str | None:
         "citl": _round(citl),
         "corp": {k: (_round(v) if isinstance(v, float) else v) for k, v in corp(ps, ys).items()},
     }
+    if len(month) < MONTHLY_MIN:
+        return f"· 上月 {len(month)} 件已结算，件数太少，先不算整体偏高还是偏低"
     points = int(Decimal(str(abs(citl) * 100)).quantize(Decimal("1"), ROUND_HALF_UP))
     if points == 0:
         return f"· 上月 {len(month)} 件已结算：价格整体和实际结果相差不到 1 个百分点（件数少，只作记录）"

@@ -485,6 +485,6 @@ def test_summary_renders_as_backtest_message():
     fetcher, _, _ = make_fetcher(kalshi_handler())
     summary = run(fetcher, settings(), NOW, dry=False)
     text = render_backtest(summary, NOW).text
-    assert "CPI 环比（2 次）：公布当晚 19:30 中位数平均差 0.10 个百分点，一半把握区间命中 1 次；提前 3 天早上平均差 0.15" in text
-    assert "美联储议息（1 次）：公布当晚 19:30 市场最看好的结果对了 1 次，实际结果的平均价格 85%" in text
+    assert "CPI 环比（2 次）：公布当晚 19:30 中位数平均差 0.10 个百分点，一半把握区间命中 1 次；提前 3 天早上平均差 0.15 个百分点" in text
+    assert "美联储议息（1 次）：公布前一晚 19:30 市场最看好的结果对了 1 次，实际结果的平均价格 85%" in text
     assert "跳过 1 次（结算不清楚）" in text and "请求 18 次" in text
