@@ -119,7 +119,7 @@ def test_footer_ledger_head():
         return message.text.rsplit(LINE, 1)[1]
 
     # 账本还是空的、这次推送后才开始记；已经有链头时照常印链头
-    assert first(None).endswith(f"｜账本从这一条开始记{E}")
+    assert first(None).endswith(f"｜账本此前为空{E}")
     assert first(HEAD16).endswith(f"｜账本 #{HEAD16}{E}")
     # 不带时区的时间按北京时间处理
     assert "数据截至 07:30" in footer(None)

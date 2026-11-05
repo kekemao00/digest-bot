@@ -43,8 +43,8 @@ SETTLEMENT = "结算依据：CPI、就业数据按劳工统计局首次公布值
 CLEVELAND = "通胀模型来自克利夫兰联储"
 DISCLAIMER = "仅供个人研究，不构成投资建议｜程序和大模型自动生成，可能有误"
 NO_LEDGER = "账本未记录"
-# 账本还是空的、这次推送成功后才开始记：第一次正式推送时页脚这样写
-FIRST_ENTRY = "账本从这一条开始记"
+# 正式推送时账本里还没有任何记录：只说发送前的情况，这一条能不能记上要看推送和写账本是否成功
+FIRST_ENTRY = "账本此前为空"
 # 板块自己的长度上限，远低于钉钉的 MAX_BYTES；超出时先删附注，再删灰色小字，最后从末尾删行
 MAX_PANEL_BYTES = 6000
 MINUS = "\u2212"  # 负数用数学减号“−”，和中文排版更协调
@@ -119,7 +119,7 @@ def render_panel(
 def render_backtest(summary: dict, now: datetime) -> Message:
     """回测结果的钉钉消息（设计文档第 8 节）。summary 的结构见 _series_entries、_band_stats。
 
-    每类合约一行（公布当晚 19:30 的成绩，再加提前 3 天早上的），一行定价一边倒的合约实际发生了多少，
+    每类合约一行（晚间 19:30 的成绩，议息是公布前一晚，再加提前 3 天早上的），一行定价一边倒的合约实际发生了多少，
     页脚是请求次数，没跑完时注明部分完成。summary 里缺的、不是数字的项都跳过，不会抛异常。
     """
     summary = summary if isinstance(summary, Mapping) else {}

@@ -71,7 +71,7 @@ class _Stop(Exception):
 
 
 def lead_label(edition: str, lead_days: int) -> str:
-    """面板上一行对应的回测快照：晚间版是 E0；早间版是 M{提前天数}，最多 M7（再远的由调用方另说“记录不足”）。"""
+    """面板上一行对应的回测快照：晚间版是 E0；早间版是 M{提前天数}，最多 M7（再远的由调用方写“回测只算到提前 7 天”）。"""
     if edition == "evening":
         return "E0"
     return f"M{min(max(int(lead_days), 0), MAX_LEAD)}"

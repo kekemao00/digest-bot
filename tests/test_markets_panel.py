@@ -534,8 +534,8 @@ def test_run_sends_then_records(wired, tmp_path, caplog):
     assert status == "市场板块：已推送 9 行（内容不公开）；Kalshi 正常，Polymarket 正常，Cboe 正常，克利夫兰联储 正常"
     (message,) = channel.sent
     assert LINE_CPI in message.text and LINE_HI in message.text
-    # 第一次推送时账本还是空的，这一条发出去以后才开始记
-    assert message.text.endswith("｜账本从这一条开始记</font>")
+    # 第一次推送时账本还是空的
+    assert message.text.endswith("｜账本此前为空</font>")
     rows = ledger_rows(tmp_path)
     types = [row["type"] for row in rows]
     assert types.count("shown") == 7 and types.count("candidate") == 1
@@ -620,7 +620,7 @@ def test_preview_sends_but_never_records(wired, tmp_path):
     assert status == "市场板块预览：已推送 10 行（内容不公开）；Kalshi 正常，Polymarket 正常，Cboe 正常，克利夫兰联储 正常"
     (message,) = channel.sent
     assert "预览" in message.title and "【后台观察】" in message.text
-    assert message.text.endswith("｜账本未记录</font>")  # 预览不记账，不写“从这一条开始记”
+    assert message.text.endswith("｜账本未记录</font>")  # 预览不记账，不写“账本此前为空”
     assert not (tmp_path / ".state").exists()
 
 

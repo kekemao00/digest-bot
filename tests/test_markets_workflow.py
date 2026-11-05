@@ -63,6 +63,22 @@ def test_attest_switch_matches_the_program():
     assert not any("download-artifact" in s.get("uses", "") for s in attest["steps"])
 
 
+# 上传、保存、登记三处用同一个条件：勾了回测就保存（不管「只生成预览」），预览从不保存
+SAVE_GATE = "(inputs.dry_run != true || inputs.markets_backtest == true) && inputs.markets_preview != true"
+
+
+def test_market_boxes_override_dry_run_and_the_save_gates_agree():
+    wf = workflow("daily.yml")
+    digest = wf["jobs"]["digest"]
+    env = step(digest, "生成并推送简报")["env"]
+    # 「只生成预览」默认勾着；勾了市场预览或回测就是要推送
+    assert env["DIGEST_DRY_RUN"] == "${{ inputs.dry_run && !inputs.markets_preview && !inputs.markets_backtest }}"
+    assert env["DIGEST_MARKETS_PREVIEW"] == "${{ inputs.markets_preview }}"
+    assert env["DIGEST_MARKETS_BACKTEST"] == "${{ inputs.markets_backtest }}"
+    for gate in (step(digest, "上传去重状态和归档")["if"], wf["jobs"]["save"]["if"], wf["jobs"]["attest"]["if"]):
+        assert SAVE_GATE in gate, gate
+
+
 def test_ci_preview_has_room_for_the_market_budgets():
     # 市场数据源连不上时，板块等满预算、回测试运行等满上限，再加上抓新闻和装依赖
     preview = workflow("ci.yml")["jobs"]["preview"]

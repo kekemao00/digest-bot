@@ -607,7 +607,7 @@ def _run(
     send_time = _aware(now_fn())
     lines = guard(result.lines, send_time)
     head16 = led.head16() if led is not None else None
-    # 账本还是空的：这次推送成功后才写下第一批记录，页脚写“账本从这一条开始记”
+    # 账本还是空的（正式推送才这样写；预览、试运行不记账）：页脚写“账本此前为空”
     first_entry = mode == "send" and led is not None and head16 is None
     message = render_panel(
         lines, edition, send_time, head16, _cleveland(lines), preview=mode == "preview", first_entry=first_entry

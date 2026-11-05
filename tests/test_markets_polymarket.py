@@ -323,8 +323,13 @@ def test_excluded_by_tag_case_insensitive():
         ("Will the example founder's death be confirmed by June 30?", True),
         ("Example founder dead by 2032?", True),
         ("Example death toll above 1000 by Friday?", True),
-        # " dead " 按整词算：deadline 不算
+        ("Will the example founder be found dead by June?", True),
+        # 财经用语不算：deadline、death cross、death spiral、death tax、declared dead
         ("Will the Example Board meet the deadline?", False),
+        ("Will Example Coin form a death cross by December 31?", False),
+        ("Will the Example Stablecoin enter a death spiral in 2031?", False),
+        ("Example death tax repealed in 2031?", False),
+        ("Will the example bill be declared dead in the Senate?", False),
     ],
 )
 def test_excluded_words(question, hit):
