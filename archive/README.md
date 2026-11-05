@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 33 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 34 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月6日 周五](2026/11-06.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 安全 2 · 科学 2 · 其他 1  
+  [英国央行加息，警告通胀将接近 5%](https://www.cnbc.com/2026/11/05/interest-rates-inflation-uk.html)；[OpenAI 发布漏洞发现与修复模型](https://openai.com/index/introducing-gpt-6-cyber)；[研究探索用消费级智能手表检测高血压迹象](https://www.nature.com/articles/s41586-026-11336-3)
 - [11月5日 周四 晚间](2026/11-05-evening.md) · 7 条｜AI 3 · 时政 2 · 金融 1 · 科学 1  
   [美国债务上限交锋或引发市场波动](https://www.cnbc.com/2026/11/04/democrats-trump-debt-ceiling-fight.html)；[Phonon TTS 发布，支持端侧语音合成](https://huggingface.co/blog/phonon-tts)
 - [11月5日 周四](2026/11-05.md) · 15 条｜AI 5 · 软件 3 · 科学 2 · 时政 2 · 金融 1 · 安全 1 · 社会 1  

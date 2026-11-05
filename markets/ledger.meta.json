@@ -1,0 +1,13 @@
+{
+ "current": "c0e2743d",
+ "keys": {
+  "c0e2743d": {
+   "kdf": "scrypt",
+   "n": 32768,
+   "p": 1,
+   "r": 8,
+   "salt": "aU1gxRaL40ZyrPreARVdjg=="
+  }
+ },
+ "version": 1
+}
