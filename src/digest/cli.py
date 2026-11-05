@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import os
-from datetime import datetime
+from collections.abc import Callable, Sequence
+from datetime import date, datetime
 from pathlib import Path
+from typing import Any
 from zoneinfo import ZoneInfo
 
 import httpx
@@ -75,9 +78,25 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
         default=Path(".state/state.json"),
         help="跨天去重状态文件（工作流从 state 分支取出），不存在时视为第一次运行",
     )
+    parser.add_argument(
+        "--markets-preview",
+        action="store_true",
+        default=_truthy(os.environ.get("DIGEST_MARKETS_PREVIEW")),
+        help="不发简报，只推送一条【预览】市场板块，不记账、不改去重状态；同时用 --dry-run 时只组装不推送"
+        "（需要 MARKETS_ENABLED；也可用环境变量 DIGEST_MARKETS_PREVIEW=true）",
+    )
+    parser.add_argument(
+        "--markets-backtest",
+        action="store_true",
+        default=_truthy(os.environ.get("DIGEST_MARKETS_BACKTEST")),
+        help="不发简报，跑一次 Kalshi 历史回测，推送【回测】并加密保存结果；同时用 --dry-run 时只试算、只报计数"
+        "（需要 MARKETS_ENABLED；也可用环境变量 DIGEST_MARKETS_BACKTEST=true）",
+    )
     args = parser.parse_args(argv)
     if args.edition is not None and args.edition not in EDITIONS:
         parser.error(f"--edition 只能是 {' 或 '.join(EDITIONS)}，现在是 {args.edition!r}")
+    if args.markets_preview and args.markets_backtest:
+        parser.error("--markets-preview 和 --markets-backtest 一次只能选一个")
     return args
 
 
@@ -139,6 +158,149 @@ def skip_reason(config: Config, state: State, now: datetime) -> tuple[str, str] 
     return None
 
 
+# ---- 市场与预测板块（只在仓库变量 MARKETS_ENABLED 打开时运行，见 README「市场与预测」） ----
+
+MARKETS_LOAD_FAILED = "市场板块：未启用（加载失败：{}）"
+# 没有新闻可推的早上不记“今天已推送”（last_sent），后面几路定时触发都会再跑一遍，板块不能每次都再推一条：
+# 在 state 目录里记下每一版板块推送成功的日期，定时触发时同一版同一天只推一次。文件里只有日期，没有任何市场内容
+MARKETS_SENT_FILE = "markets_sent.json"
+MARKETS_SENT = "市场板块：已推送"  # run_panel 推送成功时状态行的开头
+MARKETS_ALREADY = "市场板块：这一版今天已推送过，跳过"
+
+
+def markets_enabled() -> bool:
+    """CI 和 fork 默认没有这个变量：这时市场板块的代码一行都不运行，简报的行为和以前完全一样。"""
+    return _truthy(os.environ.get("MARKETS_ENABLED"))
+
+
+def report_markets(status: str, echo: bool = False) -> None:
+    """板块在 Summary 里只占一行状态，不含任何市场内容（仓库是公开的，板块内容只发到钉钉）。
+
+    echo 为真（试运行）时标准输出也只打印这一行，否则写进日志。
+    """
+    try:
+        _append_env_file("GITHUB_STEP_SUMMARY", f"\n{status}\n")
+    except OSError as exc:  # 简报已经推送，写不进 Summary 也不能让这次运行失败
+        log.warning("市场板块的状态没写进 Summary：%s", type(exc).__name__)
+    if echo:
+        print(status)
+    else:
+        log.info("%s", status)
+
+
+def call_markets(fallback: str, run: Callable[[Any], str]) -> str:
+    """按需导入 digest.markets，用 run 调用它的一个入口，返回状态行。
+
+    导入失败（缺依赖等）或入口意外抛出异常时，都只变成一行状态：fallback 加异常类型。
+    """
+    try:
+        from digest import markets
+    except Exception as exc:  # 包坏了也不能影响简报
+        return MARKETS_LOAD_FAILED.format(type(exc).__name__)
+    try:
+        return run(markets)
+    except Exception as exc:  # 入口本身不抛异常，这里再兜一层
+        log.warning("市场板块出错：%s", type(exc).__name__)
+        return f"{fallback}：{type(exc).__name__}"
+
+
+def markets_sent_dates(state_dir: Path) -> dict[str, str]:
+    """各版板块最近一次推送成功的日期：{"morning": "YYYY-MM-DD", ...}；没有或读不了时为空。"""
+    try:
+        data = json.loads((state_dir / MARKETS_SENT_FILE).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    return {k: v for k, v in data.items() if isinstance(k, str) and isinstance(v, str)}
+
+
+def mark_markets_sent(state_dir: Path, edition: str, today: date) -> None:
+    dates = markets_sent_dates(state_dir)
+    dates[edition] = today.isoformat()
+    try:
+        state_dir.mkdir(parents=True, exist_ok=True)
+        (state_dir / MARKETS_SENT_FILE).write_text(json.dumps(dates, sort_keys=True) + "\n", encoding="utf-8")
+    except OSError as exc:  # 记不下来最多是多推一次，不能影响这次运行
+        log.warning("市场板块的推送日期没记下来：%s", type(exc).__name__)
+
+
+def markets_panel(
+    client: httpx.Client,
+    config: Config,
+    now_fn: Callable[[], datetime],
+    state_dir: Path,
+    news: Sequence[Item],
+    channel: DingTalk | None,
+    dry: bool = False,
+    once: bool = False,
+) -> None:
+    """简报之后跑市场板块：推送并记账（dry 时只组装，不推送不记账）。news 是简报里实际显示的条目，没推简报时为空。
+
+    once 为真（定时触发）时，这一版今天已经推送过板块就跳过。推送成功后记下日期。
+    只在 MARKETS_ENABLED 打开时运行；从不抛异常，不影响退出码，Summary 只多一行状态。
+    """
+    if not markets_enabled():
+        return
+    edition = "evening" if config.edition == "evening" else "morning"
+    today = now_fn().date()
+    if once and not dry and markets_sent_dates(state_dir).get(edition) == today.isoformat():
+        report_markets(MARKETS_ALREADY)
+        return
+    mode = "dry" if dry else "send"
+    status = call_markets(
+        "市场板块：出错" if dry else "市场板块：未推送",
+        lambda markets: markets.run_panel(client, config, now_fn, state_dir, list(news), channel, mode=mode),
+    )
+    report_markets(status, echo=dry)
+    if not dry and status.startswith(MARKETS_SENT):
+        mark_markets_sent(state_dir, edition, today)
+
+
+def markets_only(args: argparse.Namespace, config: Config) -> int:
+    """--markets-preview / --markets-backtest：不抓新闻、不发简报、不碰去重状态和归档，只跑市场板块。
+
+    预览只推送【预览】，不记账；回测推送【回测】，有账本钥匙时加密保存结果。两者都服从 --dry-run。
+    钉钉配置有误时和简报一样尽早失败；板块本身出错只写一行状态，退出码仍是 0。
+    """
+    if not markets_enabled():
+        head = "市场回测" if args.markets_backtest else "市场板块预览"
+        report_markets(f"{head}：未运行（仓库变量 MARKETS_ENABLED 没有打开）", echo=args.dry_run)
+        return 0
+
+    def now_fn() -> datetime:
+        return now_in(config.timezone)
+
+    state_dir = args.state.parent
+    with make_client() as client:
+        channel: DingTalk | None = None
+        if not args.dry_run:
+            try:
+                channel = DingTalk.from_env(client)
+            except ChannelError as exc:
+                log.error("%s", exc)
+                return 1
+        if args.markets_backtest:
+            # channel 为 None（试运行）时每类合约只算最近两次，只报计数，不推送不保存
+            status = call_markets(
+                "市场回测：出错",
+                lambda markets: markets.run_backtest(client, config, now_fn, state_dir, channel),
+            )
+        elif args.dry_run:
+            # 预览也服从 --dry-run：只组装不推送，状态行和简报试运行时的一样
+            status = call_markets(
+                "市场板块：出错",
+                lambda markets: markets.run_panel(client, config, now_fn, state_dir, [], None, mode="dry"),
+            )
+        else:
+            status = call_markets(
+                "市场板块预览：未推送",
+                lambda markets: markets.run_preview(client, config, now_fn, state_dir, channel),
+            )
+    report_markets(status, echo=args.dry_run)
+    return 0
+
+
 def setup_logging() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     # httpx 在 INFO 级别会记录完整请求 URL，其中有钉钉的 access_token 和签名
@@ -157,7 +319,16 @@ def main(argv: list[str] | None = None) -> int:
         edition = edition_for_cron(cron, config.timezone) if cron else "morning"
     if edition == "evening":
         config = config.for_evening()
+    if args.markets_preview or args.markets_backtest:
+        return markets_only(args, config)
     now = now_in(config.timezone)
+
+    def now_fn() -> datetime:
+        # 市场板块发送前要用真实的当前时间去掉刚到公布时间的行，不能用开始运行时的 now
+        return now_in(config.timezone)
+
+    # 市场板块只写 .state/markets/ 下的加密账本，和 state.json 在同一个目录
+    state_dir = args.state.parent
     sources = build_sources(config.sources)
     state = State(args.state)
 
@@ -166,11 +337,11 @@ def main(argv: list[str] | None = None) -> int:
     candidates: list[Item] = []
     stats: dict[str, str] = {}
     failed = 0
+    # 定时推送有几路触发（外部定时服务和 GitHub 自带的定时任务互为备用），同一天会到达多次，只推一次
+    scheduled = args.scheduled or os.environ.get("GITHUB_EVENT_NAME") == "schedule"
     with make_client() as client:
         channel: DingTalk | None = None
         if not args.dry_run:
-            # 定时推送有几路触发（外部定时服务和 GitHub 自带的定时任务互为备用），同一天会到达多次，只推一次
-            scheduled = args.scheduled or os.environ.get("GITHUB_EVENT_NAME") == "schedule"
             if scheduled and (skip := skip_reason(config, state, now)):
                 heading, reason = skip
                 log.info("%s", reason)
@@ -251,15 +422,21 @@ def main(argv: list[str] | None = None) -> int:
         write_step_summary(message, report, full, preview=channel is None or quiet or not selection.items)
         if args.dry_run or channel is None:
             print(f"通知标题：{message.title}\n\n{message.text}\n\n{report}")
+            # 冒烟测试：真实抓取并组装板块，不推送、不记账；Summary 和标准输出只多一行状态
+            markets_panel(client, config, now_fn, state_dir, message.items, None, dry=True)
             return 0
         if quiet:
             state.pages = pages_before
             state.last_evening = now.date().isoformat()
             state.save(now.date())
+            # 简报今晚不推，今晚有美国数据时板块照样推送
+            markets_panel(client, config, now_fn, state_dir, [], channel, once=scheduled)
             return 0
         if not selection.items:
             log.info("今天没有达到门槛的内容，不推送")
             state.save(now.date())
+            # 这时不记“今天已推送”，后面的定时触发还会再来：板块同一版同一天只推一次
+            markets_panel(client, config, now_fn, state_dir, [], channel, once=scheduled)
             return 0
         try:
             channel.send(message)
@@ -274,6 +451,9 @@ def main(argv: list[str] | None = None) -> int:
                 history.update(args.archive_dir, selection, config, now.date())
             except Exception as exc:  # 目录页只是方便回查，不能因此丢掉去重状态
                 log.warning("归档目录更新失败：%s", type(exc).__name__)
+        # 简报已送达、去重状态已保存之后才跑板块；“今天第 n 条”对应消息里实际显示的条目
+        # 定时触发时，同一天早些时候没有新闻、只推过板块的，这次不再重复推板块
+        markets_panel(client, config, now_fn, state_dir, message.items, channel, once=scheduled)
     return 0
 
 

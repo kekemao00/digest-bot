@@ -35,6 +35,12 @@ HOST_ENV = (
     "LLM_BASE_URL",
     "LLM_API_KEY",
     "LLM_MODEL",
+    # 市场与预测板块：开关、账本密钥、预览和回测
+    "MARKETS_ENABLED",
+    "MARKETS_LEDGER_KEY",
+    "MARKETS_LEDGER_KEY_OLD",
+    "DIGEST_MARKETS_PREVIEW",
+    "DIGEST_MARKETS_BACKTEST",
 )
 
 
