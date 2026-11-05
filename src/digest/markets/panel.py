@@ -848,6 +848,9 @@ def _run_replay(
     """run_replay 的实现，市场数据走 http。"""
     dry = channel is None
     head = "市场回测（试运行）" if dry else "市场回测"
+    if not dry and settings.audience == "group":
+        # 群里有别人时板块不放 Kalshi 的数据；回测成绩单全是 Kalshi 的，灰色小字也不会显示，所以不跑
+        return f"{head}：没有运行（audience 是 group，回测只有 Kalshi 的数据）"
     markets_dir = state_dir / "markets"
     keys: Keys | None = None
     led: Ledger | None = None

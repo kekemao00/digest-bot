@@ -863,6 +863,19 @@ def test_backtest_after_failed_state_checkout_is_not_stored(wired, tmp_path, mon
     assert "结果没有保存（去重状态没取到，这次不记账）" in status and not (tmp_path / ".state").exists()
 
 
+def test_backtest_does_not_run_for_a_group(wired, tmp_path, monkeypatch):
+    # 群里有别人：成绩单全是 Kalshi 的数字，不推送、不请求、不保存；CI 的试运行不推送，照常跑
+    calls = fake_backtest(monkeypatch)
+    wired["settings"] = panel_settings(audience="group")
+    channel = Channel()
+    status = markets.run_backtest(Venues().client(), wired["config"], lambda: NOW, tmp_path / ".state", channel,
+                                  env=ENV)
+    assert status == "市场回测：没有运行（audience 是 group，回测只有 Kalshi 的数据）"
+    assert calls == [] and channel.sent == [] and not (tmp_path / ".state").exists()
+    status = markets.run_backtest(Venues().client(), wired["config"], lambda: NOW, tmp_path / ".state", None, env=ENV)
+    assert status.startswith("市场回测（试运行）：5 类合约") and calls == [True]
+
+
 def test_backtest_without_key_is_not_stored(wired, tmp_path, monkeypatch):
     fake_backtest(monkeypatch)
     status = markets.run_backtest(Venues().client(), wired["config"], lambda: NOW, tmp_path / ".state", Channel(),
