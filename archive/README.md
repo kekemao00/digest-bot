@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 34 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 35 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月7日 周六](2026/11-07.md) · 15 条｜AI 4 · 金融 3 · 科学 3 · 安全 2 · 软件 1 · 硬件 1 · 社会 1  
+  [10 月平均失业时长超 27 周，疫情外十年最高](https://www.cnbc.com/2026/11/06/long-term-unemployment-october-jobs-report.html)；[SonicOS 漏洞遭利用，可绕过多因素认证](https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0014)；[研究通过体内基因碱基编辑实现持久降脂](https://www.nature.com/articles/s41586-026-11233-9)
 - [11月6日 周五 晚间](2026/11-06-evening.md) · 8 条｜金融 3 · 软件 2 · 时政 2 · AI 1  
   [英国将强制招聘广告公开薪资](https://www.reuters.com/business/world-at-work/britain-make-salary-disclosure-job-ads-mandatory-2026-11-05/)；[Finlaws 称美股市值缩水 2.5 万亿美元](https://finlaws.substack.com/p/25t-has-been-wiped-from-us-stocks)
 - [11月6日 周五](2026/11-06.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 安全 2 · 科学 2 · 其他 1  
