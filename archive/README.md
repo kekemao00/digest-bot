@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月6日 周五 晚间](2026/11-06-evening.md) · 8 条｜金融 3 · 软件 2 · 时政 2 · AI 1  
+  [英国将强制招聘广告公开薪资](https://www.reuters.com/business/world-at-work/britain-make-salary-disclosure-job-ads-mandatory-2026-11-05/)；[Finlaws 称美股市值缩水 2.5 万亿美元](https://finlaws.substack.com/p/25t-has-been-wiped-from-us-stocks)
 - [11月6日 周五](2026/11-06.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 安全 2 · 科学 2 · 其他 1  
   [英国央行加息，警告通胀将接近 5%](https://www.cnbc.com/2026/11/05/interest-rates-inflation-uk.html)；[OpenAI 发布漏洞发现与修复模型](https://openai.com/index/introducing-gpt-6-cyber)；[研究探索用消费级智能手表检测高血压迹象](https://www.nature.com/articles/s41586-026-11336-3)
 - [11月5日 周四 晚间](2026/11-05-evening.md) · 7 条｜AI 3 · 时政 2 · 金融 1 · 科学 1  
