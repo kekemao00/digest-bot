@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 35 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 36 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月8日 周日](2026/11-08.md) · 15 条｜AI 5 · 软件 5 · 科学 2 · 金融 1 · 安全 1 · 时政 1  
+  [以色列总统授权反对派领袖组阁](https://www.bbc.co.uk/news/articles/cmy8367lj5xlo?at_medium=RSS&at_campaign=rss)；[美国 10 月新增就业 16.5 万，超预期](https://www.cnbc.com/2026/11/06/jobs-report-october-2026.html)；[PDD Kit 用形式化验证核验智能体生成代码](https://www.microsoft.com/en-us/research/blog/formally-verifying-agent-written-full-stack-web-apps-with-pdd-kit/)
 - [11月7日 周六 晚间](2026/11-07-evening.md) · 4 条｜软件 2 · 时政 1 · 社会 1  
   [巴拉圭总统因银行危机遭弹劾并被软禁](https://www.bbc.co.uk/news/articles/c68jzzvjgdy9o?at_medium=RSS&at_campaign=rss)；[降雨淹没加沙数千流离失所家庭的帐篷](https://www.aljazeera.com/news/2026/11/7/rains-flood-thousands-of-tents-in-gaza?traffic_source=rss)
 - [11月7日 周六](2026/11-07.md) · 15 条｜AI 4 · 金融 3 · 科学 3 · 安全 2 · 软件 1 · 硬件 1 · 社会 1  
