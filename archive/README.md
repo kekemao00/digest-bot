@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 36 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 37 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月9日 周一](2026/11-09.md) · 14 条｜AI 4 · 软件 3 · 金融 2 · 安全 2 · 科学 1 · 时政 1 · 社会 1  
+  [中国银行体系面临富豪债务风险](https://www.economist.com/finance-and-economics/2026/11/05/indebted-tycoons-haunt-chinas-banking-system)；[OpenAI 推出湿实验智能体评测基准](https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science)；[研究发现势场粗糙度总会降低扩散率](https://doi.org/10.1073/pnas.2601219123)
 - [11月8日 周日](2026/11-08.md) · 15 条｜AI 5 · 软件 5 · 科学 2 · 金融 1 · 安全 1 · 时政 1  
   [以色列总统授权反对派领袖组阁](https://www.bbc.co.uk/news/articles/cmy8367lj5xlo?at_medium=RSS&at_campaign=rss)；[美国 10 月新增就业 16.5 万，超预期](https://www.cnbc.com/2026/11/06/jobs-report-october-2026.html)；[PDD Kit 用形式化验证核验智能体生成代码](https://www.microsoft.com/en-us/research/blog/formally-verifying-agent-written-full-stack-web-apps-with-pdd-kit/)
 - [11月7日 周六 晚间](2026/11-07-evening.md) · 4 条｜软件 2 · 时政 1 · 社会 1  
