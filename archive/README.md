@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 37 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 38 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月10日 周二](2026/11-10.md) · 15 条｜AI 6 · 安全 2 · 社会 2 · 金融 1 · 软件 1 · 科学 1 · 其他 2  
+  [OpenSSH 特定配置下认证绕过漏洞已遭利用](https://xz.aliyun.com/news/93220)；[SCIMUSE 结合知识图谱与大模型生成科研创意](https://doi.org/10.1073/pnas.2611349123)；[美国 10 月 CPI 报告将于周二公布](https://www.cnbc.com/2026/11/09/october-cpi-report-2026-inflation.html)
 - [11月9日 周一 晚间](2026/11-09-evening.md) · 6 条｜软件 3 · 社会 2 · 金融 1  
   [中国 10 月 PPI 涨 5.7%，创逾四年新高](https://www.cnbc.com/2026/11/09/china-wholesale-inflation-rises-consumer.html)；[开源建模工具 KetchUp 发布，提供 SketchUp 替代选择](https://ketchup3d.github.io/app/)
 - [11月9日 周一](2026/11-09.md) · 14 条｜AI 4 · 软件 3 · 金融 2 · 安全 2 · 科学 1 · 时政 1 · 社会 1  
