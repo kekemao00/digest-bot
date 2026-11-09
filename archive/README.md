@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月9日 周一 晚间](2026/11-09-evening.md) · 6 条｜软件 3 · 社会 2 · 金融 1  
+  [中国 10 月 PPI 涨 5.7%，创逾四年新高](https://www.cnbc.com/2026/11/09/china-wholesale-inflation-rises-consumer.html)；[开源建模工具 KetchUp 发布，提供 SketchUp 替代选择](https://ketchup3d.github.io/app/)
 - [11月9日 周一](2026/11-09.md) · 14 条｜AI 4 · 软件 3 · 金融 2 · 安全 2 · 科学 1 · 时政 1 · 社会 1  
   [中国银行体系面临富豪债务风险](https://www.economist.com/finance-and-economics/2026/11/05/indebted-tycoons-haunt-chinas-banking-system)；[OpenAI 推出湿实验智能体评测基准](https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science)；[研究发现势场粗糙度总会降低扩散率](https://doi.org/10.1073/pnas.2601219123)
 - [11月8日 周日](2026/11-08.md) · 15 条｜AI 5 · 软件 5 · 科学 2 · 金融 1 · 安全 1 · 时政 1  
