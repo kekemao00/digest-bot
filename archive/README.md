@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 38 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 39 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月11日 周三](2026/11-11.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 安全 2 · 科学 2 · 时政 1  
+  [美国 10 月消费价格上涨 0.4%，超预期](https://www.cnbc.com/2026/11/10/cpi-inflation-report-october-2026.html)；[谷歌开放 Gemini 4 Carbon 模型](https://deepmind.google/blog/gemini-4-carbon-is-now-available/)；[感染马铃薯时，作弊型细菌变体更具适应优势](https://doi.org/10.1073/pnas.2621458123)
 - [11月10日 周二 晚间](2026/11-10-evening.md) · 7 条｜金融 2 · AI 1 · 硬件 1 · 时政 1 · 其他 2  
   [中国货物贸易顺差连续两年超万亿美元](https://www.cnbc.com/2026/11/10/china-trade-october-exports-imports-surplus-.html)；[谷歌发布 TPU 8tx 和 TPU 8i Max](https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/tpu-8i-max-and-8tx/)
 - [11月10日 周二](2026/11-10.md) · 15 条｜AI 6 · 安全 2 · 社会 2 · 金融 1 · 软件 1 · 科学 1 · 其他 2  
