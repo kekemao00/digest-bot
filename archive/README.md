@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月10日 周二 晚间](2026/11-10-evening.md) · 7 条｜金融 2 · AI 1 · 硬件 1 · 时政 1 · 其他 2  
+  [中国货物贸易顺差连续两年超万亿美元](https://www.cnbc.com/2026/11/10/china-trade-october-exports-imports-surplus-.html)；[谷歌发布 TPU 8tx 和 TPU 8i Max](https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/tpu-8i-max-and-8tx/)
 - [11月10日 周二](2026/11-10.md) · 15 条｜AI 6 · 安全 2 · 社会 2 · 金融 1 · 软件 1 · 科学 1 · 其他 2  
   [OpenSSH 特定配置下认证绕过漏洞已遭利用](https://xz.aliyun.com/news/93220)；[SCIMUSE 结合知识图谱与大模型生成科研创意](https://doi.org/10.1073/pnas.2611349123)；[美国 10 月 CPI 报告将于周二公布](https://www.cnbc.com/2026/11/09/october-cpi-report-2026-inflation.html)
 - [11月9日 周一 晚间](2026/11-09-evening.md) · 6 条｜软件 3 · 社会 2 · 金融 1  
