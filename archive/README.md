@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月11日 周三 晚间](2026/11-11-evening.md) · 4 条｜硬件 2 · AI 1 · 时政 1  
+  [调查：中国高校在美出口管制下购入 H200](https://www.aljazeera.com/news/2026/11/11/chinese-university-buys-nvidia-ai-h200-chips-despite-us-ban-records-show?traffic_source=rss)；[美指控三名伊朗支持的嫌疑人策划袭击](https://www.bbc.co.uk/news/articles/c3rryrryk59zo?at_medium=RSS&at_campaign=rss)
 - [11月11日 周三](2026/11-11.md) · 15 条｜AI 4 · 金融 3 · 软件 3 · 安全 2 · 科学 2 · 时政 1  
   [美国 10 月消费价格上涨 0.4%，超预期](https://www.cnbc.com/2026/11/10/cpi-inflation-report-october-2026.html)；[谷歌开放 Gemini 4 Carbon 模型](https://deepmind.google/blog/gemini-4-carbon-is-now-available/)；[感染马铃薯时，作弊型细菌变体更具适应优势](https://doi.org/10.1073/pnas.2621458123)
 - [11月10日 周二 晚间](2026/11-10-evening.md) · 7 条｜金融 2 · AI 1 · 硬件 1 · 时政 1 · 其他 2  
