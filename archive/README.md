@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月12日 周四 晚间](2026/11-12-evening.md) · 8 条｜金融 2 · 社会 2 · AI 1 · 软件 1 · 安全 1 · 时政 1  
+  [据报道，英伟达正准备撤换黄仁勋](https://www.wsj.com/business/nvidia-is-preparing-to-oust-nvidia-ceo-jensen-huang-30f421ad)；[英国第三季度经济增长 0.7%，符合预期](https://www.cnbc.com/2026/11/12/uk-gdp-third-quarter-2026.html)
 - [11月12日 周四](2026/11-12.md) · 15 条｜AI 4 · 金融 3 · 硬件 2 · 科学 2 · 软件 1 · 安全 1 · 社会 1 · 其他 1  
   [AlphaGenome 2 预测 DNA 变异影响](https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/)；[研究解析 OpenSSH 认证绕过与补丁差异](https://xz.aliyun.com/news/93241)；[独立成像方法证实 M87＊黑洞阴影](https://www.nature.com/articles/s41586-026-11241-9)
 - [11月11日 周三 晚间](2026/11-11-evening.md) · 4 条｜硬件 2 · AI 1 · 时政 1  
