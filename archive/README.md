@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 40 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 41 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月13日 周五](2026/11-13.md) · 15 条｜AI 3 · 金融 3 · 软件 3 · 科学 3 · 安全 1 · 时政 1 · 社会 1  
+  [美联社报道黄仁勋辞职](https://apnews.com/article/nvidia-megaspeed-china-singapore-huang-5403f152a601cf82ce939f1d24fffa0f)；[美特使称普京同意欧洲代表参与乌克兰会谈](https://www.bbc.co.uk/news/articles/cwrkgmymk55zo?at_medium=RSS&at_campaign=rss)；[谷歌发布 Gemini 4 Hydrogen](https://deepmind.google/blog/introducing-gemini-4-hydrogen/)
 - [11月12日 周四 晚间](2026/11-12-evening.md) · 8 条｜金融 2 · 社会 2 · AI 1 · 软件 1 · 安全 1 · 时政 1  
   [据报道，英伟达正准备撤换黄仁勋](https://www.wsj.com/business/nvidia-is-preparing-to-oust-nvidia-ceo-jensen-huang-30f421ad)；[英国第三季度经济增长 0.7%，符合预期](https://www.cnbc.com/2026/11/12/uk-gdp-third-quarter-2026.html)
 - [11月12日 周四](2026/11-12.md) · 15 条｜AI 4 · 金融 3 · 硬件 2 · 科学 2 · 软件 1 · 安全 1 · 社会 1 · 其他 1  
