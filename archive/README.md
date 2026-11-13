@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月13日 周五 晚间](2026/11-13-evening.md) · 8 条｜AI 3 · 金融 1 · 软件 1 · 安全 1 · 时政 1 · 社会 1  
+  [10 月通胀超预期，美联储降息前景承压](https://www.cnbc.com/2026/11/13/us-inflation-outlook-federal-reserve-rate-hike.html)；[微软研究汇总 AI 翻译与数学难题突破进展](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)
 - [11月13日 周五](2026/11-13.md) · 15 条｜AI 3 · 金融 3 · 软件 3 · 科学 3 · 安全 1 · 时政 1 · 社会 1  
   [美联社报道黄仁勋辞职](https://apnews.com/article/nvidia-megaspeed-china-singapore-huang-5403f152a601cf82ce939f1d24fffa0f)；[美特使称普京同意欧洲代表参与乌克兰会谈](https://www.bbc.co.uk/news/articles/cwrkgmymk55zo?at_medium=RSS&at_campaign=rss)；[谷歌发布 Gemini 4 Hydrogen](https://deepmind.google/blog/introducing-gemini-4-hydrogen/)
 - [11月12日 周四 晚间](2026/11-12-evening.md) · 8 条｜金融 2 · 社会 2 · AI 1 · 软件 1 · 安全 1 · 时政 1  
