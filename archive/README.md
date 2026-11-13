@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 41 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 42 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月14日 周六](2026/11-14.md) · 15 条  
+  [AI risks are the biggest threat to the financial system, Fed survey finds](https://www.cnbc.com/2026/11/13/ai-risks-financial-system-federal-reserve.html)；[Watch: How a server outage took down Microsoft Teams and Outlook](https://www.bbc.co.uk/news/videos/cqzjr903n01po?at_medium=RSS&at_campaign=rss)；[Service degradation on Microsoft 365](https://status.cloud.microsoft/)
 - [11月13日 周五 晚间](2026/11-13-evening.md) · 8 条｜AI 3 · 金融 1 · 软件 1 · 安全 1 · 时政 1 · 社会 1  
   [10 月通胀超预期，美联储降息前景承压](https://www.cnbc.com/2026/11/13/us-inflation-outlook-federal-reserve-rate-hike.html)；[微软研究汇总 AI 翻译与数学难题突破进展](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)
 - [11月13日 周五](2026/11-13.md) · 15 条｜AI 3 · 金融 3 · 软件 3 · 科学 3 · 安全 1 · 时政 1 · 社会 1  
