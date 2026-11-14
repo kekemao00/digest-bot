@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 42 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 43 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月15日 周日](2026/11-15.md) · 15 条｜科学 3 · AI 2 · 金融 2 · 软件 2 · 安全 2 · 时政 1 · 社会 1 · 其他 2  
+  [10 月批发价格同比涨 6.5%，创近四年新高](https://www.cnbc.com/2026/11/13/ppi-inflation-report-october-2026.html)；[美国全国性航班停飞令持续 4.5 小时后解除](https://www.nbcnews.com/news/us-news/faa-orders-nationwide-ground-stop-departing-flights-reasons-safety-rcna609247)；[Check Point 多产品漏洞已遭实际利用](https://support.checkpoint.com/results/sk/sk1000362)
 - [11月14日 周六 晚间](2026/11-14-evening.md) · 7 条｜时政 3 · 软件 2 · 金融 1 · 硬件 1  
   [泽连斯基称美方曾提议以顿巴斯换入北约](https://www.bbc.co.uk/news/articles/cwvg2l312ylqo?at_medium=RSS&at_campaign=rss)；[英伟达被指资助初创公司购卡以制造短缺](https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus)
 - [11月14日 周六](2026/11-14.md) · 15 条  
