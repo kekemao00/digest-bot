@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月14日 周六 晚间](2026/11-14-evening.md) · 7 条｜时政 3 · 软件 2 · 金融 1 · 硬件 1  
+  [泽连斯基称美方曾提议以顿巴斯换入北约](https://www.bbc.co.uk/news/articles/cwvg2l312ylqo?at_medium=RSS&at_campaign=rss)；[英伟达被指资助初创公司购卡以制造短缺](https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus)
 - [11月14日 周六](2026/11-14.md) · 15 条  
   [AI risks are the biggest threat to the financial system, Fed survey finds](https://www.cnbc.com/2026/11/13/ai-risks-financial-system-federal-reserve.html)；[Watch: How a server outage took down Microsoft Teams and Outlook](https://www.bbc.co.uk/news/videos/cqzjr903n01po?at_medium=RSS&at_campaign=rss)；[Service degradation on Microsoft 365](https://status.cloud.microsoft/)
 - [11月13日 周五 晚间](2026/11-13-evening.md) · 8 条｜AI 3 · 金融 1 · 软件 1 · 安全 1 · 时政 1 · 社会 1  
