@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 43 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 44 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月16日 周一](2026/11-16.md) · 14 条｜科学 3 · 时政 3 · 软件 2 · 安全 2 · AI 1 · 金融 1 · 硬件 1 · 社会 1  
+  [SpaceX 第 15 次飞行完成星舰捕获](https://www.spacex.com/launches/starship-flight-15)；[研究发现阻断 p300 与 ZEB1 互作可抑癌](https://doi.org/10.1073/pnas.2618571123)；[澳加意英敦促以色列放行加沙援助](https://www.aljazeera.com/news/2026/11/15/australia-canada-italy-and-the-uk-urge-israel-to-allow-aid-into-gaza?traffic_source=rss)
 - [11月15日 周日 晚间](2026/11-15-evening.md) · 4 条｜软件 1 · 硬件 1 · 时政 1 · 社会 1  
   [美国提出乌克兰让出顿巴斯换加入北约](https://www.aljazeera.com/news/2026/11/15/give-donbas-take-nato-seat-could-new-us-pitch-work-for-ukraine-russia?traffic_source=rss)；[报道称英伟达借循环融资维持 GPU 高价](https://www.techspot.com/news/114558-nvidia-deliberately-kept-gpu-prices-high-through-circular.html)
 - [11月15日 周日](2026/11-15.md) · 15 条｜科学 3 · AI 2 · 金融 2 · 软件 2 · 安全 2 · 时政 1 · 社会 1 · 其他 2  
