@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月15日 周日 晚间](2026/11-15-evening.md) · 4 条｜软件 1 · 硬件 1 · 时政 1 · 社会 1  
+  [美国提出乌克兰让出顿巴斯换加入北约](https://www.aljazeera.com/news/2026/11/15/give-donbas-take-nato-seat-could-new-us-pitch-work-for-ukraine-russia?traffic_source=rss)；[报道称英伟达借循环融资维持 GPU 高价](https://www.techspot.com/news/114558-nvidia-deliberately-kept-gpu-prices-high-through-circular.html)
 - [11月15日 周日](2026/11-15.md) · 15 条｜科学 3 · AI 2 · 金融 2 · 软件 2 · 安全 2 · 时政 1 · 社会 1 · 其他 2  
   [10 月批发价格同比涨 6.5%，创近四年新高](https://www.cnbc.com/2026/11/13/ppi-inflation-report-october-2026.html)；[美国全国性航班停飞令持续 4.5 小时后解除](https://www.nbcnews.com/news/us-news/faa-orders-nationwide-ground-stop-departing-flights-reasons-safety-rcna609247)；[Check Point 多产品漏洞已遭实际利用](https://support.checkpoint.com/results/sk/sk1000362)
 - [11月14日 周六 晚间](2026/11-14-evening.md) · 7 条｜时政 3 · 软件 2 · 金融 1 · 硬件 1  
