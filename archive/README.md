@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月16日 周一 晚间](2026/11-16-evening.md) · 8 条｜AI 2 · 社会 2 · 金融 1 · 软件 1 · 硬件 1 · 时政 1  
+  [日本经济第三季度意外萎缩](https://www.cnbc.com/2026/11/16/japan-q3-gdp-energy-oil-prices.html)；[路透社称黄仁勋或回归英伟达任 CEO](https://www.reuters.com/world/china/jensen-huang-discusses-comeback-nvidia-ceo-with-allies-ft-reports-2026-11-15/)
 - [11月16日 周一](2026/11-16.md) · 14 条｜科学 3 · 时政 3 · 软件 2 · 安全 2 · AI 1 · 金融 1 · 硬件 1 · 社会 1  
   [SpaceX 第 15 次飞行完成星舰捕获](https://www.spacex.com/launches/starship-flight-15)；[研究发现阻断 p300 与 ZEB1 互作可抑癌](https://doi.org/10.1073/pnas.2618571123)；[澳加意英敦促以色列放行加沙援助](https://www.aljazeera.com/news/2026/11/15/australia-canada-italy-and-the-uk-urge-israel-to-allow-aid-into-gaza?traffic_source=rss)
 - [11月15日 周日 晚间](2026/11-15-evening.md) · 4 条｜软件 1 · 硬件 1 · 时政 1 · 社会 1  
