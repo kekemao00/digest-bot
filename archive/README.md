@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 44 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 45 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月17日 周二](2026/11-17.md) · 15 条｜AI 4 · 科学 3 · 社会 3 · 金融 2 · 安全 2 · 软件 1  
+  [20 年星系巡天结果与主流宇宙学理论存出入](https://www.quantamagazine.org/what-makes-up-the-cosmos-a-20-year-survey-hints-that-something-is-missing-20261116/)；[OpenAI 将向 20 万研究人员免费开放前沿模型](https://openai.com/index/expanding-chatgpt-for-academic-researchers)；[FastMCP 路径穿越可触发认证 SSRF](https://xz.aliyun.com/news/93344)
 - [11月16日 周一 晚间](2026/11-16-evening.md) · 8 条｜AI 2 · 社会 2 · 金融 1 · 软件 1 · 硬件 1 · 时政 1  
   [日本经济第三季度意外萎缩](https://www.cnbc.com/2026/11/16/japan-q3-gdp-energy-oil-prices.html)；[路透社称黄仁勋或回归英伟达任 CEO](https://www.reuters.com/world/china/jensen-huang-discusses-comeback-nvidia-ceo-with-allies-ft-reports-2026-11-15/)
 - [11月16日 周一](2026/11-16.md) · 14 条｜科学 3 · 时政 3 · 软件 2 · 安全 2 · AI 1 · 金融 1 · 硬件 1 · 社会 1  
