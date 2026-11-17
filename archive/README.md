@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 45 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 46 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月18日 周三](2026/11-18.md) · 15 条  
+  [Palestinian woman, 72, shot dead by Israeli settlers in West Bank, health ministry says](https://www.bbc.co.uk/news/articles/cqrlg377638yo?at_medium=RSS&at_campaign=rss)；[St. Louis Fed's Musalem says four more rate hikes may be needed in coming months](https://www.cnbc.com/2026/11/17/alberto-musalem-fed-interest-rates.html)；[Why startups still go public, eventually](https://www.economist.com/finance-and-economics/2026/11/17/why-startups-still-go-public-eventually)
 - [11月17日 周二 晚间](2026/11-17-evening.md) · 8 条｜软件 3 · 时政 2 · 社会 2 · 金融 1  
   [克里米亚大桥遇袭后部分坍塌](https://www.bbc.co.uk/news/articles/cw772jk4rvmxo?at_medium=RSS&at_campaign=rss)；[美国联合航空确认发生大范围系统故障](https://www.cnn.com/2026/11/16/us/united-airlines-outage)
 - [11月17日 周二](2026/11-17.md) · 15 条｜AI 4 · 科学 3 · 社会 3 · 金融 2 · 安全 2 · 软件 1  
