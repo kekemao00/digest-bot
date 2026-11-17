@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月17日 周二 晚间](2026/11-17-evening.md) · 8 条｜软件 3 · 时政 2 · 社会 2 · 金融 1  
+  [克里米亚大桥遇袭后部分坍塌](https://www.bbc.co.uk/news/articles/cw772jk4rvmxo?at_medium=RSS&at_campaign=rss)；[美国联合航空确认发生大范围系统故障](https://www.cnn.com/2026/11/16/us/united-airlines-outage)
 - [11月17日 周二](2026/11-17.md) · 15 条｜AI 4 · 科学 3 · 社会 3 · 金融 2 · 安全 2 · 软件 1  
   [20 年星系巡天结果与主流宇宙学理论存出入](https://www.quantamagazine.org/what-makes-up-the-cosmos-a-20-year-survey-hints-that-something-is-missing-20261116/)；[OpenAI 将向 20 万研究人员免费开放前沿模型](https://openai.com/index/expanding-chatgpt-for-academic-researchers)；[FastMCP 路径穿越可触发认证 SSRF](https://xz.aliyun.com/news/93344)
 - [11月16日 周一 晚间](2026/11-16-evening.md) · 8 条｜AI 2 · 社会 2 · 金融 1 · 软件 1 · 硬件 1 · 时政 1  
