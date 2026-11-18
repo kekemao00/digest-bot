@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月18日 周三 晚间](2026/11-18-evening.md) · 8 条  
+  [As Trump and Xi meet, China's AI dreams face an unexpected hurdle: the Nvidia spy scandal](https://www.bbc.co.uk/news/articles/c5vg23g92rj4o?at_medium=RSS&at_campaign=rss)；[Southeast Asia’s data center boom leaned on Chinese demand. New U.S. rules put that pipeline at risk](https://www.cnbc.com/2026/11/18/nvidia-us-ai-chip-export-controls-data-centers-.html)；[Google's AI answers reducing search traffic by 40%](https://revscope.co/blog/search-seo-geo-2026/)
 - [11月18日 周三](2026/11-18.md) · 15 条  
   [Palestinian woman, 72, shot dead by Israeli settlers in West Bank, health ministry says](https://www.bbc.co.uk/news/articles/cqrlg377638yo?at_medium=RSS&at_campaign=rss)；[St. Louis Fed's Musalem says four more rate hikes may be needed in coming months](https://www.cnbc.com/2026/11/17/alberto-musalem-fed-interest-rates.html)；[Why startups still go public, eventually](https://www.economist.com/finance-and-economics/2026/11/17/why-startups-still-go-public-eventually)
 - [11月17日 周二 晚间](2026/11-17-evening.md) · 8 条｜软件 3 · 时政 2 · 社会 2 · 金融 1  
