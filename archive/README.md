@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 46 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 47 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月19日 周四](2026/11-19.md) · 15 条  
+  [Record diesel prices drive UK inflation to 1-year high of 3.6%](https://www.cnbc.com/2026/11/18/uk-inflation-cpi-fuel-prices.html)；[Inside the old gas pipeline where Ukraine is fighting an underground war with Russia](https://www.bbc.co.uk/news/videos/c8p3vw4q6nzzo?at_medium=RSS&at_campaign=rss)；[Java4Shell: RCE in OpenJDK when processing Base64](https://calif.io/java4shell/)
 - [11月18日 周三 晚间](2026/11-18-evening.md) · 8 条  
   [As Trump and Xi meet, China's AI dreams face an unexpected hurdle: the Nvidia spy scandal](https://www.bbc.co.uk/news/articles/c5vg23g92rj4o?at_medium=RSS&at_campaign=rss)；[Southeast Asia’s data center boom leaned on Chinese demand. New U.S. rules put that pipeline at risk](https://www.cnbc.com/2026/11/18/nvidia-us-ai-chip-export-controls-data-centers-.html)；[Google's AI answers reducing search traffic by 40%](https://revscope.co/blog/search-seo-geo-2026/)
 - [11月18日 周三](2026/11-18.md) · 15 条  
