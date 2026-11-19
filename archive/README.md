@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月19日 周四 晚间](2026/11-19-evening.md) · 6 条｜金融 2 · AI 1 · 软件 1 · 安全 1 · 时政 1  
+  [Anthropic IPO 募资 813 亿美元创纪录](https://www.aljazeera.com/news/2026/11/19/charting-the-worlds-biggest-ipos-as-anthropic-overtakes-spacex?traffic_source=rss)；[谷歌发布 Gemini 4 Neon 模型](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/)
 - [11月19日 周四](2026/11-19.md) · 15 条  
   [Record diesel prices drive UK inflation to 1-year high of 3.6%](https://www.cnbc.com/2026/11/18/uk-inflation-cpi-fuel-prices.html)；[Inside the old gas pipeline where Ukraine is fighting an underground war with Russia](https://www.bbc.co.uk/news/videos/c8p3vw4q6nzzo?at_medium=RSS&at_campaign=rss)；[Java4Shell: RCE in OpenJDK when processing Base64](https://calif.io/java4shell/)
 - [11月18日 周三 晚间](2026/11-18-evening.md) · 8 条  
