@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 47 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 48 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月20日 周五](2026/11-20.md) · 15 条｜金融 4 · 科学 4 · AI 3 · 安全 2 · 软件 1 · 硬件 1  
+  [Anthropic 上市首日跻身全球市值最高公司之列](https://www.bbc.co.uk/news/articles/c3x29ggenz12o?at_medium=RSS&at_campaign=rss)；[美国半年内批准近 90 万枚 AI 芯片对华销售](https://www.aljazeera.com/economy/2026/11/19/us-signed-off-on-sales-of-nearly-900000-ai-chips-to-china-in-six-months?traffic_source=rss)；[卫星观测发现亚马孙雨林落叶规律比此前所知更多样](https://www.nature.com/articles/s41586-026-11284-y)
 - [11月19日 周四 晚间](2026/11-19-evening.md) · 6 条｜金融 2 · AI 1 · 软件 1 · 安全 1 · 时政 1  
   [Anthropic IPO 募资 813 亿美元创纪录](https://www.aljazeera.com/news/2026/11/19/charting-the-worlds-biggest-ipos-as-anthropic-overtakes-spacex?traffic_source=rss)；[谷歌发布 Gemini 4 Neon 模型](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/)
 - [11月19日 周四](2026/11-19.md) · 15 条  
