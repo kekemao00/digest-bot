@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月20日 周五 晚间](2026/11-20-evening.md) · 7 条｜软件 3 · 时政 2 · AI 1 · 金融 1  
+  [能源补贴到期，日本核心通胀创年内新高](https://www.cnbc.com/2026/11/20/japan-inflation-cpi-october.html)；[加州就涉华 AI 芯片问题调查英伟达](https://www.bbc.co.uk/news/articles/cqn70vxp5p4no?at_medium=RSS&at_campaign=rss)
 - [11月20日 周五](2026/11-20.md) · 15 条｜金融 4 · 科学 4 · AI 3 · 安全 2 · 软件 1 · 硬件 1  
   [Anthropic 上市首日跻身全球市值最高公司之列](https://www.bbc.co.uk/news/articles/c3x29ggenz12o?at_medium=RSS&at_campaign=rss)；[美国半年内批准近 90 万枚 AI 芯片对华销售](https://www.aljazeera.com/economy/2026/11/19/us-signed-off-on-sales-of-nearly-900000-ai-chips-to-china-in-six-months?traffic_source=rss)；[卫星观测发现亚马孙雨林落叶规律比此前所知更多样](https://www.nature.com/articles/s41586-026-11284-y)
 - [11月19日 周四 晚间](2026/11-19-evening.md) · 6 条｜金融 2 · AI 1 · 软件 1 · 安全 1 · 时政 1  
