@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 48 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 49 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月21日 周六](2026/11-21.md) · 15 条｜金融 4 · 软件 3 · AI 2 · 科学 2 · 硬件 1 · 安全 1 · 其他 2  
+  [Anthropic 以每股 83 美元完成 IPO](https://www.anthropic.com/news/ipo-close)；[数学家声称已证明广义黎曼猜想](https://alpo.ge/remark.pdf)；[Apache Roller 漏洞已遭实际利用](https://lists.apache.org/thread/cc0jck13nb9vvcmzxzwotr6n16mx28z9)
 - [11月20日 周五 晚间](2026/11-20-evening.md) · 7 条｜软件 3 · 时政 2 · AI 1 · 金融 1  
   [能源补贴到期，日本核心通胀创年内新高](https://www.cnbc.com/2026/11/20/japan-inflation-cpi-october.html)；[加州就涉华 AI 芯片问题调查英伟达](https://www.bbc.co.uk/news/articles/cqn70vxp5p4no?at_medium=RSS&at_campaign=rss)
 - [11月20日 周五](2026/11-20.md) · 15 条｜金融 4 · 科学 4 · AI 3 · 安全 2 · 软件 1 · 硬件 1  
