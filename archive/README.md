@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 49 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 50 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月22日 周日](2026/11-22.md) · 15 条｜AI 6 · 科学 3 · 安全 2 · 社会 2 · 金融 1 · 时政 1  
+  [乌总统称乌方打击克里米亚大桥是回应俄方空袭](https://www.bbc.co.uk/news/articles/c6wy0qj7w5zqo?at_medium=RSS&at_campaign=rss)；[Depth Pro 2 按原分辨率估算图像和视频深度](https://machinelearning.apple.com/research/depth-pro-2-monocular)；[研究发现重组弹性场可延长钙钛矿太阳能电池寿命](https://www.science.org/doi/abs/10.1126/science.aeh3114?af=R)
 - [11月21日 周六 晚间](2026/11-21-evening.md) · 4 条｜AI 1 · 科学 1 · 时政 1 · 社会 1  
   [各国同意在 2028 年前细化自主武器规则](https://www.aljazeera.com/news/2026/11/21/nations-agree-to-draft-rules-for-killer-robots-at-arms-control-summit?traffic_source=rss)；[数学家称借 AI 证明黎曼猜想，结果待核验](https://www.bbc.co.uk/news/articles/c6pqr2g7w059o?at_medium=RSS&at_campaign=rss)
 - [11月21日 周六](2026/11-21.md) · 15 条｜金融 4 · 软件 3 · AI 2 · 科学 2 · 硬件 1 · 安全 1 · 其他 2  
