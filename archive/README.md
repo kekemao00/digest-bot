@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 50 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 51 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月23日 周一](2026/11-23.md) · 14 条｜AI 5 · 软件 3 · 金融 2 · 安全 2 · 时政 1 · 社会 1  
+  [各方在化石燃料问题上存分歧，COP31 未达成重大协议](https://www.bbc.co.uk/news/articles/cqwy06zrd26lo?at_medium=RSS&at_campaign=rss)；[研究人员用 200 万探针发现 AI 供应链隐私风险](https://arstechnica.com/security/2026/11/a-leaky-ai-supply-chain-is-exposing-secret-user-data-at-an-alarming-rate/)；[研究发现运行框架设计影响 AI 解答高阶数学题的表现](https://doi.org/10.1073/pnas.2627448123)
 - [11月22日 周日 晚间](2026/11-22-evening.md) · 7 条｜硬件 2 · 时政 2 · AI 1 · 金融 1 · 软件 1  
   [俄货船遭无人机袭击后仍在芬兰近海燃烧](https://www.aljazeera.com/news/2026/11/22/russian-cargo-ship-still-on-fire-off-finland-after-drone-attack?traffic_source=rss)；[丰田、日产和本田拟统一零部件标准以降本](https://www.caranddriver.com/news/a74490092/toyota-nissan-honda-standardize-parts-lower-costs/)
 - [11月22日 周日](2026/11-22.md) · 15 条｜AI 6 · 科学 3 · 安全 2 · 社会 2 · 金融 1 · 时政 1  
