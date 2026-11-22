@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月22日 周日 晚间](2026/11-22-evening.md) · 7 条｜硬件 2 · 时政 2 · AI 1 · 金融 1 · 软件 1  
+  [俄货船遭无人机袭击后仍在芬兰近海燃烧](https://www.aljazeera.com/news/2026/11/22/russian-cargo-ship-still-on-fire-off-finland-after-drone-attack?traffic_source=rss)；[丰田、日产和本田拟统一零部件标准以降本](https://www.caranddriver.com/news/a74490092/toyota-nissan-honda-standardize-parts-lower-costs/)
 - [11月22日 周日](2026/11-22.md) · 15 条｜AI 6 · 科学 3 · 安全 2 · 社会 2 · 金融 1 · 时政 1  
   [乌总统称乌方打击克里米亚大桥是回应俄方空袭](https://www.bbc.co.uk/news/articles/c6wy0qj7w5zqo?at_medium=RSS&at_campaign=rss)；[Depth Pro 2 按原分辨率估算图像和视频深度](https://machinelearning.apple.com/research/depth-pro-2-monocular)；[研究发现重组弹性场可延长钙钛矿太阳能电池寿命](https://www.science.org/doi/abs/10.1126/science.aeh3114?af=R)
 - [11月21日 周六 晚间](2026/11-21-evening.md) · 4 条｜AI 1 · 科学 1 · 时政 1 · 社会 1  
