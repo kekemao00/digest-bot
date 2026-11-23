@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月23日 周一 晚间](2026/11-23-evening.md) · 7 条｜软件 3 · AI 2 · 时政 1 · 社会 1  
+  [新项目让 Linux 运行完整 OS X 图形环境](https://github.com/AFK-surf/xnulinux)；[旧金山 AI 从业者担忧行业过热](https://www.bbc.co.uk/news/articles/cqe9k09j9jv4o?at_medium=RSS&at_campaign=rss)
 - [11月23日 周一](2026/11-23.md) · 14 条｜AI 5 · 软件 3 · 金融 2 · 安全 2 · 时政 1 · 社会 1  
   [各方在化石燃料问题上存分歧，COP31 未达成重大协议](https://www.bbc.co.uk/news/articles/cqwy06zrd26lo?at_medium=RSS&at_campaign=rss)；[研究人员用 200 万探针发现 AI 供应链隐私风险](https://arstechnica.com/security/2026/11/a-leaky-ai-supply-chain-is-exposing-secret-user-data-at-an-alarming-rate/)；[研究发现运行框架设计影响 AI 解答高阶数学题的表现](https://doi.org/10.1073/pnas.2627448123)
 - [11月22日 周日 晚间](2026/11-22-evening.md) · 7 条｜硬件 2 · 时政 2 · AI 1 · 金融 1 · 软件 1  

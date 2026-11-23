@@ -1,7 +1,7 @@
 {
  "version": 1,
  "last_sent": "2026-11-23",
- "last_evening": "2026-11-22",
+ "last_evening": "2026-11-23",
  "sent": {
   "8rank.ai/game/apple-intelligence-personal-knowledge-graph": "2026-11-08",
   "9to5mac.com/2026/11/10/apple-has-new-mac-app-coming-to-make-running-local-ai-models-easy": "2026-11-12",
@@ -39,6 +39,7 @@
   "aljazeera.com/news/2026/11/21/nations-agree-to-draft-rules-for-killer-robots-at-arms-control-summit?traffic_source=rss": "2026-11-21",
   "aljazeera.com/news/2026/11/22/russian-cargo-ship-still-on-fire-off-finland-after-drone-attack?traffic_source=rss": "2026-11-22",
   "aljazeera.com/news/2026/11/22/trump-to-host-private-dinner-for-largest-owners-of-his-meme-coin?traffic_source=rss": "2026-11-23",
+  "aljazeera.com/news/2026/11/23/why-is-bangladeshs-grameen-bank-under-attack?traffic_source=rss": "2026-11-23",
   "aljazeera.com/news/2026/11/3/deadly-rsf-drone-strikes-reveal-deep-divisions-between-sudan-and-ethiopia?traffic_source=rss": "2026-11-03",
   "aljazeera.com/news/2026/11/4/houthis-one-month-siege-on-taiz-is-creating-hell-for-yemenis-stuck-there?traffic_source=rss": "2026-11-04",
   "aljazeera.com/news/2026/11/5/serbian-officers-arrested-for-using-excessive-force-against-protesters?traffic_source=rss": "2026-11-05",
@@ -47,6 +48,7 @@
   "aljazeera.com/news/2026/11/9/gaza-authorities-slam-global-inaction-after-mudslide-kills-five-people?traffic_source=rss": "2026-11-09",
   "alpinelinux.org/posts/2026-11-05-openssh-password-authentication-bypass": "2026-11-06",
   "alpo.ge/remark.pdf": "2026-11-21",
+  "alvinbunk.wordpress.com/2026/11/01/nespresso-project-olympus": "2026-11-23",
   "americansentiment.com/datacenters": "2026-11-02",
   "andreasfertig.com/blog/2026/11/cpp26-dis-failed-how-does-cpp-survive": "2026-11-04",
   "anthropic.com/claude-fable-and-mythos-5-2": "2026-11-10",
@@ -145,6 +147,7 @@
   "bbc.co.uk/news/articles/cq8ez592pp0eo?at_campaign=rss&at_medium=RSS": "2026-10-26",
   "bbc.co.uk/news/articles/cq8jzkpjr28vo?at_campaign=rss&at_medium=RSS": "2026-10-30",
   "bbc.co.uk/news/articles/cqdj1ellpd70o?at_campaign=rss&at_medium=RSS": "2026-11-13",
+  "bbc.co.uk/news/articles/cqe9k09j9jv4o?at_campaign=rss&at_medium=RSS": "2026-11-23",
   "bbc.co.uk/news/articles/cqg7x7dpvym8o?at_campaign=rss&at_medium=RSS": "2026-11-10",
   "bbc.co.uk/news/articles/cqg7xxg4jdv5o?at_campaign=rss&at_medium=RSS": "2026-11-06",
   "bbc.co.uk/news/articles/cqj34gnd3n30o?at_campaign=rss&at_medium=RSS": "2026-11-01",
@@ -309,6 +312,7 @@
   "git.kernel.org/stable/c/3599e6b3cc1ada96883d496a50a210d3afbb6987": "2026-10-29",
   "github.com/addyosmani/agent-skills": "2026-11-13",
   "github.com/affaan-m/ecc": "2026-11-19",
+  "github.com/afk-surf/xnulinux": "2026-11-23",
   "github.com/ag-ui-protocol/ag-ui": "2026-11-18",
   "github.com/alibaba/open-code-review": "2026-11-15",
   "github.com/anomalyco/hex": "2026-11-02",
@@ -521,6 +525,7 @@
   "paper.seebug.org/3534": "2026-11-16",
   "paper.seebug.org/3535": "2026-11-20",
   "paper.seebug.org/3536": "2026-11-22",
+  "pequalnp.com/": "2026-11-23",
   "philipotoole.com/twelve-years-of-distributed-sqlite": "2026-10-24",
   "php.net/": "2026-10-27",
   "phrack.org/issues/73/introduction_md.html": "2026-11-19",
@@ -597,6 +602,7 @@
   "spacex.com/launches/starship-flight-15": "2026-11-16",
   "spacex.com/starfall": "2026-11-05",
   "spectrum.ieee.org/ai-in-cybersecurity-php2shell-vulnerability": "2026-11-05",
+  "spelunkr.tv/": "2026-11-23",
   "starlink.com/mini-2": "2026-11-12",
   "status.cloud.microsoft/": "2026-11-14",
   "support.apple.com/en-us/149555": "2026-10-27",
@@ -643,7 +649,8 @@
   "xz.aliyun.com/news/93320": "2026-11-14",
   "xz.aliyun.com/news/93344": "2026-11-17",
   "xz.aliyun.com/news/93353": "2026-11-18",
-  "yorickpeterse.com/articles/migrating-from-github-to-codeberg": "2026-11-17"
+  "yorickpeterse.com/articles/migrating-from-github-to-codeberg": "2026-11-17",
+  "yossarian.net/til/post/github-actions-accepts-invalid-yaml": "2026-11-23"
  },
  "pages": {
   "anthropic": [
