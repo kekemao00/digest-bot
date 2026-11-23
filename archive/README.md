@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 51 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 52 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月24日 周二](2026/11-24.md) · 15 条｜科学 4 · 软件 3 · 时政 3 · AI 2 · 安全 2 · 社会 1  
+  [美国制裁逾 24 个伊朗影子银行网络相关实体](https://www.aljazeera.com/news/2026/11/23/us-escalates-sanctions-on-iran-targets-shadow-banking-networks?traffic_source=rss)；[智谱发布面向通用编程的 GLM-5.4](https://z.ai/blog/glm-5.4)；[谷歌深度思维改进聚变与化学量子算法](https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification/)
 - [11月23日 周一 晚间](2026/11-23-evening.md) · 7 条｜软件 3 · AI 2 · 时政 1 · 社会 1  
   [新项目让 Linux 运行完整 OS X 图形环境](https://github.com/AFK-surf/xnulinux)；[旧金山 AI 从业者担忧行业过热](https://www.bbc.co.uk/news/articles/cqe9k09j9jv4o?at_medium=RSS&at_campaign=rss)
 - [11月23日 周一](2026/11-23.md) · 14 条｜AI 5 · 软件 3 · 金融 2 · 安全 2 · 时政 1 · 社会 1  
