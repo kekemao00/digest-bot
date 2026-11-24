@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月24日 周二 晚间](2026/11-24-evening.md) · 8 条｜时政 3 · 金融 2 · 科学 2 · 软件 1  
+  [特朗普称曾促成黄仁勋重返英伟达](https://www.bbc.co.uk/news/articles/cq5y1k8ez407o?at_medium=RSS&at_campaign=rss)；[伊拉克下令接管库尔德控制区油田及口岸](https://www.aljazeera.com/news/2026/11/24/iraq-orders-takeover-of-oilfields-in-areas-under-kurdish-control?traffic_source=rss)
 - [11月24日 周二](2026/11-24.md) · 15 条｜科学 4 · 软件 3 · 时政 3 · AI 2 · 安全 2 · 社会 1  
   [美国制裁逾 24 个伊朗影子银行网络相关实体](https://www.aljazeera.com/news/2026/11/23/us-escalates-sanctions-on-iran-targets-shadow-banking-networks?traffic_source=rss)；[智谱发布面向通用编程的 GLM-5.4](https://z.ai/blog/glm-5.4)；[谷歌深度思维改进聚变与化学量子算法](https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification/)
 - [11月23日 周一 晚间](2026/11-23-evening.md) · 7 条｜软件 3 · AI 2 · 时政 1 · 社会 1  
