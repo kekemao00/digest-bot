@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 52 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 53 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月25日 周三](2026/11-25.md) · 15 条｜AI 3 · 金融 3 · 软件 3 · 安全 2 · 硬件 1 · 科学 1 · 时政 1 · 其他 1  
+  [美国消费者信心指数升至 103.3](https://www.cnbc.com/2026/11/24/consumer-confidence-november-election-midterm.html)；[GPT-6 设计的蛋白质与 5 个靶点有结合迹象](https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities)；[Lean 查出 Clojure 核心 17 个未报告缺陷](https://s.conao3.com/blog/2026/e4f733)
 - [11月24日 周二 晚间](2026/11-24-evening.md) · 8 条｜时政 3 · 金融 2 · 科学 2 · 软件 1  
   [特朗普称曾促成黄仁勋重返英伟达](https://www.bbc.co.uk/news/articles/cq5y1k8ez407o?at_medium=RSS&at_campaign=rss)；[伊拉克下令接管库尔德控制区油田及口岸](https://www.aljazeera.com/news/2026/11/24/iraq-orders-takeover-of-oilfields-in-areas-under-kurdish-control?traffic_source=rss)
 - [11月24日 周二](2026/11-24.md) · 15 条｜科学 4 · 软件 3 · 时政 3 · AI 2 · 安全 2 · 社会 1  
