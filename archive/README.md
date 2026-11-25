@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月25日 周三 晚间](2026/11-25-evening.md) · 8 条｜AI 2 · 软件 2 · 时政 2 · 金融 1 · 科学 1  
+  [泄露的俄方数据显示俄军在乌克兰战场损失近 50 万人](https://www.bbc.co.uk/news/articles/cmx27g533zwyo?at_medium=RSS&at_campaign=rss)；[研究发现心脏病发作和中风风险可提前数十年检出](https://www.ed.ac.uk/news/heart-attack-and-stroke-risk-detectable-decades-in-advance)
 - [11月25日 周三](2026/11-25.md) · 15 条｜AI 3 · 金融 3 · 软件 3 · 安全 2 · 硬件 1 · 科学 1 · 时政 1 · 其他 1  
   [美国消费者信心指数升至 103.3](https://www.cnbc.com/2026/11/24/consumer-confidence-november-election-midterm.html)；[GPT-6 设计的蛋白质与 5 个靶点有结合迹象](https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities)；[Lean 查出 Clojure 核心 17 个未报告缺陷](https://s.conao3.com/blog/2026/e4f733)
 - [11月24日 周二 晚间](2026/11-24-evening.md) · 8 条｜时政 3 · 金融 2 · 科学 2 · 软件 1  
