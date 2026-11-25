@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 53 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 54 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月26日 周四](2026/11-26.md) · 15 条｜AI 3 · 金融 3 · 科学 3 · 软件 2 · 安全 2 · 时政 1 · 其他 1  
+  [美国宣布对中国、欧盟等贸易伙伴加征关税](https://www.bbc.co.uk/news/articles/c893r9ke5p97o?at_medium=RSS&at_campaign=rss)；[研究发现泥炭地排水造成长期净增温](https://www.nature.com/articles/s41586-026-11339-0)；[新基准用 60 项模拟机器人任务评估 AI 行动能力](https://arxiv.org/abs/2611.30989)
 - [11月25日 周三 晚间](2026/11-25-evening.md) · 8 条｜AI 2 · 软件 2 · 时政 2 · 金融 1 · 科学 1  
   [泄露的俄方数据显示俄军在乌克兰战场损失近 50 万人](https://www.bbc.co.uk/news/articles/cmx27g533zwyo?at_medium=RSS&at_campaign=rss)；[研究发现心脏病发作和中风风险可提前数十年检出](https://www.ed.ac.uk/news/heart-attack-and-stroke-risk-detectable-decades-in-advance)
 - [11月25日 周三](2026/11-25.md) · 15 条｜AI 3 · 金融 3 · 软件 3 · 安全 2 · 硬件 1 · 科学 1 · 时政 1 · 其他 1  
