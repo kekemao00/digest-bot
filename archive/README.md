@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 54 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 55 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月27日 周五](2026/11-27.md) · 15 条｜AI 4 · 科学 4 · 金融 2 · 安全 2 · 软件 1 · 时政 1 · 其他 1  
+  [德科斯获足够支持，预计明年执掌欧洲央行](https://www.cnbc.com/2026/11/26/pablo-hernandez-de-cos-ecb-president.html)；[70 亿参数支付模型风控迁移指标提升 34.5%](https://arxiv.org/abs/2611.25403)；[单细胞图谱将冠心病相关变异关联到细胞类型](https://www.nature.com/articles/s41586-026-11275-z)
 - [11月26日 周四 晚间](2026/11-26-evening.md) · 8 条｜AI 3 · 时政 2 · 软件 1 · 硬件 1 · 科学 1  
   [美国拟对 14 个贸易伙伴加征关税](https://www.cnbc.com/2026/11/26/us-tariffs-hike-trade-agreement.html)；[SpaceX 百万颗数据卫星发射计划获批](https://www.bbc.co.uk/news/articles/cwp836l8n1jgo?at_medium=RSS&at_campaign=rss)
 - [11月26日 周四](2026/11-26.md) · 15 条｜AI 3 · 金融 3 · 科学 3 · 软件 2 · 安全 2 · 时政 1 · 其他 1  
