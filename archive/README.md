@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月26日 周四 晚间](2026/11-26-evening.md) · 8 条｜AI 3 · 时政 2 · 软件 1 · 硬件 1 · 科学 1  
+  [美国拟对 14 个贸易伙伴加征关税](https://www.cnbc.com/2026/11/26/us-tariffs-hike-trade-agreement.html)；[SpaceX 百万颗数据卫星发射计划获批](https://www.bbc.co.uk/news/articles/cwp836l8n1jgo?at_medium=RSS&at_campaign=rss)
 - [11月26日 周四](2026/11-26.md) · 15 条｜AI 3 · 金融 3 · 科学 3 · 软件 2 · 安全 2 · 时政 1 · 其他 1  
   [美国宣布对中国、欧盟等贸易伙伴加征关税](https://www.bbc.co.uk/news/articles/c893r9ke5p97o?at_medium=RSS&at_campaign=rss)；[研究发现泥炭地排水造成长期净增温](https://www.nature.com/articles/s41586-026-11339-0)；[新基准用 60 项模拟机器人任务评估 AI 行动能力](https://arxiv.org/abs/2611.30989)
 - [11月25日 周三 晚间](2026/11-25-evening.md) · 8 条｜AI 2 · 软件 2 · 时政 2 · 金融 1 · 科学 1  
