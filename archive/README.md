@@ -4,6 +4,8 @@
 
 ## 2026 年 11 月
 
+- [11月27日 周五 晚间](2026/11-27-evening.md) · 4 条｜金融 1 · 软件 1 · 时政 1 · 社会 1  
+  [中国工厂利润恢复增长，AI 制造和出口拉动经济](https://www.cnbc.com/2026/11/27/china-industrial-profits-october.html)；[大赦国际指控以色列袭击加沙妇女和女童](https://www.aljazeera.com/news/2026/11/27/israeli-attacks-on-women-and-girls-meant-to-destroy-life-in-gaza-amnesty?traffic_source=rss)
 - [11月27日 周五](2026/11-27.md) · 15 条｜AI 4 · 科学 4 · 金融 2 · 安全 2 · 软件 1 · 时政 1 · 其他 1  
   [德科斯获足够支持，预计明年执掌欧洲央行](https://www.cnbc.com/2026/11/26/pablo-hernandez-de-cos-ecb-president.html)；[70 亿参数支付模型风控迁移指标提升 34.5%](https://arxiv.org/abs/2611.25403)；[单细胞图谱将冠心病相关变异关联到细胞类型](https://www.nature.com/articles/s41586-026-11275-z)
 - [11月26日 周四 晚间](2026/11-26-evening.md) · 8 条｜AI 3 · 时政 2 · 软件 1 · 硬件 1 · 科学 1  
