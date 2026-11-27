@@ -1,9 +1,11 @@
 # 每日简报归档
 
-每天推送后自动更新，共 55 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
+每天推送后自动更新，共 56 天。点日期看当天完整版（含落选条目和原因）。逐条数据在 [items.jsonl](items.jsonl)，每行一条推送过的内容，可以下载后检索或统计。
 
 ## 2026 年 11 月
 
+- [11月28日 周六](2026/11-28.md) · 15 条｜AI 4 · 软件 2 · 安全 2 · 科学 2 · 时政 2 · 社会 2 · 金融 1  
+  [台湾周六将公投决定是否废除非核家园政策](https://www.aljazeera.com/news/2026/11/27/will-taiwan-vote-to-revive-nuclear-power-and-why-does-that-matter-for-ai?traffic_source=rss)；[GeoServer 漏洞已被利用，可泄露本地文件](https://geoserver.org/vulnerability/2026/11/23/cve-update.html)；[研究发现结直肠癌组织界面的信号可改变干细胞状态](https://www.nature.com/articles/s41586-026-11301-0)
 - [11月27日 周五 晚间](2026/11-27-evening.md) · 4 条｜金融 1 · 软件 1 · 时政 1 · 社会 1  
   [中国工厂利润恢复增长，AI 制造和出口拉动经济](https://www.cnbc.com/2026/11/27/china-industrial-profits-october.html)；[大赦国际指控以色列袭击加沙妇女和女童](https://www.aljazeera.com/news/2026/11/27/israeli-attacks-on-women-and-girls-meant-to-destroy-life-in-gaza-amnesty?traffic_source=rss)
 - [11月27日 周五](2026/11-27.md) · 15 条｜AI 4 · 科学 4 · 金融 2 · 安全 2 · 软件 1 · 时政 1 · 其他 1  
